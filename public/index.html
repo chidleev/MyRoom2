@@ -4,15 +4,68 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>MyRoom Shop</title>
-    <script src='https://unpkg.com/vue@3'></script>
+
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/left_menu.css">
+    <link rel="stylesheet" href="/css/right_menu.css">
+
+    <script src='/scripts/vue/dist/vue.global.js'></script>
+    <script src='/scripts/vue-router/dist/vue-router.global.js'></script>
     <script src='/scripts/axios/dist/axios.min.js'></script>
 </head>
 <body>
     <div id="app">
-        <ul>
-            <li v-for="category in categories">{{category.id}}: {{category.name}}</li>
-        </ul>
+        <div id="left-menu">
+            <router-link to="/about" id="logo">
+                <img src="/icons/logo.svg" alt="Логотип">
+                <span>MyRoom</span>
+            </router-link>
+    
+            <div id="category-list">
+                <span>Категории</span>
+                <ul>
+                    <li v-for="item in categories" :key="item.id">
+                        <router-link :to="'/catalog/'+item.id" id="category-button" active-class="active">{{item.name}}</router-link>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="main-content">
+            <router-view></router-view>
+        </div>
+
+        <div id="right-menu">
+            <div id="top">
+                <router-link to="/profile" id="profile_icon" class="icon" active-class="active">
+                    <img src="/icons/profile.svg" alt="Профиль">
+                </router-link>
+    
+                <router-link to="/catalog" id="catalog_icon" class="icon" active-class="active">
+                    <img src="/icons/catalog.svg" alt="Профиль">
+                </router-link>
+    
+                <router-link to="/basket" id="basket_icon" class="icon" active-class="active">
+                    <img src="/icons/basket.svg" alt="Профиль">
+                </router-link>
+            </div>
+    
+            <div id="bottom">
+                <router-link to="/profile/logout" id="logout_icon" class="icon">
+                    <img src="/icons/logout.svg" alt="Профиль">
+                </router-link>
+    
+                <router-link to="/about" id="about_icon" class="icon" active-class="active">
+                    <img src="/icons/about.svg" alt="Профиль">
+                </router-link>
+    
+                <router-link to="#" id="up_icon" class="icon">
+                    <img src="/icons/up.svg" alt="Профиль">
+                </router-link>
+            </div>
+        </div>
     </div>
 
     <script type="module" src='/js/main.js'></script>

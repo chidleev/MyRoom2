@@ -9,6 +9,10 @@ const express = require('express')
 
 const adminAPI = express()
 
+/*adminAPI.use((req, res) => {
+    isAdminCheck
+})*/
+
 adminAPI.get('/', (req, res) => {
     res.send("Admin api work")
 })

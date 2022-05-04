@@ -12,7 +12,6 @@ serverApp.use(express.urlencoded({ extended: true }))
 serverApp.use('/api', mainAPI)
 
 serverApp.use('/scripts', express.static(path.join(__dirname, 'node_modules')))
-serverApp.use('/js', express.static(path.join(__dirname, 'public/js')))
 
 serverApp.use((req, res, next) => {
     if (req.url.indexOf('.') == -1) {
@@ -20,6 +19,8 @@ serverApp.use((req, res, next) => {
     }
     next()
 })
+
+serverApp.use('/', express.static(path.join(__dirname, 'public')))
 
 serverApp.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public/index.html'))

@@ -1,3 +1,4 @@
+import router from '/js/router.js'
 import onMountFunction from '/js/onMountFunction.js'
 
 const settings = {
@@ -13,4 +14,7 @@ const settings = {
 
 
 
-const app = Vue.createApp(settings).mount('div#app')
+const app = Vue.createApp(settings)
+app.use(router)
+
+app.mount('div#app')

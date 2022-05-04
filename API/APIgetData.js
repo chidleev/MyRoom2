@@ -19,9 +19,7 @@ getDataAPI.get('/', (req, res) => {
 })
 
 getDataAPI.get('/categories', (req, res) => {
-    setTimeout(() => {
-        res.json(categories)
-    }, 5000)
+    res.json(categories)
 })
 
 module.exports = getDataAPI

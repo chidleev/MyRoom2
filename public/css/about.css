@@ -1,0 +1,49 @@
+.container {
+    justify-content: center;
+    align-items: center;
+
+    color: var(--light-2);
+}
+
+.about-text-block {
+    margin-bottom: 0;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.about-hello {
+    font-weight: 600;
+    font-size: var(--big-text-1);
+    z-index: 10;
+}
+
+.about-logo {
+    margin-top: calc(-0.1 * var(--giant-text));
+    margin-bottom: calc(-0.1 * var(--giant-text));
+
+    font-weight: 900;
+    font-size: calc(1.1 * var(--giant-text));
+
+    color: var(--my-yellow);
+    text-shadow: 0px 0px var(--giant-text) var(--my-yellow),
+                 0px 0px calc(2*var(--giant-text)) var(--my-yellow);
+
+    z-index: 1;
+}
+
+.about-description {
+    font-weight: 300;
+    font-size: var(--big-text-2);
+    z-index: 10;
+}
+
+.about-help {
+    min-width: fit-content;
+    position: absolute;
+    bottom: calc(2.5 * var(--mini-text));
+
+    font-weight: 300;
+    font-size: var(--mini-text);
+}

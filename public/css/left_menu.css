@@ -1,0 +1,103 @@
+#left-menu {
+    width: 21%;
+    min-width: 250px;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+
+    border-right: calc(0.2 * var(--medium-text-2)) dashed var(--my-blue-1);
+
+    background-image:  linear-gradient(135deg, var(--light-1) 25%, transparent 25%), linear-gradient(225deg, var(--light-1) 25%, transparent 25%), linear-gradient(45deg, var(--light-1) 25%, transparent 25%), linear-gradient(315deg, var(--light-1) 25%, var(--light-2) 25%);
+    background-position:  10px 0, 10px 0, 0 0, 0 0;
+    background-size: 10px 10px;
+    background-repeat: repeat;
+}
+
+#logo {
+    width: 100%;
+    height: clamp(90px, 0.7rem, 0.7rem);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    text-decoration: none;
+
+    color: var(--my-blue-1);
+}
+
+#logo img {
+    width: clamp(65px, 0.5rem, 0.5rem);
+}
+
+#logo span {
+    font-weight: 900;
+    font-size: var(--medium-text-1);
+    transition: color var(--speed-1), text-shadow var(--speed-1);
+}
+
+#logo:hover span {
+    color: var(--my-yellow);
+    text-shadow: 0px 0px 20px var(--my-yellow);
+    transition-duration: var(--speed-1);
+}
+
+#logo:active span {
+    color: var(--my-orange);
+    text-shadow: 0px 0px 20px var(--my-orange);
+    transition-duration: var(--speed-2);
+}
+
+#category-list {
+    position: sticky;
+    top: 0px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+#category-button, #category-list span {
+    margin-bottom: calc(0.3 * var(--medium-text-2));
+    padding-left: calc(0.3 * var(--medium-text-2));
+    height: calc(1.5 * var(--medium-text-2));
+
+    display: flex;
+    align-items: center;
+
+    font-size: calc(0.9 * var(--medium-text-2));
+    font-weight: 500;
+    text-decoration: none;
+
+    border-left: calc(0.3 * var(--medium-text-2)) solid var(--my-blue-1);
+
+    color: var(--my-blue-1);
+    background: linear-gradient(to right, var(--light-2) 50%, transparent);
+
+    transition-duration: var(--speed-1);
+}
+
+#category-list span {
+    font-size: var(--medium-text-2);
+    font-weight: 800;
+}
+
+
+#category-button:hover {
+    padding-left: var(--medium-text-2);
+
+    border-left: calc(0.3 * var(--medium-text-2)) solid var(--light-2);
+
+    color: var(--light-2);
+    background: linear-gradient(to right, var(--my-yellow) 50%, transparent);
+
+    transition-duration: var(--speed-1);
+}
+
+#category-button:active, #category-button.active {
+    border-left: calc(0.3 * var(--medium-text-2)) solid var(--my-yellow);
+
+    color: var(--light-2);
+    background: linear-gradient(to right, var(--my-orange) 50%, transparent);
+}
