@@ -1,7 +1,9 @@
-const About = { template: '<div>About</div>' }
+import getPage from '/js/getPageReq.js'
+
+const About = { template: getPage('about') }
 const Catalog = {
     props: ['categoryID'],
-    template: '<div>Catalog {{categoryID}}</div>'
+    template: getPage('catalog')
 }
 
 const routes = [
