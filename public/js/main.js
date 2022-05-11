@@ -9,7 +9,17 @@ const settings = {
     },
     mounted: onMountFunction,
     computed: {},
-    methods: {}
+    methods: {
+        logoutReqest() {
+
+        },
+        isLogin() {
+            if (localStorage.getItem('UUID')) {
+                return true
+            }
+            return false
+        }
+    }
 }
 
 

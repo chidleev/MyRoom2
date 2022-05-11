@@ -1,10 +1,9 @@
-import getPage from '/js/getPageReq.js'
-
-const About = { template: getPage('about') }
-const Catalog = {
-    props: ['categoryID'],
-    template: getPage('catalog')
-}
+import About from '/js/pages/about.js'
+import Catalog from '/js/pages/catalog.js'
+import MainCatalog from '/js/pages/mainCatalog.js'
+import Product from '/js/pages/product.js'
+import Profile from '/js/pages/profile.js'
+import Basket from '/js/pages/basket.js'
 
 const routes = [
     { 
@@ -16,21 +15,36 @@ const routes = [
         component: About
     },
     {
-        path: '/catalog/:categoryID(\\d+)?',
+        path: '/catalog',
+        component: MainCatalog
+    },
+    {
+        path: '/catalog/:categoryName',
         component: Catalog,
         props: true
     },
     {
+        path: '/catalog/:categoryName/:productName',
+        component: Product,
+        props: true
+    },
+    {
         path: '/profile',
-        component: Catalog
+        component: Profile
     },
     {
         path: '/basket',
-        component: Catalog
+        component: Basket
     }
 ]
 
-export default VueRouter.createRouter({
+const router = VueRouter.createRouter({
     history: VueRouter.createWebHistory(),
     routes
 })
+
+router.beforeEach(async (to, from) => {
+    document.getElementById('pageCSSLink').href = `/css/${to.fullPath.split('/')[1]}.css`
+})
+
+export default router

@@ -1,12 +1,7 @@
 /* Нужен для получения данных из БД */
-const categories = [
-    { "id": 1,  "name":"Диваны" },
-    { "id": 12, "name":"Кресла" },
-    { "id": 34, "name":"Люстры" },
-    { "id": 23, "name":"Столы"  },
-    { "id": 4,  "name":"Кровати"},
-    { "id": 8,  "name":"Шкафы"  }
-]
+const globalVars = require('../globalVars.json')
+
+const controller = require("../dataBase/controllers")
 
 const express = require('express')
 
@@ -19,7 +14,13 @@ getDataAPI.get('/', (req, res) => {
 })
 
 getDataAPI.get('/categories', (req, res) => {
-    res.json(categories)
+    if (req.query.update == 1) {
+        controller.Category.findAll().then(result => {
+            console.log("Categories updated");
+            globalVars.categories = result
+        })
+    }
+    res.json(globalVars.categories)
 })
 
 module.exports = getDataAPI

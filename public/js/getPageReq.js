@@ -1,14 +1,18 @@
-export default function(pageName) {
-    if (localStorage.getItem(pageName)) {
-        return localStorage.getItem(pageName) 
+export default function(pagesType) {
+    if (/*localStorage.getItem(pagesType)*/false) {
+        try {
+            return JSON.parse(localStorage.getItem(pagesType))
+        } catch(e) {
+            localStorage.removeItem(pagesType)
+        }
     }
     else {
         var request = new XMLHttpRequest()
-        request.open('GET', `/api/gethtml/${pageName}`, false)
+        request.open('GET', `/api/gethtml/${pagesType}`, false)
         request.send()
         if (request.status === 200) {
-            localStorage.setItem(pageName, request.responseText)
-            return request.responseText
+            localStorage.setItem(pagesType, request.responseText)
+            return JSON.parse(request.responseText)
         }
     }
 }

@@ -16,6 +16,8 @@
     "axios": "^0.27.2",
     "cookie-parser": "^1.4.6",
     "express": "^4.17.1",
+    "pg": "^8.7.3",
+    "pg-hstore": "^2.3.4",
     "sequelize": "^6.19.0",
     "vue": "^3.2.33",
     "vue-router": "^4.0.15"

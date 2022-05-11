@@ -1,6 +1,10 @@
 const express = require('express')
 const path = require('path')
 
+const db = require("./dataBase/models")
+const categoriesData = require('./dataBase/originData/categories.json')
+const globalVars = require('./globalVars.json')
+
 const mainAPI = require('./API/mainAPI')
 
 const serverApp = express()
@@ -22,10 +26,14 @@ serverApp.use((req, res, next) => {
 
 serverApp.use('/', express.static(path.join(__dirname, 'public')))
 
-serverApp.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public/index.html'))
-})
 
-serverApp.listen(serverApp.locals.PORT, () => {
-    console.log(`Server running on port ${serverApp.locals.PORT}`)
+db.sequelize.sync(/*{force: true}*/).then(() => {
+    console.log("Drop and re-sync db.")
+    
+    //db.Categories.bulkCreate(categoriesData)
+    globalVars.categories = categoriesData
+    
+    serverApp.listen(serverApp.locals.PORT, () => {
+        console.log(`Server running on port ${serverApp.locals.PORT}`)
+    })
 })

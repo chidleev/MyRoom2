@@ -9,12 +9,12 @@
 
     <link rel="shortcut icon" href="/icons/logo.svg" type="image/x-icon">
 
-    <link rel="stylesheet" href="/css/main.css">
-    <link rel="stylesheet" href="/css/left_menu.css">
-    <link rel="stylesheet" href="/css/right_menu.css">
-    <link rel="stylesheet" href="/css/about.css">
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
+    <link rel="stylesheet" type="text/css" href="/css/left_menu.css">
+    <link rel="stylesheet" type="text/css" href="/css/right_menu.css">
+    <link rel="stylesheet" type="text/css" href="/css/about.css" id="pageCSSLink">
 
-    <script src='/scripts/vue/dist/vue.global.js'></script>
+    <script src='/scripts/vue/dist/vue.global.prod.js'></script>
     <script src='/scripts/vue-router/dist/vue-router.global.js'></script>
     <script src='/scripts/axios/dist/axios.min.js'></script>
 </head>
@@ -29,8 +29,14 @@
             <div id="category-list">
                 <span>Категории</span>
                 <ul>
-                    <li v-for="item in categories" :key="item.id">
-                        <router-link :to="'/catalog/'+item.id" id="category-button" active-class="active">{{item.name}}</router-link>
+                    <li v-for="item in categories" :key="item.uuid">
+                        <router-link 
+                            :to="'/catalog/'+item.ENname" 
+                            id="category-button" 
+                            active-class="active"
+                        >
+                            {{item.name}}
+                        </router-link>
                     </li>
                 </ul>
             </div>
@@ -42,30 +48,58 @@
 
         <div id="right-menu">
             <div id="top">
-                <router-link to="/profile" id="profile_icon" class="icon" active-class="active">
+                <router-link 
+                    to="/profile" 
+                    id="profile_icon" 
+                    class="icon" 
+                    active-class="active" 
+                >
                     <img src="/icons/profile.svg" alt="Профиль">
                 </router-link>
     
-                <router-link to="/catalog" id="catalog_icon" class="icon" active-class="active">
-                    <img src="/icons/catalog.svg" alt="Профиль">
+                <router-link 
+                    to="/catalog" 
+                    id="catalog_icon" 
+                    class="icon" 
+                    active-class="active" 
+                >
+                    <img src="/icons/catalog.svg" alt="Каталог">
                 </router-link>
     
-                <router-link to="/basket" id="basket_icon" class="icon" active-class="active">
-                    <img src="/icons/basket.svg" alt="Профиль">
+                <router-link 
+                    v-if="isLogin()"
+                    to="/basket" 
+                    id="basket_icon" 
+                    class="icon" 
+                    active-class="active" 
+                >
+                    <img src="/icons/basket.svg" alt="Корзина">
                 </router-link>
             </div>
-    
+
+
             <div id="bottom">
-                <router-link to="/profile/logout" id="logout_icon" class="icon">
-                    <img src="/icons/logout.svg" alt="Профиль">
+                <router-link 
+                    v-if="isLogin()"
+                    id="logout_icon"
+                    class="icon"
+                    @click="logoutReqest"
+                >
+                    <img src="/icons/logout.svg" alt="Выйти из аккаунта">
                 </router-link>
     
-                <router-link to="/about" id="about_icon" class="icon" active-class="active">
-                    <img src="/icons/about.svg" alt="Профиль">
+                <router-link 
+                    to="/about" 
+                    id="about_icon" 
+                    class="icon" 
+                    active-class="active" 
+                >
+                    <img src="/icons/about.svg" alt="О магазине">
                 </router-link>
     
+
                 <router-link to="#" id="up_icon" class="icon">
-                    <img src="/icons/up.svg" alt="Профиль">
+                    <img src="/icons/up.svg" alt="Вверх">
                 </router-link>
             </div>
         </div>

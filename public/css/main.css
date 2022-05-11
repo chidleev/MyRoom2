@@ -9,9 +9,9 @@
     --light-2: #f0e6dc;
 
     --my-yellow: rgb(240, 170, 50);
-    --my-orange: rgb(240, 120, 50);
+    --my-orange: #f07832;
 
-    --my-red-1: rgb(240, 20, 20);
+    --my-red-1: #f01414;
     --my-red-2: rgb(120, 20, 20);
 
     --my-blue-1: #8cc8c8;
@@ -74,4 +74,76 @@ body, #app {
     background-color: var(--dark-1);
     background-image: repeating-linear-gradient(90deg, transparent, transparent var(--medium-text-2), var(--dark-2) var(--medium-text-2), var(--dark-2) calc(2 * var(--medium-text-2)));
     box-shadow: inset 0px 0px var(--giant-text) var(--dark-3);
+}
+
+#search {
+    margin: var(--mini-text) 0;
+    width: 100%;
+
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: relative;
+}
+
+#search input {
+    padding-left: calc(0.2 * var(--medium-text-2));
+    width: 100%;
+    height: calc(1.25 * var(--medium-text-1));
+
+    font-size: var(--mini-text);
+
+    border: calc(0.15 * var(--medium-text-2)) dashed var(--my-blue-1);
+    border-right: none;
+    outline: none;
+
+    background-color: var(--light-1);
+    color: var(--my-blue-1);
+}
+
+#search input::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+    margin: 0 calc(0.2 * var(--medium-text-2));
+    height: calc(0.9 * var(--medium-text-2));
+    width: calc(0.9 * var(--medium-text-2));
+
+    background-image: url('/icons/delete.svg');
+    background-size: contain;
+    filter: invert(48%) sepia(70%) saturate(1279%) hue-rotate(343deg) brightness(105%) contrast(88%);
+    transition: 200ms;
+}
+
+#search input::-webkit-search-cancel-button:hover {
+    transform: scale(1.2);
+    filter: invert(31%) sepia(99%) saturate(7365%) hue-rotate(358deg) brightness(107%) contrast(89%);
+    transition: 200ms;
+}
+
+#search button {
+    width: 10%;
+    height: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border: calc(0.15 * var(--medium-text-2)) dashed var(--light-1);
+    border-left: none;
+
+    background: var(--my-blue-1);
+    cursor: pointer;
+    transition: var(--speed-2);
+}
+
+#search button:hover {
+    background: var(--my-yellow);
+    box-shadow: 0px 0px var(--medium-text-1) var(--my-yellow);
+    transition: var(--speed-2);
+}
+
+#search button img{
+    height: 75%;
+    filter: invert(100%) sepia(0%) saturate(837%) hue-rotate(250deg) brightness(125%) contrast(100%);
 }

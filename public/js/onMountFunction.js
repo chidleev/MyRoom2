@@ -1,5 +1,5 @@
 export default function() {
-    if (localStorage.getItem('categories')) {
+    if (/*localStorage.getItem('categories')*/false) {
         try {
             this.categories = JSON.parse(localStorage.getItem('categories')) 
         } catch(e) {

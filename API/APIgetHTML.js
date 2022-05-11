@@ -1,8 +1,13 @@
 /* Нужен для получения HTML текста */
 
 const express = require('express')
-const path = require('path')
 const fs = require('fs')
+
+const defaultPages = ['about', 'mainCatalog', 'catalog', 'product', 'logReg']
+const loggedPages = ['profile', 'basket']
+const adminPages = ['categories', 'comments', 'employees', 'products']
+
+const components = ['searchLine']
 
 const getHtmlAPI = express()
 
@@ -10,14 +15,29 @@ getHtmlAPI.get('/', (req, res) => {
     res.send("GetHtml api work")
 })
 
-getHtmlAPI.get('/:pageName', (req, res) => {
-    fs.readFile(`./pages/${req.params.pageName}.html`, 'utf8' , (err, data) => {
-        if (err) {
-          console.error(err)
-          res.sendStatus(404)
-        }
-        res.send(data)
+getHtmlAPI.get('/default', (req, res) => {
+    pages = {}
+    defaultPages.forEach((fileName) => {
+        pages[fileName] =  fs.readFileSync(`./pages/default/${fileName}.html`, 'utf8')
     })
+    res.json(pages)
 })
+
+getHtmlAPI.get('/logged', (req, res) => {
+    pages = {}
+    loggedPages.forEach((fileName) => {
+        pages[fileName] =  fs.readFileSync(`./pages/logged/${fileName}.html`, 'utf8')
+    })
+    res.json(pages)
+})
+
+getHtmlAPI.get('/components', (req, res) => {
+    pages = {}
+    components.forEach((fileName) => {
+        pages[fileName] =  fs.readFileSync(`./pages/components/${fileName}.html`, 'utf8')
+    })
+    res.json(pages)
+})
+
 
 module.exports = getHtmlAPI

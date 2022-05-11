@@ -1,0 +1,26 @@
+[
+	{
+		"name": "Диваны",
+		"ENname": "sofas"
+	},
+	{
+		"name": "Кресла",
+		"ENname": "armchairs"
+	},
+	{
+		"name": "Кровати",
+		"ENname": "beds"
+	},
+	{
+		"name": "Шкафы",
+		"ENname": "wardrobes"
+	},
+	{
+		"name": "Освещение",
+		"ENname": "lighting"
+	},
+	{
+		"name": "Столы",
+		"ENname": "tables"
+	}
+]
