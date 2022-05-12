@@ -34,7 +34,7 @@ const routes = [
         component: Profile
     },
     {
-        path: '/reglog1',
+        path: '/reglog',
         component: RegLog
     },
     {
