@@ -54,9 +54,13 @@
     text-align: center;
 
     background-color: var(--light-1);
-    color: var(--my-blue-1);
+    color: var(--my-yellow);
 
     z-index: 1;
+}
+
+#profile-inputs input::placeholder {
+    color: var(--my-blue-1);
 }
 
 #profile-inputs button {

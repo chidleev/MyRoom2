@@ -100,7 +100,7 @@ body, #app {
     outline: none;
 
     background-color: var(--light-1);
-    color: var(--my-blue-1);
+    color: var(--my-yellow);
 }
 
 #search input::-webkit-search-cancel-button {
@@ -118,6 +118,10 @@ body, #app {
 #search input::-webkit-search-cancel-button:hover {
     filter: invert(31%) sepia(99%) saturate(7365%) hue-rotate(358deg) brightness(107%) contrast(89%);
     transition: 200ms;
+}
+
+#search input::placeholder {
+    color: var(--my-blue-1);
 }
 
 #search button {

@@ -4,7 +4,7 @@ import MainCatalog from '/js/pages/mainCatalog.js'
 import Product from '/js/pages/product.js'
 import Profile from '/js/pages/profile.js'
 import Basket from '/js/pages/basket.js'
-import RegLog from '/js/pages/regLog.js'
+import Login from '/js/pages/login.js'
 
 const routes = [
     { 
@@ -18,33 +18,59 @@ const routes = [
     },
     {
         path: '/catalog',
-        name: 'mainCatalog',
-        component: MainCatalog
-    },
-    {
-        path: '/catalog/:categoryName',
-        name: 'catalog',
-        component: Catalog,
-        props: true
-    },
-    {
-        path: '/catalog/:categoryName/:productName',
-        name: 'product',
-        component: Product,
-        props: true
+        component: {
+            template: '<router-view></router-view>'
+        },
+        children: [
+            {
+                path: '',
+                name: 'mainCatalog',
+                component: MainCatalog,
+                props: true
+            },
+            {
+                path: ':categoryName',
+                component: {
+                    template: '<router-view></router-view>'
+                },
+                props: true,
+                children: [
+                    {
+                        path: '',
+                        name: 'catalog',
+                        component: Catalog,
+                        props: true
+                    },
+                    {
+                        path: ':productName',
+                        name: 'product',
+                        component: Product,
+                        props: true
+                    }
+                ]
+            }
+        ]
     },
     {
         path: '/profile',
-        name: 'profile',
-        component: Profile,
-        meta: {
-            requredLogin: true
-        }
-    },
-    {
-        path: '/reglog',
-        name: 'reglog',
-        component: RegLog,
+        component: {
+            template: '<router-view></router-view>'
+        },
+        children: [
+            {
+                path: '',
+                name: 'profile',
+                component: Profile,
+                meta: {
+                    requredLogin: true
+                }
+            },
+            {
+                path: 'login',
+                name: 'login',
+                component: Login
+            }
+        ]
     },
     {
         path: '/basket',
@@ -64,7 +90,7 @@ const router = VueRouter.createRouter({
 router.beforeEach((to, from, next) => {
     if(to.meta.requredLogin && !localStorage.getItem('UUID')){
         next({
-            name: "reglog"
+            name: "login"
         })
     }
     else next()

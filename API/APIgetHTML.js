@@ -3,7 +3,7 @@
 const express = require('express')
 const fs = require('fs')
 
-const defaultPages = ['about', 'mainCatalog', 'catalog', 'product', 'regLog']
+const defaultPages = ['about', 'mainCatalog', 'catalog', 'product', 'login']
 const loggedPages = ['profile', 'basket']
 const adminPages = ['categories', 'comments', 'employees', 'products']
 
