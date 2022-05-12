@@ -4,6 +4,7 @@ import MainCatalog from '/js/pages/mainCatalog.js'
 import Product from '/js/pages/product.js'
 import Profile from '/js/pages/profile.js'
 import Basket from '/js/pages/basket.js'
+import RegLog from '/js/pages/regLog.js'
 
 const routes = [
     { 
@@ -33,6 +34,10 @@ const routes = [
         component: Profile
     },
     {
+        path: '/reglog',
+        component: RegLog
+    },
+    {
         path: '/basket',
         component: Basket
     }
@@ -42,6 +47,17 @@ const router = VueRouter.createRouter({
     history: VueRouter.createWebHistory(),
     routes
 })
+
+/*router.beforeEach(async (to, from, next) => {
+    var t = {path: '/reglog'}
+    if (!localStorage.getItem('UUID') && to.name != 'reglog') {
+        next(t)
+    }
+    else {
+        t = to
+        next(t)
+    }
+})*/
 
 router.beforeEach(async (to, from) => {
     document.getElementById('pageCSSLink').href = `/css/${to.fullPath.split('/')[1]}.css`

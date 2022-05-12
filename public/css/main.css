@@ -116,7 +116,6 @@ body, #app {
 }
 
 #search input::-webkit-search-cancel-button:hover {
-    transform: scale(1.2);
     filter: invert(31%) sepia(99%) saturate(7365%) hue-rotate(358deg) brightness(107%) contrast(89%);
     transition: 200ms;
 }
