@@ -13,33 +13,46 @@ const routes = [
     },
     {
         path: '/about',
+        name: 'about',
         component: About
     },
     {
         path: '/catalog',
+        name: 'mainCatalog',
         component: MainCatalog
     },
     {
         path: '/catalog/:categoryName',
+        name: 'catalog',
         component: Catalog,
         props: true
     },
     {
         path: '/catalog/:categoryName/:productName',
+        name: 'product',
         component: Product,
         props: true
     },
     {
         path: '/profile',
-        component: Profile
+        name: 'profile',
+        component: Profile,
+        meta: {
+            requredLogin: true
+        }
     },
     {
         path: '/reglog',
-        component: RegLog
+        name: 'reglog',
+        component: RegLog,
     },
     {
         path: '/basket',
-        component: Basket
+        name: 'basket',
+        component: Basket,
+        meta: {
+            requredLogin: true
+        }
     }
 ]
 
@@ -48,20 +61,17 @@ const router = VueRouter.createRouter({
     routes
 })
 
-/*router.beforeEach(async (to, from, next) => {
-    var t = {path: '/reglog'}
-    if (!localStorage.getItem('UUID') && to.name != 'reglog') {
-        next(t)
+router.beforeEach((to, from, next) => {
+    if(to.meta.requredLogin && !localStorage.getItem('UUID')){
+        next({
+            name: "reglog"
+        })
     }
-    else {
-        t = to
-        next(t)
-    }
-})*/
+    else next()
+})
 
 router.beforeEach(async (to, from) => {
-    console.log(to.fullPath.split('/')[1]);
-    document.getElementById('pageCSSLink').href = `/css/${to.fullPath.split('/')[1]}.css`
+    document.getElementById('pageCSSLink').href = `/css/${to.name}.css`
 })
 
 export default router

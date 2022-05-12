@@ -29,8 +29,7 @@
     font-size: var(--big-text-1);
 
     color: var(--my-yellow);
-    text-shadow: 0px 0px calc(1.5*var(--medium-text-2)) var(--my-yellow),
-                 0px 0px calc(2.5*var(--medium-text-2)) var(--my-yellow);
+    text-shadow: 0px 0px calc(1.5*var(--medium-text-2)) var(--my-yellow);
 }
 
 #profile-inputs {
@@ -48,7 +47,7 @@
 
     font-size: var(--mini-text);
 
-    border: calc(0.15 * var(--medium-text-2)) dashed var(--my-blue-1);
+    border: calc(0.15*var(--medium-text-2)) dashed var(--my-blue-1);
     outline: none;
     box-sizing: border-box;
 
