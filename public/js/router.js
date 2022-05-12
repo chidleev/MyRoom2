@@ -60,6 +60,7 @@ const router = VueRouter.createRouter({
 })*/
 
 router.beforeEach(async (to, from) => {
+    console.log(to.fullPath.split('/')[1]);
     document.getElementById('pageCSSLink').href = `/css/${to.fullPath.split('/')[1]}.css`
 })
 
