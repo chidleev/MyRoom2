@@ -1,4 +1,5 @@
 import router from '/js/router.js'
+import getPage from '/js/getPageReq.js'
 import onMountFunction from '/js/onMountFunction.js'
 
 const settings = {
@@ -25,6 +26,11 @@ const settings = {
 
 
 const app = Vue.createApp(settings)
+
 app.use(router)
+
+app.component('searchLine', {
+    template: getPage('components').searchLine
+})
 
 app.mount('div#app')

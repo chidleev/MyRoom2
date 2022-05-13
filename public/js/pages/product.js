@@ -1,5 +1,4 @@
-import getPages from '/js/getPageReq.js'
+import getPage from '/js/getPageReq.js'
 export default {
-    props: ['categoryName', 'productName'],
-    template: getPages('default').product
+    template: getPage('default').product
 }

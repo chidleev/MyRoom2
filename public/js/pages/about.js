@@ -1,4 +1,4 @@
-import getPages from '/js/getPageReq.js'
+import getPage from '/js/getPageReq.js'
 export default { 
-    template: getPages('default').about
+    template: getPage('default').about
 }

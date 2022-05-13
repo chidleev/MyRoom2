@@ -1,11 +1,4 @@
-import getPages from '/js/getPageReq.js'
-
+import getPage from '/js/getPageReq.js'
 export default {
-    props: ['categoryName'],
-    template: getPages('default').catalog,
-    components: {
-        searchLine: {
-            template: getPages('components').searchLine
-        }
-    }
+    template: getPage('default').catalog
 }

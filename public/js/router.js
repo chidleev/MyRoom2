@@ -19,7 +19,7 @@ const routes = [
     {
         path: '/catalog',
         component: {
-            template: '<router-view></router-view>'
+            template: '<searchLine style="width: 90%"/><router-view></router-view>'
         },
         children: [
             {
