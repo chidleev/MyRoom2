@@ -1,7 +1,7 @@
 const dbConfig = require("../dbConfig.js");
 const { Sequelize, Op, DataTypes } = require("sequelize");
 
-const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
+const client = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
   host: dbConfig.HOST,
   dialect: dbConfig.DIALECT,
   dialectOptions: dbConfig.dialectOptions,
@@ -12,10 +12,11 @@ const db = {};
 db.Sequelize = Sequelize;
 db.Op = Op;
 db.DataTypes = DataTypes;
-db.sequelize = sequelize;
+db.client = client;
 
-db.Categories = require("./modelCategory.js")(sequelize, Sequelize, DataTypes);
-db.Products = require("./modelProduct.js")(sequelize, Sequelize, DataTypes);
+db.Categories = require("./modelCategory.js")(client, Sequelize, DataTypes);
+db.Products = require("./modelProduct.js")(client, Sequelize, DataTypes);
+db.User = require("./modelUser.js")(client, Sequelize, DataTypes);
 
 db.Categories.hasMany(db.Products, { as: "products" });
 db.Products.belongsTo(db.Categories, {

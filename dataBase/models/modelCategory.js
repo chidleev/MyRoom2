@@ -1,5 +1,5 @@
-module.exports = (sequelize, Sequelize, DataTypes) => {
-    const Category = sequelize.define("Category", {
+module.exports = (client, Sequelize, DataTypes) => {
+    const Category = client.define("Category", {
         uuid: {
             type: DataTypes.UUID,
             defaultValue: Sequelize.UUIDV4,
@@ -19,4 +19,4 @@ module.exports = (sequelize, Sequelize, DataTypes) => {
         }
     });
     return Category;
-  };
+};

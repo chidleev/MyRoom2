@@ -27,7 +27,7 @@ serverApp.use((req, res, next) => {
 serverApp.use('/', express.static(path.join(__dirname, 'public')))
 
 
-db.sequelize.sync(/*{force: true}*/).then(() => {
+db.client.sync(/*{force: true}*/).then(() => {
     console.log("Drop and re-sync db.")
     
     //db.Categories.bulkCreate(categoriesData)
