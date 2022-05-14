@@ -16,7 +16,7 @@ db.client = client;
 
 db.Categories = require("./modelCategory.js")(client, Sequelize, DataTypes);
 db.Products = require("./modelProduct.js")(client, Sequelize, DataTypes);
-db.User = require("./modelUser.js")(client, Sequelize, DataTypes);
+db.Users = require("./modelUser.js")(client, Sequelize, DataTypes);
 
 db.Categories.hasMany(db.Products, { as: "products" });
 db.Products.belongsTo(db.Categories, {

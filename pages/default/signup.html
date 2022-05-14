@@ -1,18 +1,18 @@
-<div id="login-menu">
+<div id="signup-menu">
     <div id="text">
         <span id="profile-logo">MyRoom</span>
         <span id="description" class="dark">интернет-магазин мебели</span>
-        <span id="description">Войти в аккаунт</span>
+        <span id="description">Регистрация</span>
     </div>
 
     <div id="profile-inputs">
         <input type="text" placeholder="Логин">
         <input type="password" placeholder="Пароль">
-        <button>Войти</button>
+        <button>Далее</button>
     </div>
 </div>
 
-<button id="to-signup-btn" @click="$router.push({name: 'signup'})">
-    <span>Зарегестрироваться</span>
-    <img src="/icons/right.svg" alt="Войти">
+<button id="to-login-btn" @click="$router.push({name: 'login'})">
+    <img src="/icons/left.svg" alt="Войти">
+    <span>Вернуться обратно</span>
 </button>

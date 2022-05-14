@@ -5,6 +5,7 @@ import Product from '/js/pages/product.js'
 import Profile from '/js/pages/profile.js'
 import Basket from '/js/pages/basket.js'
 import Login from '/js/pages/login.js'
+import Signup from '/js/pages/signup.js'
 
 const routes = [
     { 
@@ -69,6 +70,11 @@ const routes = [
                 path: 'login',
                 name: 'login',
                 component: Login
+            },
+            {
+                path: 'signup',
+                name: 'signup',
+                component: Signup
             }
         ]
     },

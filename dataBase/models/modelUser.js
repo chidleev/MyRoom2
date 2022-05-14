@@ -28,11 +28,10 @@ module.exports = (client, Sequelize, DataTypes) => {
             allowNull: false
         },
         email: DataTypes.STRING,
+        phone: DataTypes.STRING,
+        token: DataTypes.UUID
     }, {
         instanceMethods: {
-            generateHash(password) {
-                return bcrypt.hash(password, bcrypt.genSaltSync(8));
-            },
             validPassword(password) {
                 return bcrypt.compare(password, this.password);
             }
