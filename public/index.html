@@ -14,10 +14,13 @@
     <link rel="stylesheet" type="text/css" href="/css/right_menu.css">
     <link rel="stylesheet" type="text/css" href="/css/about.css" id="pageCSSLink">
 
-    <script src='/scripts/vue/dist/vue.global.prod.js'></script>
+    <script src='/scripts/vue/dist/vue.global.js'></script>
     <script src='/scripts/vue-router/dist/vue-router.global.js'></script>
     <script src='/scripts/axios/dist/axios.min.js'></script>
+    <script src='/scripts/validator/validator.min.js'></script>
     <script src='/scripts/animejs/lib/anime.min.js'></script>
+    <script src='/scripts/vue-spinner/dist/vue-spinner.min.js'></script>
+    
 </head>
 <body>
     <div id="app">
@@ -80,10 +83,10 @@
 
             <div id="bottom">
                 <router-link 
-                    v-if="isLogin()"
+                    to="#"
                     id="logout_icon"
                     class="icon"
-                    @click="logoutReqest"
+                    @click="logoutReq"
                 >
                     <img src="/icons/logout.svg" alt="Выйти из аккаунта">
                 </router-link>

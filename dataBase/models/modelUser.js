@@ -11,8 +11,7 @@ module.exports = (client, Sequelize, DataTypes) => {
         },
         name: {
             type: DataTypes.STRING,
-            allowNull: false,
-            unique: true
+            allowNull: false
         },
         login: {
             type: DataTypes.STRING,
@@ -33,12 +32,6 @@ module.exports = (client, Sequelize, DataTypes) => {
         },
         phone: DataTypes.STRING,
         token: DataTypes.UUID
-    }, {
-        instanceMethods: {
-            validPassword(password) {
-                return bcrypt.compare(password, this.password);
-            }
-        }
-    });
+    }, {});
     return User;
 };

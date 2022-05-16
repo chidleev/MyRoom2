@@ -6,8 +6,7 @@ exports.create = (user) => {
     return User.create({
         name: user.name,
         login: user.login,
-        password: bcrypt.hash(user.password, bcrypt.genSaltSync(8)),
-        role: user.role,
+        password: bcrypt.hashSync(user.password, bcrypt.genSaltSync(8)),
         email: user.email,
         phone: user.phone,
         token: null
@@ -34,6 +33,18 @@ exports.findByUUID = (userUUID) => {
 exports.findByToken = (token) => {
     return User.findOne({
         where: { token: token }
+    })
+        .then((user) => {
+            return user;
+        })
+        .catch((err) => {
+            onsole.log(">> Error while finding user: ", err);
+        });
+};
+
+exports.findByLogin = (login) => {
+    return User.findOne({
+        where: { login: login }
     })
         .then((user) => {
             return user;

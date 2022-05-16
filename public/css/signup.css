@@ -8,6 +8,7 @@
     width: 40%;
     min-width: 400px;
     height: calc(1.5*var(--medium-text-1));
+    min-height: 46px;
 
     display: flex;
     justify-content: center;
@@ -64,7 +65,7 @@
 }
 
 #text {
-    margin-bottom: var(--medium-text-2);
+    margin-bottom: var(--mini-text);
 
     flex-direction: column;
     align-items: center;
@@ -72,8 +73,9 @@
 
 #profile-logo {
     margin-bottom: calc(-0.5 * var(--mini-text));
+
     font-weight: 900;
-    font-size: var(--big-text-1);
+    font-size: calc(2.2 * var(--medium-text-1));
 
     color: var(--my-yellow);
     text-shadow: 0px 0px calc(1.5*var(--medium-text-2)) var(--my-yellow);
@@ -88,9 +90,11 @@
 }
 
 #description.dark {
-    font-weight: 400;
     margin-bottom: var(--mini-text);
+
+    font-weight: 400;
     font-size: var(--medium-text-2);
+
     color: var(--dark-1);
 }
 
@@ -132,15 +136,12 @@
     color: var(--my-blue-1);
 }
 
-#profile-inputs input[wrong="true"]::placeholder {
-    color: var(--my-yellow)
+#profile-inputs input[phone]::placeholder {
+    font-size: calc(0.8 * var(--mini-text));
 }
 
-#profile-inputs input::before {
-    content: 'qq';
-    width: 100px;
-    height: 100px;
-    background-color: brown;
+#profile-inputs input[wrong="true"]::placeholder {
+    color: var(--my-yellow)
 }
 
 #profile-inputs button {
@@ -168,5 +169,11 @@
 #profile-inputs button:active {
     background-color: var(--my-orange);
     box-shadow: 0px 0px var(--medium-text-1) var(--my-orange);
+    transition: var(--speed-2);
+}
+
+#profile-inputs button:disabled {
+    background-color: var(--dark-1);
+    box-shadow: none;
     transition: var(--speed-2);
 }

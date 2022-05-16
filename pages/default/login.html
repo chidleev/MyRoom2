@@ -6,9 +6,9 @@
     </div>
 
     <div id="profile-inputs">
-        <input type="text" placeholder="Логин">
-        <input type="password" placeholder="Пароль">
-        <button>Войти</button>
+        <input type="text" placeholder="Логин" v-model="user.login" :wrong="wrongInput.login">
+        <input type="password" placeholder="Пароль" v-model="user.password" :wrong="wrongInput.password">
+        <button @click="loginReq" :disabled="haveErrors">Войти</button>
     </div>
 </div>
 

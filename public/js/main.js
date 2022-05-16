@@ -11,24 +11,17 @@ const settings = {
     mounted: onMountFunction,
     computed: {},
     methods: {
-        logoutReqest() {
-
-        },
-        isLogin() {
-            if (localStorage.getItem('UUID')) {
-                return true
-            }
-            return false
+        logoutReq() {
+            document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
         }
     }
 }
-
-
 
 const app = Vue.createApp(settings)
 
 app.use(router)
 
+app.component('BeatLoader', VueSpinner.BeatLoader)
 app.component('searchLine', {
     template: getPage('components').searchLine
 })

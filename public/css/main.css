@@ -52,8 +52,12 @@ div {
     display: flex;
 }
 
+button {
+    cursor: pointer;
+}
+
 body, #app {
-    width: 100vw;
+    width: 100%;
     min-width: 850px;
     height: 100vh;
     min-height: 480px;

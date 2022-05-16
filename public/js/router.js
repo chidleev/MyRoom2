@@ -88,13 +88,19 @@ const routes = [
     }
 ]
 
+function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+}
+
 const router = VueRouter.createRouter({
     history: VueRouter.createWebHistory(),
     routes
 })
 
 router.beforeEach((to, from, next) => {
-    if(to.meta.requredLogin && !localStorage.getItem('UUID')){
+    if(to.meta.requredLogin && !getCookie('token')){
         next({
             name: "login"
         })
