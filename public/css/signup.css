@@ -6,6 +6,7 @@
     margin-top: var(--medium-text-2);
     
     width: 40%;
+    min-width: 400px;
     height: calc(1.5*var(--medium-text-1));
 
     display: flex;
@@ -120,8 +121,18 @@
     z-index: 1;
 }
 
+#profile-inputs input[wrong] {
+    border: calc(0.15*var(--medium-text-2)) dashed var(--my-orange);
+    background-color: var(--light-2);
+    color: var(--my-orange)
+}
+
 #profile-inputs input::placeholder {
     color: var(--my-blue-1);
+}
+
+#profile-inputs input[wrong]::placeholder {
+    color: var(--my-yellow)
 }
 
 #profile-inputs button {

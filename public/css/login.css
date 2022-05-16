@@ -6,6 +6,7 @@
     margin-top: var(--medium-text-2);
     
     width: 40%;
+    min-width: 400px;
     height: calc(1.5*var(--medium-text-1));
 
     display: flex;

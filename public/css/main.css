@@ -44,6 +44,7 @@
 }
 
 html {
+    height: 100vh;
     font-size: calc((100vw - 850px)/(1920 - 850) * (160 - 80) + 80px);
 }
 
@@ -62,6 +63,8 @@ body, #app {
 }
 
 #main-content {
+    padding: var(--mini-text) 0;
+    
     width: 100%;
 
     flex-direction: column;
@@ -74,10 +77,25 @@ body, #app {
     background-color: var(--dark-1);
     background-image: repeating-linear-gradient(90deg, transparent, transparent var(--medium-text-2), var(--dark-2) var(--medium-text-2), var(--dark-2) calc(2 * var(--medium-text-2)));
     box-shadow: inset 0px 0px var(--giant-text) var(--dark-3);
+
+    overflow-y: auto;
+    scrollbar-color: var(--dark-2) var(--my-blue-1);
+}
+
+#main-content::-webkit-scrollbar {
+    width: calc(0.5 * var(--medium-text-2));
+}
+
+#main-content::-webkit-scrollbar-track {
+    background-color: var(--dark-2);
+}
+
+#main-content::-webkit-scrollbar-thumb {
+    background-color: var(--dark-1);
 }
 
 #search {
-    margin: var(--mini-text) 0;
+    margin-bottom: var(--mini-text);
     width: 100%;
 
     box-sizing: border-box;

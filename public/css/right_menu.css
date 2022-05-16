@@ -15,17 +15,11 @@
 }
 
 #top {
-    position: sticky;
-    top: 0px;
-
     flex-direction: column;
     align-items: center;
 }
 
 #bottom {
-    position: sticky;
-    bottom: 0px;
-
     flex-direction: column;
     align-items: center;
 }

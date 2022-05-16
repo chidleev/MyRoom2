@@ -6,13 +6,24 @@
     </div>
 
     <div id="profile-inputs">
-        <input type="text" placeholder="Логин">
-        <input type="password" placeholder="Пароль">
-        <button>Далее</button>
+        <template v-if="step == 0">
+            <input type="text" placeholder="Логин" v-model="user.login">
+            <input type="password" placeholder="Пароль" v-model="user.passwordOne">
+            <button @click="signupReqStep1">Далее</button>
+        </template>
+        
+        <template v-if="step == 1">
+            <input type="password" placeholder="Подтвердите пароль" v-model="user.passwordTwo">
+            <input type="text" placeholder="Ваше имя" v-model="user.name">
+            <input type="email" placeholder="Почта email" v-model="user.name">
+            <button @click="signupReqStep2">Далее</button>
+            <button @click="step -= 1">Назад</button>
+        </template>
+        
     </div>
 </div>
 
 <button id="to-login-btn" @click="$router.push({name: 'login'})">
     <img src="/icons/left.svg" alt="Войти">
-    <span>Вернуться обратно</span>
+    <span>Войти в аккаунт</span>
 </button>
