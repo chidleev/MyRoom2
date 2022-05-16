@@ -103,6 +103,7 @@
 
 #profile-inputs input {
     margin: calc(0.2*var(--medium-text-2)) 0;
+    padding: 0 var(--mini-text);
 
     width: 60%;
     height: calc(1.75*var(--medium-text-2));
@@ -121,7 +122,7 @@
     z-index: 1;
 }
 
-#profile-inputs input[wrong] {
+#profile-inputs input[wrong="true"] {
     border: calc(0.15*var(--medium-text-2)) dashed var(--my-orange);
     background-color: var(--light-2);
     color: var(--my-orange)
@@ -131,8 +132,15 @@
     color: var(--my-blue-1);
 }
 
-#profile-inputs input[wrong]::placeholder {
+#profile-inputs input[wrong="true"]::placeholder {
     color: var(--my-yellow)
+}
+
+#profile-inputs input::before {
+    content: 'qq';
+    width: 100px;
+    height: 100px;
+    background-color: brown;
 }
 
 #profile-inputs button {

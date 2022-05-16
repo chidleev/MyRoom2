@@ -9,14 +9,15 @@
         <template v-if="step == 0">
             <input type="text" placeholder="Логин" v-model="user.login">
             <input type="password" placeholder="Пароль" v-model="user.passwordOne">
-            <button @click="signupReqStep1">Далее</button>
+            <input type="password" placeholder="Подтвердите пароль" v-model="user.passwordTwo"  v-bind:wrong="wrongInput.password">
+            <button @click="signupStep1">Далее</button>
         </template>
         
         <template v-if="step == 1">
-            <input type="password" placeholder="Подтвердите пароль" v-model="user.passwordTwo">
             <input type="text" placeholder="Ваше имя" v-model="user.name">
-            <input type="email" placeholder="Почта email" v-model="user.name">
-            <button @click="signupReqStep2">Далее</button>
+            <input type="email" placeholder="Почта email" v-model="user.email">
+            <input type="email" placeholder="Телефон (необязательно)" v-model="user.phone">
+            <button @click="signupReq">Зарегистрироваться</button>
             <button @click="step -= 1">Назад</button>
         </template>
         
@@ -27,3 +28,5 @@
     <img src="/icons/left.svg" alt="Войти">
     <span>Войти в аккаунт</span>
 </button>
+
+<img src="/gifs/loading.gif" alt="">

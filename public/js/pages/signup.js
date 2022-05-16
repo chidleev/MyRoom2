@@ -4,15 +4,35 @@ export default {
     data() {
         return {
             step: 0,
-            user: {}
+            user: {},
+            wrongInput: {}
+        }
+    },
+    watch: {
+        'user.passwordOne': function(newValue) {
+            if (Boolean(this.user.passwordTwo) && (newValue != this.user.passwordTwo)) {
+                this.wrongInput.password = true
+            }
+            else {
+                this.wrongInput.password = false
+            }
+        },
+
+        'user.passwordTwo': function(newValue) {
+            if (Boolean(this.user.passwordOne) && (newValue != this.user.passwordOne)) {
+                this.wrongInput.password = true
+            }
+            else {
+                this.wrongInput.password = false
+            }
         }
     },
     methods: {
-        signupReqStep1() {
+        signupStep1() {
             this.step += 1
         },
 
-        signupReqStep2() {
+        signupReq() {
 
         }
     }
