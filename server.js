@@ -1,22 +1,31 @@
-const express = require('express')
-const path = require('path')
+const express = require('express') //подключаем фреймворк Express.js
+const path = require('path') //подключаем встроенную библиотеку Path
 
-const db = require("./dataBase/models")
-const categoriesData = require('./dataBase/originData/categories.json')
-const globalVars = require('./globalVars.json')
+const db = require("./dataBase/models") //подключаем объект базы данных
+const categoriesData = require('./dataBase/originData/categories.json') //подключаем данные о категориях
+const globalVars = require('./globalVars.json') //подключаем файл глобальных переменных
 
+/*подключаем приложение для управления обработки запросов RestAPI*/
 const mainAPI = require('./API/mainAPI')
 
-const serverApp = express()
-serverApp.locals.PORT = process.env.PORT || 3000
+const serverApp = express() //создаем главное приложение сервера
+serverApp.locals.PORT = process.env.PORT || 3000 //определяем порт, на котором будет работать сервер
 
-serverApp.use(express.json())
+/*указываем главному приложению сервера использовать парсер JSON для всех входящих запросов*/
+serverApp.use(express.json()) 
+
+/*указываем главному приложению сервера использовать парсер url для всех входящих POST запросов*/
 serverApp.use(express.urlencoded({ extended: true }))
 
+/*указываем главному приложению сервера обрабатывать входящие запросы RestAPI с помощью приложения обработки запросов RestAPI*/
 serverApp.use('/api', mainAPI)
 
+/*указываем главному приложению сервера искать и отправлять файлы по запросу типа 
+'/scripts/directory/files.type' из папки 'node_modules', находящейся в папке проекта*/
 serverApp.use('/scripts', express.static(path.join(__dirname, 'node_modules')))
 
+/*указываем главному приложению сервера переписывать все остальные запросы не файлов
+в запросы типа '/', что необходимо для реализации работы SPA*/
 serverApp.use((req, res, next) => {
     if (req.url.indexOf('.') == -1) {
         req.url = '/'
@@ -24,16 +33,19 @@ serverApp.use((req, res, next) => {
     next()
 })
 
+/*указываем главному приложению сервера искать и отправлять файлы по запросу типа 
+'/directory/files.type' из папки 'public', находящейся в папке проекта*/
 serverApp.use('/', express.static(path.join(__dirname, 'public')))
 
-
+/*синхронизируем объект базы данных с реальной удаленной базой данных в интернете*/
 db.client.sync(/*{force: true}*/).then(() => {
-    console.log("Drop and re-sync db.")
+    console.log("Drop and re-sync db.") //сообщаем себе, что синхронизация прошла успешно
     
     //db.Categories.bulkCreate(categoriesData)
-    globalVars.categories = categoriesData
+    globalVars.categories = categoriesData //кешируем информацию о категориях
     
+    /*указываем главному приложению сервера начинать работать на определенном нами ранее порту*/
     serverApp.listen(serverApp.locals.PORT, () => {
-        console.log(`Server running on port ${serverApp.locals.PORT}`)
+        console.log(`Server running on port ${serverApp.locals.PORT}`) //сообщаем себе, что сервер успешно запущен
     })
 })
