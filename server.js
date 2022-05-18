@@ -1,8 +1,9 @@
 const express = require('express') //подключаем фреймворк Express.js
 const path = require('path') //подключаем встроенную библиотеку Path
+const cookieParser = require('cookie-parser')
 
 const db = require("./dataBase/models") //подключаем объект базы данных
-const categoriesData = require('./dataBase/originData/categories.json') //подключаем данные о категориях
+const originData = require('./dataBase/originData') //подключаем начальные данные
 const globalVars = require('./globalVars.json') //подключаем файл глобальных переменных
 
 /*подключаем приложение для управления обработки запросов RestAPI*/
@@ -16,6 +17,9 @@ serverApp.use(express.json())
 
 /*указываем главному приложению сервера использовать парсер url для всех входящих POST запросов*/
 serverApp.use(express.urlencoded({ extended: true }))
+
+/*указываем главному приложению сервера использовать cookie-парсер для всех входящих запросов*/
+serverApp.use(cookieParser('My secret "MyRoom-shop" key :D'))
 
 /*указываем главному приложению сервера обрабатывать входящие запросы RestAPI с помощью приложения обработки запросов RestAPI*/
 serverApp.use('/api', mainAPI)
@@ -41,8 +45,8 @@ serverApp.use('/', express.static(path.join(__dirname, 'public')))
 db.client.sync(/*{force: true}*/).then(() => {
     console.log("Drop and re-sync db.") //сообщаем себе, что синхронизация прошла успешно
     
-    //db.Categories.bulkCreate(categoriesData)
-    globalVars.categories = categoriesData //кешируем информацию о категориях
+    //db.Categories.bulkCreate(originData.categories)
+    //db.Users.bulkCreate(originData.users)
     
     /*указываем главному приложению сервера начинать работать на определенном нами ранее порту*/
     serverApp.listen(serverApp.locals.PORT, () => {

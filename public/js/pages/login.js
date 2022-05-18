@@ -29,7 +29,7 @@ export default {
     computed: {
         haveErrors() {
             const haveWrongInputs = this.wrongInput.login || this.wrongInput.password
-            const haveEmptyData = !this.user.login || !this.user.password
+            const haveEmptyData = !Boolean(this.user.login) || !Boolean(this.user.password)
             return haveWrongInputs || haveEmptyData
         }
     },
@@ -44,27 +44,14 @@ export default {
                 }
             })
             .then(response => {
-                if (response.data.successful) {
-                    alert(response.data.comment)
-                    document.cookie = `token=${response.data.token}; path=/`
-                    this.$router.push({name: 'profile'})
-                }
-                else {
-                    switch (response.data.error.type) {
-                        case 'login':
-                            alert(response.data.error.comment)
-                            this.wrongInput.login = true
-                            break;
-
-                        case 'password':
-                            alert(response.data.error.comment)
-                            this.wrongInput.password = true
-                            break;
-                    }
-                }
+                alert("Вы успешно вошли в свой аккаунт!")
+                this.$router.push({name: 'profile'})
             })
             .catch(error => {
-                console.error(error.response);
+                error.response.data.errors.forEach(error => {
+                    this.wrongInput[error.type] = true
+                    alert(error.comment)
+                })
             })
         }
     }

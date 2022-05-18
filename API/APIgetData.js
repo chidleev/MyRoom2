@@ -1,13 +1,14 @@
 /* Нужен для получения данных из БД */
-const globalVars = require('../globalVars.json')
+const db = require('../dataBase/models')
+const originCategories = require('../dataBase/originData').categories
 
-const controller = require("../dataBase/controllers")
+const cashData = {
+    categories: originCategories
+}
 
 const express = require('express')
 
 const getDataAPI = express()
-getDataAPI.use(express.json())
-getDataAPI.use(express.urlencoded({ extended: true }))
 
 getDataAPI.get('/', (req, res) => {
     res.send("GetData api work")
@@ -15,12 +16,12 @@ getDataAPI.get('/', (req, res) => {
 
 getDataAPI.get('/categories', (req, res) => {
     if (req.query.update == 1) {
-        controller.Category.findAll().then(result => {
+        db.Categories.findAll().then(result => {
             console.log("Categories updated");
-            globalVars.categories = result
+            cashData.categories = result
         })
     }
-    res.json(globalVars.categories)
+    res.json(cashData.categories)
 })
 
 module.exports = getDataAPI

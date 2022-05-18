@@ -136,10 +136,6 @@
     color: var(--my-blue-1);
 }
 
-#profile-inputs input[phone]::placeholder {
-    font-size: calc(0.8 * var(--mini-text));
-}
-
 #profile-inputs input[wrong="true"]::placeholder {
     color: var(--my-yellow)
 }

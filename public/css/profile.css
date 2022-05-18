@@ -1,0 +1,74 @@
+#profile-content {
+    padding: var(--mini-text) 0;
+    width: 90%;
+
+    flex-direction: column;
+    justify-content: stretch;
+    align-items: center;
+}
+
+.row {
+    width: 100%;
+
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+#header #photo {
+    width: calc(7.5 * var(--medium-text-1));
+    height: calc(7.5 * var(--medium-text-1));
+
+    justify-content: center;
+    align-items: center;
+    flex-grow: 0;
+
+    border: calc(0.2 * var(--medium-text-2)) dashed var(--my-blue-1);
+    box-shadow: 0px 0px var(--giant-text) var(--dark-3);
+
+    background-color: var(--dark-2);
+}
+
+#header #photo img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+#header #photo img[src='/icons/profile.svg'] {
+    width: calc(5 * var(--medium-text-1));
+    height: calc(5 * var(--medium-text-1));
+    filter: invert(15%) sepia(15%) saturate(532%) hue-rotate(169deg) brightness(91%) contrast(80%);
+}
+
+#header #text {
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    flex-grow: 2;
+}
+
+#header #text #logo {
+    margin: var(--medium-text-1) 0;
+
+    font-weight: 900;
+    font-size: calc(4 * var(--medium-text-2));
+
+    color: var(--my-yellow);
+    text-shadow: 0px 0px var(--giant-text) var(--my-yellow);
+
+    z-index: 1;
+}
+
+#header #text #name {
+    margin: 0 var(--medium-text-1);
+
+    flex: 1, 2, 200px;
+    text-align: center;
+    
+    font-weight: 400;
+    font-size: calc(0.75 * var(--medium-text-1));
+
+    color: var(--light-2);
+}

@@ -40,6 +40,15 @@ export default {
             }
         },
 
+        'user.name': function(newValue) {
+            if (validator.isEmpty(newValue)) {
+                this.wrongInput.name = true
+            }
+            else {
+                this.wrongInput.name = false
+            }
+        },
+
         'user.email': function(newValue) {
             if (!validator.isEmpty(newValue) && !validator.isEmail(newValue)) {
                 this.wrongInput.email = true
@@ -74,24 +83,20 @@ export default {
     methods: {
         signupStep1() {
             axios({
-                url: '/api/user/check-login',
+                url: '/api/user/checkLogin',
                 method: 'post',
                 data: {
                     login: this.user.login
                 }
             })
             .then(response => {
-                if (response.data.allowLogin) {
-                    this.wrongInput.login = false
-                    this.step += 1
-                }
-                else {
-                    alert(response.data.comment)
-                    this.wrongInput.login = true
-                }
+                this.step += 1
             })
             .catch(error => {
-                console.error(error.response);
+                error.response.data.errors.forEach(error => {
+                    alert(error.comment)
+                    this.wrongInput[error.type] = true
+                })
             })
         },
 
@@ -101,23 +106,21 @@ export default {
                 method: 'post',
                 data: {
                     login: this.user.login,
-                    password: this.user.passwordTwo,
+                    password: this.user.passwordOne,
                     name: this.user.name,
                     email: this.user.email,
                     phone: this.user.phone,
                 }
             })
             .then(response => {
-                if (response.data.successful) {
-                    alert(response.data.comment)
-                    this.$router.push({name: 'login'})
-                }
-                else {
-                    alert(response.data.errors)
-                }
+                alert("Вы успешно зарегестрировались!")
+                this.$router.push({name: 'login'})
             })
             .catch(error => {
-                console.error(error.response);
+                error.response.data.errors.forEach(error => {
+                    alert(error.comment)
+                    this.wrongInput[error.type] = true
+                })
             })
         }
     }

@@ -9,149 +9,226 @@ const validator = require('validator')
 const bcrypt = require('bcrypt')
 const { v4: uuidv4 } = require('uuid');
 
-const controller = require("../dataBase/controllers")
 const db = require("../dataBase/models")
 
-const express = require('express')
+const checkIsLogin = require('./helpFunctions').checkIsLogin
 
+const express = require('express');
 const userAPI = express()
 
 userAPI.get('/', (req, res) => {
     res.send("User api work")
 })
 
-userAPI.post('/check-login', (req, res) => {
-    if (!validator.isEmpty(req.body.login)) {
-        controller.User.findByLogin(req.body.login).then(user => {
-            if (user == null) {
-                res.json({
-                    allowLogin: true
-                })
-            }
-            else {
-                res.json({
-                    allowLogin: false,
-                    comment: "Пользователь с таким логином уже существует"
-                })
-            }
+userAPI.post('/checkLogin', (req, res) => {
+    const errors = []
+
+    if (!Boolean(req.body.login)) {
+        errors.push({
+            type: 'login',
+            comment: 'Вы не ввели логин'
         })
     }
-    else {
-        res.json({
-            allowLogin: false,
-            comment: "Вы не ввели логин"
+
+    if (errors.length > 0) {
+        res.status(422).json({
+            errors: errors
         })
+        return
     }
+
+    db.Users.findOne({
+        where: { login: req.body.login }
+    })
+    .then(user => {
+        if (user == null) {
+            res.sendStatus(200)
+        }
+        else {
+            errors.push({
+                type: 'login',
+                comment: 'Пользователь с таким логином уже существует'
+            })
+            res.status(422).json({
+                errors: errors
+            })
+        }
+    })
 })
 
 userAPI.post('/signup', (req, res) => {
     const errors = []
 
     if (!Boolean(req.body.login)) {
-        errors.push("Вы не ввели логин")
-    }
-    if (!Boolean(req.body.password)) {
-        errors.push("Вы не ввели пароль")
-    }
-    if (!Boolean(req.body.name)) {
-        errors.push("Вы не ввели свое имя")
-    }
-    if (!Boolean(req.body.email)) {
-        errors.push("Вы не ввели свою электронную почту")
-    }
-    else if (!validator.isEmail(req.body.email)) {
-        errors.push("Вы не ввели некорректную электронную почту")
-    }
-    if (Boolean(req.body.phone)) {
-        if (!validator.isMobilePhone(req.body.phone)) {
-            errors.push("Вы ввели некорректный номер телефона")
-        }
-    }
-    
-    if (errors.length > 0) {
-        res.json({
-            successful: false,
-            errors: errors
+        errors.push({
+            type: 'login',
+            comment: 'Вы не ввели логин'
         })
     }
 
-    controller.User.create({
+    if (!Boolean(req.body.password)) {
+        errors.push({
+            type: 'password',
+            comment: 'Вы не ввели пароль'
+        })
+    }
+
+    if (!Boolean(req.body.name)) {
+        errors.push({
+            type: 'name',
+            comment: 'Вы не ввели свое имя'
+        })
+    }
+
+    if (!Boolean(req.body.email)) {
+        errors.push({
+            type: 'email',
+            comment: 'Вы не ввели свою электронную почту'
+        })
+    }
+    else if (!validator.isEmail(req.body.email)) {
+        errors.push({
+            type: 'email',
+            comment: 'Вы ввели некорректную электронную почту'
+        })
+    }
+
+    if (Boolean(req.body.phone) && !validator.isMobilePhone(req.body.phone)) {
+        errors.push({
+            type: 'phone',
+            comment: 'Вы ввели некорректный номер телефона'
+        })
+    }
+
+    if (errors.length > 0) {
+        res.status(422).json({
+            errors: errors
+        })
+        return
+    }
+
+    db.Users.create({
         login: req.body.login,
         password: req.body.password,
         name: req.body.name,
         email: req.body.email,
         phone: req.body.phone,
-    }).then(user => {
-        res.json({
-            successful: true,
-            comment: "Вы успешно зарегестрировались"
+    })
+    .then(user => {
+        res.status(201)
+    })
+    .catch(error => {
+        errors.push({
+            type: 'login',
+            comment: 'Ошибка базы данных: мы не смогли Вас зарегестрировать'
         })
-    }).catch(error => {
-        res.json({
-            successful: false,
-            errors: error
+        res.status(400).json({
+            errors: errors
         })
     })
 })
 
 userAPI.post('/login', (req, res) => {
-    var haveError = false
-    const error = {}
+    const errors = []
 
     if (!Boolean(req.body.login)) {
-        haveError = true
-        error.type = 'login'
-        error.comment = 'Вы не ввели логин'
+        errors.push({
+            type: 'login',
+            comment: 'Вы не ввели логин'
+        })
     }
     if (!Boolean(req.body.password)) {
-        haveError = true
-        error.type = 'password'
-        error.comment = 'Вы не ввели пароль'
-    }
-
-    if (haveError) {
-        res.json({
-            successful: false,
-            error: error
+        errors.push({
+            type: 'password',
+            comment: 'Вы не ввели пароль'
         })
     }
 
-    controller.User.findByLogin(req.body.login).then(user => {
+    if (errors.length > 0) {
+        res.status(422).json({
+            errors: errors
+        })
+        return
+    }
+
+    db.Users.findOne({
+        where: { login: req.body.login }
+    })
+    .then(user => {
         if (user == null) {
-            error.type = 'login'
-            error.comment = 'Пользователя с таким логином не найдено'
-            res.json({
-                successful: false,
-                error: error
+            errors.push({
+                type: 'login',
+                comment: 'Пользователя с таким логином не найдено'
+            })
+            res.status(404).json({
+                errors: errors
             })
         }
         else {
             bcrypt.compare(req.body.password, user.password).then(success => {
                 if (success) {
-                    const token = uuidv4()
-                    db.Users.update({ token: token }, {
-                        where: { login: req.body.login }
-                    }).then(user => {
-                        res.json({
-                            successful: true,
-                            comment: 'Вы вошли в свой аккаунт',
-                            token: token
+                    if (user.token) {
+                        res.cookie('token', user.token, { 
+                            signed: true,
+                            maxAge: 604800000
+                        }).sendStatus(200)
+                    }
+                    else {
+                        const token = uuidv4()
+                        db.Users.update({ token: token }, {
+                            where: { login: req.body.login }
                         })
-                    }).catch(error => {
-                        console.log(error)
-                        res.json({
-                            successful: false
+                        .then(user => {
+                            res.cookie('token', token, { 
+                                signed: true,
+                                maxAge: 604800000
+                            }).sendStatus(200)
                         })
-                    })
+                        .catch(error => {
+                            errors.push({
+                                type: 'login',
+                                comment: 'Ошибка базы данных: мы не смогли Вас аутентифицировать'
+                            })
+                            res.status(401).json({
+                                errors: errors
+                            })
+                        })
+                    }
                 }
                 else {
-                    error.type = 'password'
-                    error.comment = 'Неверный пароль'
-                    res.json({
-                        successful: false,
-                        error: error
+                    errors.push({
+                        type: 'password',
+                        comment: 'Неверный пароль'
+                    })
+                    res.status(401).json({
+                        errors: errors
                     })
                 }
+            })
+        }
+    })
+})
+
+userAPI.use(checkIsLogin)
+
+userAPI.get('/info', (req, res) => {
+    db.Users.findOne({
+        where: { token: req.signedCookies.token }
+    })
+    .then(user => {
+        if (user) {
+            res.status(200).json({
+                name: user.name,
+                email: user.email,
+                phone: user.phone
+            })
+        }
+        else {
+            res.status(404).clearCookie('token').json({
+                errors: [{
+                    type: 'authentification',
+                    comment: 'В нашей базе данных Вы числитесь как неаутентифицированный пользователь'
+                }]
             })
         }
     })

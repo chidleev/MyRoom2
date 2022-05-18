@@ -20,10 +20,13 @@ module.exports = (client, Sequelize, DataTypes) => {
         },
         password: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
+            set(value) {
+                this.setDataValue('password', bcrypt.hashSync(value, bcrypt.genSaltSync(8)));
+            }
         },
-        role: {
-            type: DataTypes.STRING,
+        roleUUID: {
+            type: DataTypes.UUID,
             defaultValue: "00000000-0000-0000-0000-000000000000"
         },
         email: {
