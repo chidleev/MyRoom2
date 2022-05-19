@@ -4,7 +4,6 @@ const cookieParser = require('cookie-parser')
 
 const db = require("./dataBase/models") //подключаем объект базы данных
 const originData = require('./dataBase/originData') //подключаем начальные данные
-const globalVars = require('./globalVars.json') //подключаем файл глобальных переменных
 
 /*подключаем приложение для управления обработки запросов RestAPI*/
 const mainAPI = require('./API/mainAPI')
@@ -43,11 +42,43 @@ serverApp.use('/', express.static(path.join(__dirname, 'public')))
 
 /*синхронизируем объект базы данных с реальной удаленной базой данных в интернете*/
 db.client.sync(/*{force: true}*/).then(() => {
-    console.log("Drop and re-sync db.") //сообщаем себе, что синхронизация прошла успешно
+    console.log("---> Sync DataBase") //сообщаем себе, что синхронизация прошла успешно
     
-    //db.Categories.bulkCreate(originData.categories)
-    //db.Users.bulkCreate(originData.users)
-    
+    /*db.Users.bulkCreate(originData.users)
+
+    const categories = []
+    db.Categories.bulkCreate(originData.categories)
+    .then(result => {
+        result.forEach(category => {
+            categories.push({
+                uuid: category.dataValues.uuid,
+                name: category.dataValues.name
+            })
+        });
+
+        originData.products.forEach(originProduct => {
+            db.Products.create(originProduct)
+            .then(product => {
+                const categoryUUID = categories.find(category => category.name == originProduct.categoryName).uuid
+                product.setCategory(categoryUUID)
+                .then(category => {
+                    console.log("---> Продукт с категорией создан");
+                })
+                .catch(err => {
+                    console.error(err);
+                })
+            })
+            .catch(err => {
+                console.error(err);
+            })
+        })
+    })
+    .catch(err => {
+        console.error(err);
+    })*/
+
+   
+
     /*указываем главному приложению сервера начинать работать на определенном нами ранее порту*/
     serverApp.listen(serverApp.locals.PORT, () => {
         console.log(`Server running on port ${serverApp.locals.PORT}`) //сообщаем себе, что сервер успешно запущен

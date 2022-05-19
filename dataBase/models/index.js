@@ -4,10 +4,10 @@ const { Sequelize, Op, DataTypes } = require("sequelize"); //подключае�
 /*Создаем объект, через который будем взаимодествовать с БД
 Передаем реквизиты БД и конфигурационные данные для подключения*/
 const client = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
-  host: dbConfig.HOST,
-  dialect: dbConfig.DIALECT,
-  dialectOptions: dbConfig.dialectOptions,
-  pool: dbConfig.pool,
+    host: dbConfig.HOST,
+    dialect: dbConfig.DIALECT,
+    dialectOptions: dbConfig.dialectOptions,
+    pool: dbConfig.pool,
 });
 
 const db = {}; //Создаем объект БД
@@ -18,15 +18,12 @@ db.DataTypes = DataTypes;
 db.client = client;
 
 /*Объявляем и сохраняем объекте БД наши таблицы*/
+db.Users = require("./modelUser.js")(client, Sequelize, DataTypes);
 db.Categories = require("./modelCategory.js")(client, Sequelize, DataTypes);
 db.Products = require("./modelProduct.js")(client, Sequelize, DataTypes);
-db.Users = require("./modelUser.js")(client, Sequelize, DataTypes);
 
 /*Устанавливаем связи между таблицами*/
-db.Categories.hasMany(db.Products, { as: "products" });
-db.Products.belongsTo(db.Categories, {
-  foreignKey: "categoryId",
-  as: "category",
-});
+db.Categories.hasMany(db.Products);
+db.Products.belongsTo(db.Categories);
 
 module.exports = db; //экспортируем объект базы данных

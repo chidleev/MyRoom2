@@ -19,15 +19,23 @@ module.exports = (client, Sequelize, DataTypes) => {
             type: DataTypes.DOUBLE(6, 2),
             allowNull: false,
         },
-        width: {
+        madeIn: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        material: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        widthSize: {
             type: DataTypes.DOUBLE(3, 2),
             allowNull: false
         },
-        llength: {
+        lengthSize: {
             type: DataTypes.DOUBLE(3, 2),
             allowNull: false
         },
-        height: {
+        heightSize: {
             type: DataTypes.DOUBLE(3, 2),
             allowNull: false
         },
