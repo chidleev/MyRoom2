@@ -1,3 +1,25 @@
 <div id="catalog">
-    {{$route.params.categoryName}}
+    <div id="catalogName">
+        <span>Ассортимент товаров категории "{{categoryData.name}}"</span>
+    </div>
+
+    <div id="productsContainer">
+        <div v-for="product in categoryData.Products" id="productCard">
+            <div :id="product.uuid+'-miniGallery'" class="miniGallery">
+                <div v-for="n in 4" :id="'trigger-'+n" class="trigger" @mouseover="changeImage(product.uuid, n)"></div>
+            </div>
+            <div id="text">
+                <div id="head">
+                    <router-link :to="$route.path +'/'+ product.name" id="name">{{product.name}}</router-link>
+                    <div id="rate">Оценка товара</div>
+                </div>
+                <div id="description">
+                    <span>
+                        {{getShortDesc(product.description)}}
+                        <router-link :to="$route.path +'/'+ product.name">подробнее>></router-link>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

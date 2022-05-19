@@ -24,4 +24,27 @@ getDataAPI.get('/categories', (req, res) => {
     res.json(cashData.categories)
 })
 
+getDataAPI.post('/productsByCategory', (req, res) => {
+    if (!Boolean(req.body.categoryENname)) {
+        res.status(422).json({
+            errors: [{
+                type: 'name',
+                comment: 'Отсутствует название категории'
+            }]
+        })
+        return
+    }
+
+    db.Categories.findOne({
+        where: { ENname: req.body.categoryENname},
+        include: ["Products"]
+    })
+    .then(category => {
+        res.json(category)
+    })
+    .catch(error => {
+        res.sendStatus(404)
+    })
+})
+
 module.exports = getDataAPI

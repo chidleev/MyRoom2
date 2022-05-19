@@ -234,4 +234,19 @@ userAPI.get('/info', (req, res) => {
     })
 })
 
+userAPI.get('/logout', (req, res) => {
+    db.Users.update({token: null}, {
+        where: { token: req.signedCookies.token }
+    }).then(result => {
+        res.clearCookie('token').sendStatus(200)
+    }).catch(error => {
+        res.status(503).json({
+            errors: [{
+                type: 'authentification',
+                comment: 'Мы не смогли отметить Вас в своей базе данных как неаутентифицированный пользователь'
+            }]
+        })
+    })
+})
+
 module.exports = userAPI

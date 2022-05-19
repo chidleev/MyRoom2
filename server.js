@@ -77,8 +77,6 @@ db.client.sync(/*{force: true}*/).then(() => {
         console.error(err);
     })*/
 
-   
-
     /*указываем главному приложению сервера начинать работать на определенном нами ранее порту*/
     serverApp.listen(serverApp.locals.PORT, () => {
         console.log(`Server running on port ${serverApp.locals.PORT}`) //сообщаем себе, что сервер успешно запущен

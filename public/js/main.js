@@ -12,7 +12,20 @@ const settings = {
     computed: {},
     methods: {
         logoutReq() {
-            document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
+            axios({
+                url: '/api/user/logout',
+            })
+            .then(response => {
+                if (localStorage.getItem('userData')) {
+                    localStorage.removeItem('userData')
+                }
+                alert("Вы вышли из аккаунта")
+                document.getElementById('logout_icon').style.display = 'none'
+                this.$router.push({name: 'login'})
+            })
+            .catch(error => {
+                alert("Не удалось выйти из аккаунта")
+            })
         }
     }
 }

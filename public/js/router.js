@@ -20,7 +20,7 @@ const routes = [
     {
         path: '/catalog',
         component: {
-            template: '<searchLine style="width: 90%"/><router-view></router-view>'
+            template: '<searchLine style="width: 95%"/><router-view></router-view>'
         },
         children: [
             {
@@ -30,7 +30,7 @@ const routes = [
                 props: true
             },
             {
-                path: ':categoryName',
+                path: ':categoryENname',
                 component: {
                     template: '<router-view></router-view>'
                 },

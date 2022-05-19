@@ -7,7 +7,7 @@
 
     border-right: calc(0.2 * var(--medium-text-2)) dashed var(--my-blue-1);
 
-    background-image:  linear-gradient(135deg, var(--light-1) 25%, transparent 25%), linear-gradient(225deg, var(--light-1) 25%, transparent 25%), linear-gradient(45deg, var(--light-1) 25%, transparent 25%), linear-gradient(315deg, var(--light-1) 25%, var(--light-2) 25%);
+    background-image: var(--back-img);
     background-position:  calc(0.5 * var(--mini-text)) 0, calc(0.5 * var(--mini-text)) 0, 0 0, 0 0;
     background-size: calc(0.5 * var(--mini-text)) calc(0.5 * var(--mini-text));
     background-repeat: repeat;

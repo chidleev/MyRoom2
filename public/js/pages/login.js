@@ -45,6 +45,7 @@ export default {
             })
             .then(response => {
                 alert("Вы успешно вошли в свой аккаунт!")
+                document.getElementById('logout_icon').style.display = 'flex'
                 this.$router.push({name: 'profile'})
             })
             .catch(error => {

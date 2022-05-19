@@ -29,6 +29,9 @@
     --medium-text-1: clamp(35px, 0.25rem, 0.25rem);
     --medium-text-2: clamp(25px, 0.2rem, 0.2rem);
     --mini-text: clamp(15px, 0.15rem, 0.15rem);
+
+    --back-img: linear-gradient(135deg, var(--light-1) 25%, transparent 25%), linear-gradient(225deg, var(--light-1) 25%, transparent 25%), linear-gradient(45deg, var(--light-1) 25%, transparent 25%), linear-gradient(315deg, var(--light-1) 25%, var(--light-2) 25%);
+    --black-back-img: linear-gradient(135deg, var(--dark-1) 25%, transparent 25%), linear-gradient(225deg, var(--dark-1) 25%, transparent 25%), linear-gradient(45deg, var(--dark-1) 25%, transparent 25%), linear-gradient(315deg, var(--dark-1) 25%, var(--dark-2) 25%);
 }
 
 * {
@@ -100,20 +103,23 @@ body, #app {
 
 #search {
     margin-bottom: var(--mini-text);
+    
+    box-sizing: border-box;
     width: 100%;
 
-    box-sizing: border-box;
     display: flex;
     justify-content: center;
     align-items: center;
 
-    position: relative;
+    z-index: 1;
 }
 
 #search input {
     padding-left: calc(0.2 * var(--medium-text-2));
     width: 100%;
     height: calc(1.25 * var(--medium-text-1));
+
+    flex: 20 1 200px;
 
     font-size: var(--mini-text);
 
@@ -153,6 +159,8 @@ body, #app {
     display: flex;
     justify-content: center;
     align-items: center;
+
+    flex: 1 10 100px;
 
     border: calc(0.15 * var(--medium-text-2)) dashed var(--light-1);
     border-left: none;
