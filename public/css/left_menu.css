@@ -39,13 +39,13 @@
 #logo:hover span {
     color: var(--my-yellow);
     text-shadow: 0px 0px 20px var(--my-yellow);
-    transition-duration: var(--speed-1);
+    transition: var(--speed-1);
 }
 
 #logo:active span {
     color: var(--my-orange);
     text-shadow: 0px 0px 20px var(--my-orange);
-    transition-duration: var(--speed-2);
+    transition: var(--speed-2);
 }
 
 #category-list {
@@ -55,45 +55,49 @@
 }
 
 #category-button, #category-list span {
-    margin-bottom: calc(0.3 * var(--medium-text-2));
-    padding-left: calc(0.3 * var(--medium-text-2));
-    height: calc(1.5 * var(--medium-text-2));
+    margin: calc(0.5 * var(--mini-text));
+    padding-left: calc(0.5 * var(--mini-text));
+
+    box-sizing: border-box;
+    height: calc(1.25 * var(--medium-text-1));
 
     display: flex;
     align-items: center;
 
-    font-size: calc(0.8 * var(--medium-text-2));
+    font-size: calc(0.65 * var(--medium-text-1));
     font-weight: 400;
     text-decoration: none;
 
-    border-left: calc(0.3 * var(--medium-text-2)) solid var(--my-blue-1);
+    border: calc(0.125 * var(--medium-text-2)) dashed var(--my-blue-1);
 
     color: var(--my-blue-1);
-    background: linear-gradient(to right, var(--light-2) 50%, transparent);
+    background-color: var(--light-1);
 
-    transition-duration: var(--speed-1);
+    transition: var(--speed-1);
 }
 
 #category-list span {
-    font-size: var(--medium-text-2);
+    font-size: calc(0.75 * var(--medium-text-1));
     font-weight: 800;
+
+    border: calc(0.125 * var(--medium-text-2)) solid var(--my-blue-1);
 }
 
 
 #category-button:hover {
-    padding-left: var(--medium-text-2);
+    padding-left: var(--mini-text);
 
-    border-left: calc(0.3 * var(--medium-text-2)) solid var(--light-2);
+    border: calc(0.125 * var(--medium-text-2)) solid var(--my-blue-1);
 
-    color: var(--light-2);
-    background: linear-gradient(to right, var(--my-yellow) 50%, transparent);
+    color: var(--my-blue-2);
 
-    transition-duration: var(--speed-1);
+    transition: var(--speed-1);
 }
 
 #category-button:active, #category-button.active {
-    border-left: calc(0.3 * var(--medium-text-2)) solid var(--my-yellow);
+    border: calc(0.125 * var(--medium-text-2)) solid var(--my-blue-2);
 
-    color: var(--light-2);
-    background: linear-gradient(to right, var(--my-orange) 50%, transparent);
+    color: var(--my-blue-2);
+
+    transition: var(--speed-1);
 }

@@ -32,7 +32,7 @@ module.exports.checkIsLogin = function(req, res, next) {
 
 module.exports.checkIsAdmin = function(req, res, next) {
     if (req.signedCookies.token) {
-        db.Users.findeOne({
+        db.Users.findOne({
             where: {token: req.signedCookies.token}
         })
         .then(user => {
@@ -61,7 +61,7 @@ module.exports.checkIsAdmin = function(req, res, next) {
 
 module.exports.checkIsAccountant = function(req, res, next) {
     if (req.signedCookies.token) {
-        db.Users.findeOne({
+        db.Users.findOne({
             where: {token: req.signedCookies.token}
         })
         .then(user => {
@@ -90,7 +90,7 @@ module.exports.checkIsAccountant = function(req, res, next) {
 
 module.exports.checkIsManager = function(req, res, next) {
     if (req.signedCookies.token) {
-        db.Users.findeOne({
+        db.Users.findOne({
             where: {token: req.signedCookies.token}
         })
         .then(user => {
