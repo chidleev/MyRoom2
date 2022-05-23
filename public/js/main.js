@@ -9,6 +9,7 @@
 
 
 import initRouter from '/js/router.js'
+import loadComponents from '/js/loadComponents.js'
 import onMountFunction from '/js/onMountFunction.js'
 
 const settings = {
@@ -27,8 +28,8 @@ const settings = {
                 url: '/api/user/logout',
             })
             .then(response => {
-                if (localStorage.getItem('userData')) {
-                    localStorage.removeItem('userData')
+                if (localStorage.getItem('userAllData')) {
+                    localStorage.removeItem('userAllData')
                 }
                 alert("Вы вышли из аккаунта")
                 document.getElementById('logout_icon').style.display = 'none'
@@ -44,9 +45,7 @@ const settings = {
 const app = Vue.createApp(settings)
 
 app.component('BeatLoader', VueSpinner.BeatLoader)
-/*app.component('searchLine', {
-    template: getPage('components').searchLine
-})*/
+app.component('searchLine', loadComponents.searchLine)
 
 initRouter.defaultRouter().then(router => {
     app.use(router)

@@ -37,13 +37,14 @@ sendData.app.post('/productsByCategory', (req, res) => {
         where: { ENname: req.body.categoryENname },
         include: [{
             model: db.Products,
-            include: ['ProductPhotos', 'Comments']
+            include: [db.ProductPhotos]
         }]
     })
         .then(category => {
             res.json(category)
         })
         .catch(error => {
+            console.log(error);
             res.sendStatus(404)
         })
 })

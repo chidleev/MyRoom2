@@ -1,3 +1,5 @@
-export default { 
-    template: "getPage('logged').basket"
+export default function (htmlPage) {
+    return {
+        template: htmlPage
+    }
 }

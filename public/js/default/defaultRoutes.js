@@ -1,3 +1,19 @@
+var defaultPages = {}
+var loggedPages = {}
+
+const request = new XMLHttpRequest()
+request.open('GET', '/api/gethtml/default', false)
+request.send()
+if (request.status == 200) {
+    defaultPages = JSON.parse(request.responseText)
+}
+
+request.open('GET', '/api/gethtml/logged', false)
+request.send()
+if (request.status == 200) {
+    loggedPages = JSON.parse(request.responseText)
+}
+
 export default function(defaultPageScripts, loggedPageScripts) {
     return [
         { 
@@ -7,7 +23,7 @@ export default function(defaultPageScripts, loggedPageScripts) {
         {
             path: "/about",
             name: "about",
-            component: defaultPageScripts.about
+            component: defaultPageScripts.about(defaultPages.about)
         },
         {
             path: "/catalog",
@@ -18,7 +34,7 @@ export default function(defaultPageScripts, loggedPageScripts) {
                 {
                     path: "",
                     name: "mainCatalog",
-                    component: defaultPageScripts.mainCatalog,
+                    component: defaultPageScripts.mainCatalog(defaultPages.mainCatalog),
                     props: true
                 },
                 {
@@ -31,13 +47,13 @@ export default function(defaultPageScripts, loggedPageScripts) {
                         {
                             path: "",
                             name: "catalog",
-                            component: "defaultPageScripts.catalog",
+                            component: defaultPageScripts.catalog(defaultPages.catalog),
                             props: true
                         },
                         {
                             path: ":productName",
                             name: "product",
-                            component: defaultPageScripts.product,
+                            component: defaultPageScripts.product(defaultPages.product),
                             props: true
                         }
                     ]
@@ -53,7 +69,7 @@ export default function(defaultPageScripts, loggedPageScripts) {
                 {
                     path: "",
                     name: "profile",
-                    component: loggedPageScripts.profile,
+                    component: loggedPageScripts.profile(loggedPages.profile),
                     meta: {
                         requredLogin: true
                     }
@@ -61,19 +77,19 @@ export default function(defaultPageScripts, loggedPageScripts) {
                 {
                     path: "login",
                     name: "login",
-                    component: defaultPageScripts.login
+                    component: defaultPageScripts.login(defaultPages.login)
                 },
                 {
                     path: "signup",
                     name: "signup",
-                    component: defaultPageScripts.signup
+                    component: defaultPageScripts.signup(defaultPages.signup)
                 }
             ]
         },
         {
             path: "/basket",
             name: "basket",
-            component: loggedPageScripts.Basket,
+            component: loggedPageScripts.basket(loggedPages.basket),
             meta: {
                 requredLogin: true
             }

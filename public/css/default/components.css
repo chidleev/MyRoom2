@@ -1,0 +1,79 @@
+#search {
+    margin-bottom: var(--mini-text);
+    
+    box-sizing: border-box;
+    width: 95%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 1;
+}
+
+#search input {
+    padding-left: calc(0.2 * var(--medium-text-2));
+    width: 100%;
+    height: calc(1.25 * var(--medium-text-1));
+
+    flex: 20 1 200px;
+
+    font-size: var(--mini-text);
+
+    border: calc(0.15 * var(--medium-text-2)) dashed var(--my-blue-1);
+    border-right: none;
+    outline: none;
+
+    background-color: var(--light-1);
+    color: var(--my-yellow);
+}
+
+#search input::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+    margin: 0 calc(0.2 * var(--medium-text-2));
+    height: calc(0.9 * var(--medium-text-2));
+    width: calc(0.9 * var(--medium-text-2));
+
+    background-image: url('/icons/delete.svg');
+    background-size: contain;
+    filter: invert(48%) sepia(70%) saturate(1279%) hue-rotate(343deg) brightness(105%) contrast(88%);
+    transition: 200ms;
+}
+
+#search input::-webkit-search-cancel-button:hover {
+    filter: invert(31%) sepia(99%) saturate(7365%) hue-rotate(358deg) brightness(107%) contrast(89%);
+    transition: 200ms;
+}
+
+#search input::placeholder {
+    color: var(--my-blue-1);
+}
+
+#search button {
+    width: 10%;
+    height: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    flex: 1 10 100px;
+
+    border: calc(0.15 * var(--medium-text-2)) dashed var(--light-1);
+    border-left: none;
+
+    background: var(--my-blue-1);
+    cursor: pointer;
+    transition: var(--speed-2);
+}
+
+#search button:hover {
+    background: var(--my-yellow);
+    box-shadow: 0px 0px var(--medium-text-1) var(--my-yellow);
+    transition: var(--speed-2);
+}
+
+#search button img{
+    height: 75%;
+    filter: invert(100%) sepia(0%) saturate(837%) hue-rotate(250deg) brightness(125%) contrast(100%);
+}

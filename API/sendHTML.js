@@ -11,44 +11,46 @@ const managerPages = []
 
 const components = ['searchLine']
 
-const express = require('express')
-const sendHtmlAPI = express()
+const sendHtml = {}
 
-sendHtmlAPI.get('/', (req, res) => {
+const express = require('express')
+sendHtml.app = express()
+
+sendHtml.app.get('/', (req, res) => {
     res.send("GetHtml api work")
 })
 
-sendHtmlAPI.get('/default', (req, res) => {
+sendHtml.app.get('/default', (req, res) => {
     pages = {}
     defaultPages.forEach((fileName) => {
-        pages[fileName] =  fs.readFileSync(`./pages/default/${fileName}.html`, 'utf8')
+        pages[fileName] =  fs.readFileSync(`./public/pages/default/${fileName}.html`, 'utf8')
     })
     res.json(pages)
 })
 
-sendHtmlAPI.get('/logged', (req, res) => {
+sendHtml.app.get('/logged', (req, res) => {
     pages = {}
     loggedPages.forEach((fileName) => {
-        pages[fileName] =  fs.readFileSync(`./pages/logged/${fileName}.html`, 'utf8')
+        pages[fileName] =  fs.readFileSync(`./public/pages/logged/${fileName}.html`, 'utf8')
     })
     res.json(pages)
 })
 
-sendHtmlAPI.get('/components', (req, res) => {
+sendHtml.app.get('/components', (req, res) => {
     pages = {}
     components.forEach((fileName) => {
-        pages[fileName] =  fs.readFileSync(`./pages/components/${fileName}.html`, 'utf8')
+        pages[fileName] =  fs.readFileSync(`./public/pages/components/${fileName}.html`, 'utf8')
     })
     res.json(pages)
 })
 
-sendHtmlAPI.get('/admin', userValidators.checkIsAdmin, (req, res) => {
+sendHtml.app.get('/admin', userValidators.isAdmin, (req, res) => {
     pages = {}
     adminPages.forEach((fileName) => {
-        pages[fileName] =  fs.readFileSync(`./pages/admin/${fileName}.html`, 'utf8')
+        pages[fileName] =  fs.readFileSync(`./public/pages/admin/${fileName}.html`, 'utf8')
     })
     res.json(pages)
 })
 
 
-module.exports = sendHtmlAPI
+module.exports = sendHtml

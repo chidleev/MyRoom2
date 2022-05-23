@@ -1,3 +1,5 @@
-export default { 
-    template: "getPage('default').mainCatalog"
+export default function (htmlPage) {
+    return {
+        template: htmlPage
+    }
 }

@@ -44,6 +44,7 @@ db.Categories.hasMany(db.Products)
 
 db.Products.belongsTo(db.Categories)
 db.Products.hasMany(db.BasketOrders)
+db.Products.hasMany(db.Comments)
 db.Products.hasMany(db.ProductPhotos)
 db.Products.hasMany(db.Orders)
 

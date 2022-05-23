@@ -1,12 +1,12 @@
 <div id="profile-content">
     <div id="header" class="row">
         <div id="photo">
-            <img src="/icons/profile.svg" alt="Фотография профиля">
+            <img :src="userData.photoURL || '/icon/profile.svg'" alt="Фотография профиля">
         </div>
 
         <div id="text">
             <span id="logo">MyRoom</span>
-            <span id="name">Добро пожаловать, {{user.name}}!</span>
+            <span id="name">Добро пожаловать, {{userData.name}}!</span>
         </div>
     </div>
 

@@ -63,7 +63,7 @@ serverApp.get('/', (req, res) => {
 /*синхронизируем объект базы данных с реальной удаленной базой данных в интернете*/
 db.client.sync(/*{force: true}*/).then(() => {
     console.log("---> Sync DataBase") //сообщаем себе, что синхронизация прошла успешно
-    
+
     /*db.Users.bulkCreate(originData.users)
 
     const categories = []
