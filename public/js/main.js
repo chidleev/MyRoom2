@@ -1,11 +1,22 @@
-import router from '/js/router.js'
-import getPage from '/js/getPageReq.js'
+/* заходит на сайт
+запрос категорий - сохраняет в переменную и локалстор
+запрос дефолтных страниц - сохраняет в переменную и локал стор
+запрос компонентов - сохраняет
+чел логинится - получет токен и страницы залогиненного
+если имеет права - получает другие страницы
+все страницы хранятся одним объектом
+ */
+
+
+import initRouter from '/js/router.js'
 import onMountFunction from '/js/onMountFunction.js'
 
 const settings = {
     data() {
         return {
-            categories: []
+            categories: [],
+            pages: {},
+            components: {}
         }
     },
     mounted: onMountFunction,
@@ -32,11 +43,12 @@ const settings = {
 
 const app = Vue.createApp(settings)
 
-app.use(router)
-
 app.component('BeatLoader', VueSpinner.BeatLoader)
-app.component('searchLine', {
+/*app.component('searchLine', {
     template: getPage('components').searchLine
-})
+})*/
 
-app.mount('div#app')
+initRouter.defaultRouter().then(router => {
+    app.use(router)
+    app.mount('div#app')
+})

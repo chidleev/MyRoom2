@@ -1,27 +1,24 @@
-const helpFunctions = require('./helpFunctions')
+const validators = require('./validators')
 
-const getDataAPI = require('./APIgetData')
-const getHtmlAPI = require('./APIgetHTML')
+const sendData = require('./sendData')
 
-const userAPI = require('./APIUser')
-const adminAPI = require('./APIAdmin')
-const accountantAPI = require('./APIAccountant')
-const managerAPI = require('./APIManager')
+const userAPI = require('./user')
+const adminAPI = require('./admin')
+const accountantAPI = require('./accountant')
+const managerAPI = require('./manager')
 
 const express = require('express')
 const mainAPI = express()
 
-mainAPI.use('/getdata', getDataAPI)
-
-mainAPI.use('/gethtml', getHtmlAPI)
+mainAPI.use('/getdata', sendData.app)
 
 mainAPI.use('/user', userAPI)
 
-mainAPI.use('/admin', helpFunctions.checkIsAdmin, adminAPI)
+mainAPI.use('/admin', validators.isAdmin, adminAPI)
 
-mainAPI.use('/accountant', helpFunctions.checkIsAccountant, accountantAPI)
+mainAPI.use('/accountant', validators.isAccountant, accountantAPI)
 
-mainAPI.use('/manager', helpFunctions.checkIsManager, managerAPI)
+mainAPI.use('/manager', validators.isManager, managerAPI)
 
 mainAPI.get('/', (req, res) => {
     res.send("Main API work")

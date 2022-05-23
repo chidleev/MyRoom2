@@ -2,6 +2,8 @@ const express = require('express') //подключаем фреймворк Exp
 const path = require('path') //подключаем встроенную библиотеку Path
 const cookieParser = require('cookie-parser')
 
+const usersValidators = require('./API/validators')
+
 const db = require("./dataBase/models") //подключаем объект базы данных
 const originData = require('./dataBase/originData') //подключаем начальные данные
 
@@ -36,9 +38,27 @@ serverApp.use((req, res, next) => {
     next()
 })
 
-/*указываем главному приложению сервера искать и отправлять файлы по запросу типа 
-'/directory/files.type' из папки 'public', находящейся в папке проекта*/
-serverApp.use('/', express.static(path.join(__dirname, 'public')))
+
+serverApp.use('/css', express.static(path.join(__dirname, 'public', 'css', 'default')))
+serverApp.use('/css', express.static(path.join(__dirname, 'public', 'css', 'components')))
+serverApp.use('/css', express.static(path.join(__dirname, 'public', 'css', 'logged')))
+serverApp.use('/css', express.static(path.join(__dirname, 'public', 'css', 'admin')))
+serverApp.use('/css', express.static(path.join(__dirname, 'public', 'css', 'accountant')))
+serverApp.use('/css', express.static(path.join(__dirname, 'public', 'css', 'manager')))
+
+serverApp.use('/icon', express.static(path.join(__dirname, 'public', 'icons')))
+
+serverApp.use('/js', express.static(path.join(__dirname, 'public', 'js')))
+serverApp.use('/js/component', express.static(path.join(__dirname, 'public', 'js', 'components')))
+serverApp.use('/js/pageScript', express.static(path.join(__dirname, 'public', 'js', 'default')))
+serverApp.use('/js/pageScript', express.static(path.join(__dirname, 'public', 'js', 'logged')))
+serverApp.use('/js/pageScript', usersValidators.isAdmin, express.static(path.join(__dirname, 'public', 'js', 'admin')))
+serverApp.use('/js/pageScript', usersValidators.isAccountant, express.static(path.join(__dirname, 'public', 'js', 'accountant')))
+serverApp.use('/js/pageScript', usersValidators.isManager, express.static(path.join(__dirname, 'public', 'js', 'manager')))
+
+serverApp.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'pages', 'index.html'))
+})
 
 /*синхронизируем объект базы данных с реальной удаленной базой данных в интернете*/
 db.client.sync(/*{force: true}*/).then(() => {
