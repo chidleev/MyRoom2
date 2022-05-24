@@ -43,8 +43,6 @@ async function defaultRouter() {
 
 async function adminRouter() {
     var defaultPageScripts = await getPageScripts.defaultScripts()
-
-    console.log(defaultPageScripts.about);
     var loggedPageScripts = await getPageScripts.loggedScripts()
     var adminPageScripts = await getPageScripts.adminScripts()
 

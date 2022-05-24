@@ -37,7 +37,7 @@ module.exports.isAdmin = function (req, res, next) {
     if (req.signedCookies.token) {
         db.Tokens.findOne({
             where: { value: req.signedCookies.token },
-            include: ['Users']
+            include: [db.Users]
         })
             .then(token => {
                 if (token.User.roleUUID == globalVars.adminRoleUUID) {
@@ -67,7 +67,7 @@ module.exports.isAccountant = function (req, res, next) {
     if (req.signedCookies.token) {
         db.Tokens.findOne({
             where: { value: req.signedCookies.token },
-            include: ['Users']
+            include: [db.Users]
         })
             .then(user => {
                 if (token.User.roleUUID == globalVars.accountantRoleUUID) {
@@ -97,7 +97,7 @@ module.exports.isManager = function (req, res, next) {
     if (req.signedCookies.token) {
         db.Tokens.findOne({
             where: { value: req.signedCookies.token },
-            include: ['Users']
+            include: [db.Users]
         })
             .then(user => {
                 if (token.User.roleUUID == globalVars.managerRoleUUID) {

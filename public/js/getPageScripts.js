@@ -23,10 +23,10 @@ async function loggedScripts() {
 }
 
 async function adminScripts() {
-    const pages = ['categoryAdm', 'commentAdm', 'employeeAdm', 'productAdm']
+    const pages = ['categoryAdm', 'commentAdm', 'employeeAdm', 'productAdm', 'profileAdm']
     const pageScripts = {}
 
-    for (pageName of pages) {
+    for (var pageName of pages) {
         const pageScript = await import(`/js/pageScript/${pageName}.js`)
         pageScripts[pageName] = pageScript.default
     }

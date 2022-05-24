@@ -27,17 +27,20 @@ const settings = {
             axios({
                 url: '/api/user/logout',
             })
-            .then(response => {
-                if (localStorage.getItem('userAllData')) {
-                    localStorage.removeItem('userAllData')
-                }
-                alert("Вы вышли из аккаунта")
-                document.getElementById('logout_icon').style.display = 'none'
-                this.$router.push({name: 'login'})
-            })
-            .catch(error => {
-                alert("Не удалось выйти из аккаунта")
-            })
+                .then(response => {
+                    if (localStorage.getItem('userAllData')) {
+                        localStorage.removeItem('userAllData')
+                    }
+                    alert("Вы вышли из аккаунта")
+                    document.getElementById('logout_icon').style.display = 'none'
+                    this.$router.go()
+                })
+                .catch(error => {
+                    error.response.data.errors.forEach(error => {
+                        alert(error.comment)
+                        this.wrongInput[error.type] = true
+                    })
+                })
         }
     }
 }
@@ -47,7 +50,33 @@ const app = Vue.createApp(settings)
 app.component('BeatLoader', VueSpinner.BeatLoader)
 app.component('searchLine', loadComponents.searchLine)
 
-initRouter.defaultRouter().then(router => {
-    app.use(router)
-    app.mount('div#app')
+axios({
+    url: '/api/user/checkRole'
 })
+    .then(response => {
+        console.log(response.data);
+        switch (response.data) {
+            case 'admin':
+                console.log('its admin');
+                initRouter.adminRouter().then(router => {
+                    app.use(router)
+                    app.mount('div#app')
+                })
+                break;
+
+            default:
+                console.log('its user');
+                initRouter.defaultRouter().then(router => {
+                    app.use(router)
+                    app.mount('div#app')
+                })
+                break;
+        }
+    })
+    .catch(error => {
+        console.log('its user');
+        initRouter.defaultRouter().then(router => {
+            app.use(router)
+            app.mount('div#app')
+        })
+    })

@@ -5,7 +5,7 @@ const fs = require('fs')
 const defaultPages = ['about', 'mainCatalog', 'catalog', 'product', 'login', 'signup']
 
 const loggedPages = ['profile', 'basket']
-const adminPages = ['categoryAdm', 'commentAdm', 'employeeAdm', 'productAdm', 'profile']
+const adminPages = ['categoryAdm', 'commentAdm', 'employeeAdm', 'productAdm', 'profileAdm']
 const accountantPages = []
 const managerPages = []
 

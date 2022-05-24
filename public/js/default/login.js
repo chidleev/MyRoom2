@@ -46,6 +46,9 @@ export default function (htmlPage) {
                     .then(response => {
                         alert("Вы успешно вошли в свой аккаунт!")
                         document.getElementById('logout_icon').style.display = 'flex'
+                        if (response.data) {
+                            this.$router.go()
+                        }
                         this.$router.push({ name: 'profile' })
                     })
                     .catch(error => {

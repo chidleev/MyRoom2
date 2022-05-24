@@ -11,10 +11,12 @@ const bcrypt = require('bcrypt')
 const { v4: uuidv4 } = require('uuid');
 
 const db = require("../dataBase/models")
+const globalVars = require('../globalVars.json')
 
 const usersValidators = require('./validators')
 
 const express = require('express');
+const user = require('../dataBase/models/user');
 const userAPI = express()
 
 userAPI.get('/', (req, res) => {
@@ -177,7 +179,7 @@ userAPI.post('/login', (req, res) => {
                                         res.cookie('token', token, {
                                             signed: true,
                                             maxAge: 604800000
-                                        }).sendStatus(200)
+                                        }).json((user.roleUUID == globalVars.userRoleUUID)? false : true)
                                     })
                                     .catch(error => {
                                         console.log(error);
@@ -220,6 +222,40 @@ userAPI.post('/login', (req, res) => {
 })
 
 userAPI.use(usersValidators.isLogged)
+
+userAPI.get('/checkRole', (req, res) => {
+    db.Tokens.findOne({
+        where: { value: req.signedCookies.token }
+    })
+        .then(token => {
+            if (token) {
+                token.getUser()
+                    .then(user => {
+                        switch (user.roleUUID) {
+                            case "56de4ebc-c616-496f-8666-a45232a900eb":
+                                res.send('admin')
+                                break;
+                            case "5757484e-79e0-4a4d-a8c9-c7a08b9137fc":
+                                res.send('accountant')
+                                break;
+                            case "cc8554cb-d9c7-44e9-9c68-6ab2caac61e9":
+                                res.send('manager')
+                                break;
+                            default:
+                                res.send('user')
+                                break;
+                        }
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        res.send('user')
+                    })
+            }
+            else {
+                res.send('user')
+            }
+        })
+})
 
 userAPI.get('/info', (req, res) => {
     db.Tokens.findOne({
