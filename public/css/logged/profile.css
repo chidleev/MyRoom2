@@ -17,6 +17,7 @@
 }
 
 #header #photo {
+    box-sizing: border-box;
     width: calc(7.5 * var(--medium-text-1));
     height: calc(7.5 * var(--medium-text-1));
 
@@ -56,7 +57,7 @@
     font-size: calc(4 * var(--medium-text-2));
 
     color: var(--my-yellow);
-    text-shadow: 0px 0px var(--giant-text) var(--my-yellow);
+    text-shadow: 0px 0px calc(1.75*var(--medium-text-1)) var(--my-yellow);
 
     z-index: 1;
 }
@@ -71,4 +72,52 @@
     font-size: calc(0.75 * var(--medium-text-1));
 
     color: var(--light-2);
+}
+
+.buttons-row {
+    margin: calc(0.5*var(--mini-text)) 0;
+    justify-content: space-between;
+}
+
+.button {
+    margin: calc(0.5*var(--mini-text)) 0;
+    
+    box-sizing: border-box;
+    min-width: 47%;
+    height: calc(1.75*var(--medium-text-2));
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1, 1;
+
+    text-decoration: none;
+    font-size: var(--mini-text);
+
+    border: calc(0.125 * var(--medium-text-2)) dashed var(--light-1);
+    outline: none;
+
+    background-color: var(--my-blue-1);
+    color: var(--light-1);
+    transition: var(--speed-2);
+}
+
+.button:hover {
+    border: calc(0.125 * var(--medium-text-2)) solid var(--light-1);
+    background-color: var(--my-yellow);
+    box-shadow: 0px 0px var(--medium-text-1) var(--my-yellow);
+    transition: var(--speed-2);
+}
+
+.button:active, .active-btn {
+    border: calc(0.125 * var(--medium-text-2)) solid var(--light-1);
+    background-color: var(--my-orange);
+    box-shadow: 0px 0px var(--medium-text-1) var(--my-orange);
+    transition: var(--speed-2);
+}
+
+.button:disabled {
+    background-color: var(--dark-1);
+    box-shadow: none;
+    transition: var(--speed-2);
 }

@@ -1,0 +1,25 @@
+<div id="profile-content">
+    <div id="header" class="row">
+        <div id="photo">
+            <img :src="userData.photoURL || '/icon/profile.svg'" alt="Фотография профиля">
+        </div>
+
+        <div id="text">
+            <span id="logo">MyRoom</span>
+            <span id="name">Добро пожаловать, {{userData.name}}!</span>
+        </div>
+    </div>
+
+    <div class="row buttons-row">
+        <router-link 
+            v-for="(pageName, key) in {category: 'Категории', product: 'Товары', comment: 'Комментарии', employee: 'Работники'}"
+            :to="'/profile/'+key" 
+            class="button" 
+            active-class="active-btn"
+        >
+        {{pageName}}
+        </router-link>
+    </div>
+
+    <router-view></router-view>
+</div>

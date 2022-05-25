@@ -1,0 +1,74 @@
+@import url('/css/profile.css');
+
+#categories-box {
+    padding: calc(0.5 * var(--mini-text));
+
+    box-sizing: border-box;
+    width: 100%;
+
+    flex-direction: column;
+    align-items: stretch;
+
+    border: calc(0.2 * var(--medium-text-2)) dashed var(--my-blue-1);
+
+    background-color: var(--light-1);
+}
+
+.category-item {
+    margin: calc(0.25 * var(--mini-text)) 0;
+
+
+    height: calc(2 * var(--mini-text));
+
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: stretch;
+
+    border: calc(0.15 * var(--medium-text-2)) dashed var(--my-blue-1);
+
+    background-image: var(--back-img);
+    background-position:  calc(0.5 * var(--mini-text)) 0, calc(0.5 * var(--mini-text)) 0, 0 0, 0 0;
+    background-size: calc(0.5 * var(--mini-text)) calc(0.5 * var(--mini-text));
+    background-repeat: repeat;
+}
+
+.category-item input[type='text'] {
+    padding: 0 calc(0.5 * var(--mini-text));
+
+    width: calc(8 * var(--mini-text));
+
+    font-size: calc(0.8 * var(--medium-text-2));
+    border: none;
+
+    color: var(--my-blue-2);
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.category-item input[type='text']:focus {
+    outline: none;
+}
+
+.category-item button {
+    padding: 0 calc(0.5 * var(--mini-text));
+    border: none;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.category-item input[type='checkbox'] {
+    margin: 0 calc(0.5 * var(--mini-text));
+
+    width: var(--mini-text);
+    height: var(--mini-text);
+
+    outline: none;
+    border: none;
+
+    align-self: center;
+}
+
+.category-item span {
+    color: var(--my-blue-1);
+
+    display: flex;
+    align-items: center;
+}

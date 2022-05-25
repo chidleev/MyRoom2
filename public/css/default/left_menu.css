@@ -56,12 +56,13 @@
 
 #category-button, #category-list span {
     margin: calc(0.5 * var(--mini-text));
-    padding-left: calc(0.5 * var(--mini-text));
+    padding: 0 calc(0.5 * var(--mini-text));
 
     box-sizing: border-box;
     height: calc(1.25 * var(--medium-text-1));
 
     display: flex;
+    justify-content: space-between;
     align-items: center;
 
     font-size: calc(0.65 * var(--medium-text-1));

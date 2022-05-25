@@ -13,13 +13,18 @@ sendData.app.get('/', (req, res) => {
 })
 
 sendData.app.get('/categories', (req, res) => {
-    db.Categories.findAll()
-    .then(result => {
-        res.json(result)
+    db.Categories.findAll({
+        include: [{
+            model: db.Products
+        }]
     })
-    .catch(err => {
-        res.sendStatus(404)
-    })
+        .then(result => {
+            res.json(result)
+        })
+        .catch(err => {
+            console.log(err);
+            res.sendStatus(404)
+        })
 })
 
 sendData.app.post('/productsByCategory', (req, res) => {

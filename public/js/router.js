@@ -34,7 +34,7 @@ async function defaultRouter() {
         else next()
     })
     
-    router.beforeEach(async (to, from) => {
+    router.beforeEach((to, from) => {
         document.getElementById('pageCSSLink').href = `/css/${to.name}.css`
     })
 
@@ -68,7 +68,7 @@ async function adminRouter() {
         else next()
     })
     
-    router.beforeEach(async (to, from) => {
+    router.beforeEach((to, from) => {
         document.getElementById('pageCSSLink').href = `/css/${to.name}.css`
     })
 
