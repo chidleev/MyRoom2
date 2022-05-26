@@ -2,7 +2,11 @@
     <div v-for="category in categories" class="category-item" :id="'category-item-'+category.uuid" @click.self="checkItem(category.uuid)">
         <div>
             <input type="text" v-model="category.name">
-            <button><img src="/icon/rename.svg" alt="Переименовать" @click="renameCategory(category)"></button>
+            <button @click="renameCategory(category)">
+                <span class="material-icons">
+                    drive_file_rename_outline
+                </span>
+            </button>
         </div>
         <div>
             <span @click.self="checkItem(category.uuid)">Количество товара: {{category.Products.length}}шт.</span>

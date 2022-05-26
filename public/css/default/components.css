@@ -73,7 +73,8 @@
     transition: var(--speed-2);
 }
 
-#search button img{
-    height: 75%;
-    filter: invert(100%) sepia(0%) saturate(837%) hue-rotate(250deg) brightness(125%) contrast(100%);
+#search button span{
+    font-size: calc(0.8*var(--medium-text-1));
+    line-height: calc(0.8*var(--medium-text-1));
+    color: var(--light-1)
 }

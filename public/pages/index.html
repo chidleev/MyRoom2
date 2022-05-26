@@ -9,6 +9,7 @@
 
     <link rel="shortcut icon" href="/icon/logo.svg" type="image/x-icon">
 
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" type="text/css" href="/css/main.css">
     <link rel="stylesheet" type="text/css" href="/css/components.css">
     <link rel="stylesheet" type="text/css" href="/css/left_menu.css">
@@ -83,7 +84,8 @@
                     class="icon" 
                     active-class="active" 
                 >
-                    <img src="/icon/profile.svg" alt="Профиль">
+                    <span class="material-icons">face</span>
+                    <!--<img src="/icon/profile.svg" alt="Профиль">-->
                 </router-link>
                 <!--
                     Кнопка главного каталога
@@ -94,7 +96,7 @@
                     class="icon" 
                     active-class="active" 
                 >
-                    <img src="/icon/catalog.svg" alt="Каталог">
+                    <span class="material-icons">storefront</span>
                 </router-link>
                 <!--
                     Кнопка корзины
@@ -105,7 +107,7 @@
                     class="icon" 
                     active-class="active" 
                 >
-                    <img src="/icon/basket.svg" alt="Корзина">
+                    <span class="material-icons">shopping_cart</span>
                 </router-link>
             </div>
 
@@ -120,7 +122,7 @@
                     class="icon"
                     @click="logoutReq"
                 >
-                    <img src="/icon/logout.svg" alt="Выйти из аккаунта">
+                    <span class="material-icons">logout</span>
                 </router-link>
                 <!--
                     Кнопка "О магазине"
@@ -131,13 +133,13 @@
                     class="icon" 
                     active-class="active" 
                 >
-                    <img src="/icon/about.svg" alt="О магазине">
+                    <span class="material-icons">info</span>
                 </router-link>
                 <!--
                     Кнопка "вверх"
                 -->
                 <router-link to="#" id="up_icon" class="icon">
-                    <img src="/icon/up.svg" alt="Вверх">
+                    <span class="material-icons">keyboard_double_arrow_up</span>
                 </router-link>
             </div>
         </div>
