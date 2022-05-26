@@ -17,8 +17,7 @@
 .category-item {
     margin: calc(0.25 * var(--mini-text)) 0;
 
-
-    height: calc(2 * var(--mini-text));
+    min-height: calc(2 * var(--mini-text));
 
     flex-direction: row;
     justify-content: space-between;
@@ -30,6 +29,13 @@
     background-position:  calc(0.5 * var(--mini-text)) 0, calc(0.5 * var(--mini-text)) 0, 0 0, 0 0;
     background-size: calc(0.5 * var(--mini-text)) calc(0.5 * var(--mini-text));
     background-repeat: repeat;
+    
+    transition: var(--speed-2);
+}
+
+.category-item:hover {
+    border: calc(0.15 * var(--medium-text-2)) dashed var(--my-blue-2);
+    transition: var(--speed-2);
 }
 
 .category-item input[type='text'] {
@@ -38,10 +44,10 @@
     width: calc(8 * var(--mini-text));
 
     font-size: calc(0.8 * var(--medium-text-2));
-    border: none;
+    border: calc(0.15 * var(--medium-text-2)) solid var(--light-2);
 
     color: var(--my-blue-2);
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: var(--light-1);
 }
 
 .category-item input[type='text']:focus {
@@ -50,8 +56,17 @@
 
 .category-item button {
     padding: 0 calc(0.5 * var(--mini-text));
-    border: none;
-    background-color: rgba(255, 255, 255, 0.5);
+    
+    line-height: calc(0.5*var(--medium-text-2));
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    border: calc(0.15 * var(--medium-text-2)) solid var(--light-2);
+    color: var(--my-blue-1);
+    background-color: var(--light-1);
 }
 
 .category-item input[type='checkbox'] {
@@ -67,8 +82,32 @@
 }
 
 .category-item span {
-    color: var(--my-blue-1);
+    color: var(--my-blue-2);
+
+    line-height: calc(0.5*var(--medium-text-2));
 
     display: flex;
     align-items: center;
+    
+    transition: var(--speed-2);
+}
+
+.category-item button:hover .material-icons {
+    color: var(--my-yellow);
+    transition: var(--speed-2);
+}
+
+.category-item button .delete-btn {
+    color: var(--my-orange);
+    transition: var(--speed-2);
+}
+
+.category-item button:hover .delete-btn {
+    color: var(--my-red-1);
+    transition: var(--speed-2);
+}
+
+.category-item button:active .delete-btn {
+    color: var(--my-red-2);
+    transition: var(--speed-2);
 }

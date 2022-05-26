@@ -4,7 +4,8 @@ export default function (htmlPage) {
         data() {
             return {
                 categories: [],
-                checkedCategories: []
+                checkedCategories: [],
+                newCategory: {}
             }
         },
         mounted() {
@@ -36,10 +37,60 @@ export default function (htmlPage) {
                     this.checkedCategories.push(uuid)
                 }
             },
-            onInputFunc() {
+            createCategory() {
+                axios({
+                    url: '/api/admin/category',
+                    method: 'put',
+                    data: {
+                        name: this.newCategory.name
+                    }
+                })
+                .then(res => {
+                    alert(res.data)
+                    window.dispatchEvent(new Event('updateCategories'))
+                })
+                .catch(err => {
+                    err.response.data.errors.forEach(error => {
+                        alert(error.comment)
+                    });
+                })
             },
             renameCategory(category) {
-                alert(category.name)
+                axios({
+                    url: '/api/admin/category',
+                    method: 'patch',
+                    data: {
+                        uuid: category.uuid,
+                        newName: category.name
+                    }
+                })
+                .then(res => {
+                    alert(res.data)
+                    window.dispatchEvent(new Event('updateCategories'))
+                })
+                .catch(err => {
+                    err.response.data.errors.forEach(error => {
+                        alert(error.comment)
+                    });
+                })
+            },
+            deleteCategories() {
+                axios({
+                    url: '/api/admin/category',
+                    method: 'delete',
+                    data: {
+                        uuids: this.checkedCategories
+                    }
+                })
+                .then(res => {
+                    alert(res.data)
+                    window.dispatchEvent(new Event('updateCategories'))
+                })
+                .catch(err => {
+                    err.response.data.errors.forEach(error => {
+                        alert(error.comment)
+                    });
+                })
             }
         }
     }

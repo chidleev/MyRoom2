@@ -46,9 +46,7 @@ serverApp.use('/css', express.static(path.join(__dirname, 'public', 'css', 'admi
 serverApp.use('/css', express.static(path.join(__dirname, 'public', 'css', 'accountant')))
 serverApp.use('/css', express.static(path.join(__dirname, 'public', 'css', 'manager')))
 
-serverApp.use('/icon/logo.svg', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'logo.svg'))
-})
+serverApp.use('/icon', express.static(path.join(__dirname, 'public', 'icons')))
 
 serverApp.use('/js', express.static(path.join(__dirname, 'public', 'js')))
 serverApp.use('/js/component', express.static(path.join(__dirname, 'public', 'js', 'components')))

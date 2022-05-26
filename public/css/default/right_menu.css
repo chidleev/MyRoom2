@@ -64,6 +64,7 @@
 
 .icon .material-icons {
     font-size: calc(1.2 * var(--medium-text-2));
+    line-height: calc(1.2 * var(--medium-text-2));
     color: var(--my-blue-1);
     transition: filter var(--speed-1);
 }

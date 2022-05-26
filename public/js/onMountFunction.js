@@ -1,12 +1,5 @@
 export default function() {
-    if (/*localStorage.getItem('categories')*/false) {
-        try {
-            this.categories = JSON.parse(localStorage.getItem('categories')) 
-        } catch(e) {
-            localStorage.removeItem('categories')
-        }
-    }
-    else {
+    window.addEventListener('updateCategories', () => {
         const that = this
         axios.get('/api/getdata/categories')
         .then(function (response) {
@@ -16,5 +9,18 @@ export default function() {
         .catch(function (error) {
             console.log(error)
         })
+    })
+
+    if (/*localStorage.getItem('categories')*/false) {
+        try {
+            this.categories = JSON.parse(localStorage.getItem('categories')) 
+        } catch(e) {
+            localStorage.removeItem('categories')
+        }
     }
+    else {
+        window.dispatchEvent(new Event('updateCategories'))
+    }
+
+    
 }

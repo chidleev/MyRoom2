@@ -1,4 +1,23 @@
 <div id="categories-box">
+    <div class="category-item" id="category-item">
+        <div>
+            <input type="text" v-model="newCategory.name">
+            <button @click="createCategory()">
+                <span class="material-icons">
+                    add_circle_outline
+                </span>
+            </button>
+        </div>
+        <div>
+            <span>Количество категорий: {{categories.length}}шт.</span>
+            <button @click="deleteCategories()">
+                Удалить выбранное <span class="material-icons delete-btn">
+                    delete_forever
+                </span>
+            </button>
+        </div>
+    </div>
+
     <div v-for="category in categories" class="category-item" :id="'category-item-'+category.uuid" @click.self="checkItem(category.uuid)">
         <div>
             <input type="text" v-model="category.name">
@@ -13,5 +32,4 @@
             <input type="checkbox" :id="'check-'+category.uuid" v-model="checkedCategories" :value="category.uuid">
         </div>
     </div>
-    {{checkedCategories}}
 </div>
