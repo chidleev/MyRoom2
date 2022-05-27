@@ -1,1 +1,93 @@
 @import url('/css/profile.css');
+
+#product-box {
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+#head-menu {
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+    width: 47%;
+    position: relative;
+    display: inline-block;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.dropdown-text {
+    padding: 0 calc(0.5 * var(--mini-text));
+
+    box-sizing: border-box;
+    height: calc(1.75*var(--medium-text-2));
+
+    align-items: center;
+
+    border: calc(0.125 * var(--medium-text-2)) dashed var(--light-1);
+
+    font-size: var(--mini-text);
+
+    background-color: var(--my-blue-1);
+    color: var(--light-1);
+    
+    transition: var(--speed-2);
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+    display: none;
+    width: 100%;
+    position: absolute;
+    z-index: 1;
+    transition: all var(--speed-1);
+}
+
+/* Links inside the dropdown */
+.dropdown-content div {
+    padding: calc(0.25 * var(--mini-text)) calc(0.5 * var(--mini-text));
+
+    box-sizing: border-box;
+    width: 100%;
+
+    display: block;
+
+    border: calc(0.125 * var(--medium-text-2)) solid var(--light-2);
+
+    color: var(--dark-1);
+    background-color: var(--light-2);
+
+    transition: var(--speed-2);
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content div:hover {
+    color: var(--light-1);
+    background-color: var(--my-yellow);
+    transition: var(--speed-2);
+}
+
+.dropdown-content div.active {
+    color: var(--light-1);
+    background-color: var(--my-orange);
+    transition: var(--speed-2);
+}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+    display: block;
+    transition: all var(--speed-1);
+}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropdown-text {
+    border: calc(0.125 * var(--medium-text-2)) solid var(--light-2);
+    background-color: var(--my-blue-2);
+    transition: var(--speed-2);
+}

@@ -65,7 +65,7 @@
     justify-content: space-between;
     align-items: center;
 
-    font-size: calc(0.65 * var(--medium-text-1));
+    font-size: calc(0.8 * var(--medium-text-2));
     font-weight: 400;
     text-decoration: none;
 

@@ -9,24 +9,10 @@ export default function (htmlPage) {
             }
         },
         mounted() {
-            if (localStorage.getItem('categories')) {
-                try {
-                    this.categories = JSON.parse(localStorage.getItem('categories')) 
-                } catch(e) {
-                    localStorage.removeItem('categories')
-                }
-            }
-            else {
-                const that = this
-                axios.get('/api/getdata/categories')
-                .then(function (response) {
-                    localStorage.setItem('categories', JSON.stringify(response.data))
-                    that.categories = response.data
-                })
-                .catch(function (error) {
-                    console.log(error)
-                })
-            }
+            window.addEventListener('categoriesDistribution', event => {
+                this.categories = event.detail.categories
+            })
+            window.dispatchEvent(new Event('categoriesRequest'))
         },
         methods: {
             checkItem(uuid) {

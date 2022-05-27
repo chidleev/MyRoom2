@@ -1,1 +1,17 @@
-product
+<div id="product-box">
+    <div id="head-menu">
+        <div class="dropdown">
+            <div class="dropdown-text">Текущая категория: {{selectedCategory.name || 'не выбрана'}}</div>
+            <div class="dropdown-content">
+                <div v-for="category in categories" @click="selectedCategory = category" calss="active">{{category.name}}</div>
+            </div>
+        </div>
+
+        <div>fgfggfg</div>
+    </div>
+
+    <details>
+        <summary>Details</summary>
+        Something small enough to escape casual notice.
+    </details>
+</div>
