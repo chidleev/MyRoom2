@@ -1,17 +1,11 @@
 @import url('/css/profile.css');
 
 #categories-box {
-    padding: calc(0.5 * var(--mini-text));
-
     box-sizing: border-box;
     width: 100%;
 
     flex-direction: column;
     align-items: stretch;
-
-    border: calc(0.2 * var(--medium-text-2)) dashed var(--my-blue-1);
-
-    background-color: var(--light-1);
 }
 
 .category-item {
@@ -33,6 +27,19 @@
     transition: var(--speed-2);
 }
 
+#category-head.category-item {
+    background-image: none;
+    background-color: var(--light-1);
+}
+
+#category-head.category-item input, #category-head.category-item input ~ button {
+    background-color: var(--light-2);
+}
+
+#category-head.category-item input::placeholder {
+    font-size: calc(0.75*var(--mini-text));
+}
+
 .category-item:hover {
     border: calc(0.15 * var(--medium-text-2)) dashed var(--my-blue-2);
     transition: var(--speed-2);
@@ -44,7 +51,8 @@
     width: calc(8 * var(--mini-text));
 
     font-size: calc(0.8 * var(--medium-text-2));
-    border: calc(0.15 * var(--medium-text-2)) solid var(--light-2);
+    /*border: calc(0.15 * var(--medium-text-2)) solid var(--light-2);*/
+    border: none;
 
     color: var(--my-blue-2);
     background-color: var(--light-1);
@@ -64,7 +72,8 @@
     justify-content: center;
     align-items: center;
 
-    border: calc(0.15 * var(--medium-text-2)) solid var(--light-2);
+    /*border: calc(0.15 * var(--medium-text-2)) solid var(--light-2);*/
+    border: none;
     color: var(--my-blue-1);
     background-color: var(--light-1);
 }

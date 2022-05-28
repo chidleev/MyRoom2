@@ -2,23 +2,23 @@
 
 :root {
     --dark-1: rgb(120, 125, 130);
-    --dark-2: #64696e;
-    --dark-3: #32373c;
+    --dark-2: rgb(100, 105, 110);
+    --dark-3: rgb(50, 55, 60);
 
-    --light-1: rgb(255, 255, 255);
-    --light-2: #f0e6dc;
+    --light-1: rgb(245, 245, 245);
+    --light-2: rgb(240, 230, 220);
 
-    --my-yellow: #f0aa32;
-    --my-orange: #f07832;
+    --my-yellow: rgb(240, 180, 60);
+    --my-orange: rgb(240, 120, 60);
 
-    --my-red-1: #f01414;
-    --my-red-2: rgb(120, 20, 20);
+    --my-red-1: rgb(150, 50, 50);
+    --my-red-2: rgb(150, 25, 25);
 
-    --my-blue-1: #96c8c8;
+    --my-blue-1: rgb(150, 200, 200);
     --my-blue-2: rgb(100, 125, 150);
 
     --my-green-1: rgb(150, 200, 150);
-    --my-green-2: #326432;
+    --my-green-2: rgb(100, 150, 100);
 
     --speed-1: 0.25s;
     --speed-2: 0.1s;
@@ -70,7 +70,7 @@ body, #app {
 }
 
 #main-content {
-    padding: var(--mini-text) 0;
+    padding: var(--mini-text) calc(2*var(--mini-text));
     
     width: 100%;
 
@@ -85,6 +85,7 @@ body, #app {
     background-image: repeating-linear-gradient(90deg, transparent, transparent var(--medium-text-2), var(--dark-2) var(--medium-text-2), var(--dark-2) calc(2 * var(--medium-text-2)));
     box-shadow: inset 0px 0px var(--giant-text) var(--dark-3);
 
+    overflow-x: hidden;
     overflow-y: auto;
     scrollbar-color: var(--dark-2) var(--dark-1);
     scrollbar-width: calc(0.5 * var(--medium-text-2));

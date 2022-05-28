@@ -14,9 +14,15 @@ sendData.app.get('/', (req, res) => {
 
 sendData.app.get('/categories', (req, res) => {
     db.Categories.findAll({
+        attributes: { 
+            include: [[db.Sequelize.fn("COUNT", db.Sequelize.col("Products.uuid")), "productsCount"]] 
+        },
         include: [{
-            model: db.Products
-        }]
+            model: db.Products,
+            attributes: []
+        }],
+        group: ['Category.uuid'],
+        order: [['name', 'ASC']]
     })
         .then(result => {
             res.json(result)

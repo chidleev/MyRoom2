@@ -1,15 +1,43 @@
 <div id="categories-box">
-    <div class="category-item" id="category-item">
+    <div id="panel">
+        <div id="buttons">
+            <div class="block">
+                <router-link 
+                    v-for="(pageName, key) in {categoryAdm: 'Категории', productAdm: 'Товары'}"
+                    :to="{ name: key }" 
+                    class="button" 
+                    active-class="active-btn"
+                >
+                {{pageName}}
+                </router-link>
+            </div>
+            <div class="block">
+                <router-link 
+                    v-for="(pageName, key) in {commentAdm: 'Комментарии', employeeAdm: 'Работники'}"
+                    :to="{ name: key }" 
+                    class="button" 
+                    active-class="active-btn"
+                >
+                {{pageName}}
+                </router-link>
+            </div>
+        </div>
+        <div id="text">Панель управления. Категории</div>
+    </div>
+
+    <div class="category-item" id="category-head">
         <div>
-            <input type="text" v-model="newCategory.name">
+            <input type="text" v-model="newCategory.name" placeholder="Название категории">
             <button @click="createCategory()">
                 <span class="material-icons">
                     add_circle_outline
                 </span>
             </button>
         </div>
+        
+        <span>Количество категорий: {{categories.length}}шт.</span>
+        
         <div>
-            <span>Количество категорий: {{categories.length}}шт.</span>
             <button @click="deleteCategories()">
                 Удалить выбранное <span class="material-icons delete-btn">
                     delete_forever
@@ -28,7 +56,7 @@
             </button>
         </div>
         <div>
-            <span @click.self="checkItem(category.uuid)">Количество товара: {{category.Products.length}}шт.</span>
+            <span @click.self="checkItem(category.uuid)">Количество товара: {{category.productsCount}}шт.</span>
             <input type="checkbox" :id="'check-'+category.uuid" v-model="checkedCategories" :value="category.uuid">
         </div>
     </div>

@@ -3,7 +3,6 @@ export default function() {
         const that = this
         axios.get('/api/getdata/categories')
         .then(function (response) {
-            localStorage.setItem('categories', JSON.stringify(response.data))
             that.categories = response.data
             window.dispatchEvent(new CustomEvent('categoriesDistribution', { detail: {
                 categories: that.categories
@@ -21,16 +20,5 @@ export default function() {
         }}))
     })
 
-    if (/*localStorage.getItem('categories')*/false) {
-        try {
-            this.categories = JSON.parse(localStorage.getItem('categories')) 
-        } catch(e) {
-            localStorage.removeItem('categories')
-        }
-    }
-    else {
-        window.dispatchEvent(new Event('updateCategories'))
-    }
-
-    
+    window.dispatchEvent(new Event('updateCategories'))
 }

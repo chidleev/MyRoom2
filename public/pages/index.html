@@ -21,6 +21,7 @@
 
     <script src='/scripts/vue/dist/vue.global.js'></script>
     <script src='/scripts/vue-router/dist/vue-router.global.js'></script>
+    <script src='/scripts/jenesius-vue-modal/dist/jenesius-vue-modal.cjs.js'></script>
     <script src='/scripts/vue-spinner/dist/vue-spinner.min.js'></script>
     <script src='/scripts/axios/dist/axios.min.js'></script>
     <script src='/scripts/validator/validator.min.js'></script>
@@ -58,7 +59,7 @@
                             id="category-button" 
                             active-class="active"
                         >
-                            <div>{{item.name}}</div><div>{{item.Products.length}}</div>
+                            <div>{{item.name}}</div><div>{{item.productsCount}}</div>
                         </router-link>
                     </li>
                 </ul>

@@ -79,29 +79,7 @@ export default function(defaultPageScripts, loggedPageScripts, adminPageScripts)
                     component: adminPageScripts.profileAdm(adminPages.profileAdm),
                     meta: {
                         requredLogin: true
-                    },
-                    children: [
-                        {
-                            path: "category",
-                            name: "categoryAdm",
-                            component: adminPageScripts.categoryAdm(adminPages.categoryAdm)
-                        },
-                        {
-                            path: "comment",
-                            name: "commentAdm",
-                            component: adminPageScripts.commentAdm(adminPages.commentAdm)
-                        },
-                        {
-                            path: "employee",
-                            name: "employeeAdm",
-                            component: adminPageScripts.employeeAdm(adminPages.employeeAdm)
-                        },
-                        {
-                            path: "product",
-                            name: "productAdm",
-                            component: adminPageScripts.productAdm(adminPages.productAdm)
-                        }
-                    ]
+                    }
                 },
                 {
                     path: "login",
@@ -112,6 +90,26 @@ export default function(defaultPageScripts, loggedPageScripts, adminPageScripts)
                     path: "signup",
                     name: "signup",
                     component: defaultPageScripts.signup(defaultPages.signup)
+                },
+                {
+                    path: "category",
+                    name: "categoryAdm",
+                    component: adminPageScripts.categoryAdm(adminPages.categoryAdm)
+                },
+                {
+                    path: "comment",
+                    name: "commentAdm",
+                    component: adminPageScripts.commentAdm(adminPages.commentAdm)
+                },
+                {
+                    path: "employee",
+                    name: "employeeAdm",
+                    component: adminPageScripts.employeeAdm(adminPages.employeeAdm)
+                },
+                {
+                    path: "product",
+                    name: "productAdm",
+                    component: adminPageScripts.productAdm(adminPages.productAdm)
                 }
             ]
         },

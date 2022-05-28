@@ -1,4 +1,30 @@
 <div id="product-box">
+    <div id="panel">
+        <div id="buttons">
+            <div class="block">
+                <router-link 
+                    v-for="(pageName, key) in {categoryAdm: 'Категории', productAdm: 'Товары'}"
+                    :to="{ name: key }" 
+                    class="button" 
+                    active-class="active-btn"
+                >
+                {{pageName}}
+                </router-link>
+            </div>
+            <div class="block">
+                <router-link 
+                    v-for="(pageName, key) in {commentAdm: 'Комментарии', employeeAdm: 'Работники'}"
+                    :to="{ name: key }" 
+                    class="button" 
+                    active-class="active-btn"
+                >
+                {{pageName}}
+                </router-link>
+            </div>
+        </div>
+        <div id="text">Панель управления. Товары</div>
+    </div>
+    
     <div id="head-menu">
         <div class="dropdown">
             <div class="dropdown-text">Текущая категория: {{selectedCategory.name || 'не выбрана'}}</div>
@@ -7,7 +33,7 @@
             </div>
         </div>
 
-        <div>fgfggfg</div>
+        <div id="new-product">fgfggfg</div>
     </div>
 
     <details>
