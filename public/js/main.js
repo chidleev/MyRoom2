@@ -7,7 +7,6 @@
 все страницы хранятся одним объектом
  */
 
-
 import initRouter from '/js/router.js'
 import loadComponents from '/js/loadComponents.js'
 import onMountFunction from '/js/onMountFunction.js'
@@ -48,7 +47,7 @@ const settings = {
 const app = Vue.createApp(settings)
 
 app.component('BeatLoader', VueSpinner.BeatLoader)
-app.component('searchLine', loadComponents.searchLine)
+app.component('SearchLine', loadComponents.searchLine)
 
 axios({
     url: '/api/user/checkRole'

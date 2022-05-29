@@ -17,7 +17,7 @@ export default function (htmlPage) {
         methods: {
             checkItem(uuid) {
                 if (this.checkedCategories.indexOf(uuid) + 1) {
-                    this.checkedCategories.splice(this.checkedCategories.indexOf(uuid), 1); 
+                    this.checkedCategories.splice(this.checkedCategories.indexOf(uuid), 1);
                 }
                 else {
                     this.checkedCategories.push(uuid)
@@ -31,15 +31,22 @@ export default function (htmlPage) {
                         name: this.newCategory.name
                     }
                 })
-                .then(res => {
-                    alert(res.data)
-                    window.dispatchEvent(new Event('updateCategories'))
-                })
-                .catch(err => {
-                    err.response.data.errors.forEach(error => {
-                        alert(error.comment)
-                    });
-                })
+                    .then(res => {
+                        new Toast({
+                            title: false,
+                            text: res.data,
+                            theme: 'success',
+                            autohide: true,
+                            interval: 2000
+                        });
+                        this.newCategory.name = ''
+                        window.dispatchEvent(new Event('updateCategories'))
+                    })
+                    .catch(err => {
+                        err.response.data.errors.forEach(error => {
+                            alert(error.comment)
+                        });
+                    })
             },
             renameCategory(category) {
                 axios({
@@ -50,33 +57,48 @@ export default function (htmlPage) {
                         newName: category.name
                     }
                 })
-                .then(res => {
-                    alert(res.data)
-                    window.dispatchEvent(new Event('updateCategories'))
-                })
-                .catch(err => {
-                    err.response.data.errors.forEach(error => {
-                        alert(error.comment)
-                    });
-                })
+                    .then(res => {
+                        new Toast({
+                            title: false,
+                            text: res.data,
+                            theme: 'success',
+                            autohide: true,
+                            interval: 2000
+                        });
+                        window.dispatchEvent(new Event('updateCategories'))
+                    })
+                    .catch(err => {
+                        err.response.data.errors.forEach(error => {
+                            alert(error.comment)
+                        });
+                    })
             },
             deleteCategories() {
-                axios({
-                    url: '/api/admin/category',
-                    method: 'delete',
-                    data: {
-                        uuids: this.checkedCategories
-                    }
-                })
-                .then(res => {
-                    alert(res.data)
-                    window.dispatchEvent(new Event('updateCategories'))
-                })
-                .catch(err => {
-                    err.response.data.errors.forEach(error => {
-                        alert(error.comment)
-                    });
-                })
+                var answer = confirm('Вы действительно хотите удалить выбранные категории?')
+                if (answer) {
+                    axios({
+                        url: '/api/admin/category',
+                        method: 'delete',
+                        data: {
+                            uuids: this.checkedCategories
+                        }
+                    })
+                        .then(res => {
+                            new Toast({
+                                title: false,
+                                text: res.data,
+                                theme: 'success',
+                                autohide: true,
+                                interval: 2000
+                            });
+                            window.dispatchEvent(new Event('updateCategories'))
+                        })
+                        .catch(err => {
+                            err.response.data.errors.forEach(error => {
+                                alert(error.comment)
+                            });
+                        })
+                }
             }
         }
     }

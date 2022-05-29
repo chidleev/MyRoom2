@@ -27,7 +27,7 @@
 
     <div class="category-item" id="category-head">
         <div>
-            <input type="text" v-model="newCategory.name" placeholder="Название категории">
+            <input type="text" v-model="newCategory.name" placeholder="Название новой категории">
             <button @click="createCategory()">
                 <span class="material-icons">
                     add_circle_outline
@@ -48,12 +48,12 @@
 
     <div v-for="category in categories" class="category-item" :id="'category-item-'+category.uuid" @click.self="checkItem(category.uuid)">
         <div>
-            <input type="text" v-model="category.name">
-            <button @click="renameCategory(category)">
+            <input type="text" v-model="category.name" @change="renameCategory(category)" :id="'category-name-'+category.uuid">
+            <label :for="'category-name-'+category.uuid">
                 <span class="material-icons">
                     drive_file_rename_outline
                 </span>
-            </button>
+            </label>
         </div>
         <div>
             <span @click.self="checkItem(category.uuid)">Количество товара: {{category.productsCount}}шт.</span>

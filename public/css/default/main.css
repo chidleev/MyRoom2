@@ -11,8 +11,8 @@
     --my-yellow: rgb(240, 180, 60);
     --my-orange: rgb(240, 120, 60);
 
-    --my-red-1: rgb(150, 50, 50);
-    --my-red-2: rgb(150, 25, 25);
+    --my-red-1: rgb(240, 40, 40);
+    --my-red-2: rgb(180, 20, 20);
 
     --my-blue-1: rgb(150, 200, 200);
     --my-blue-2: rgb(100, 125, 150);
@@ -23,12 +23,14 @@
     --speed-1: 0.25s;
     --speed-2: 0.1s;
 
-    --giant-text: clamp(90px, 1rem, 1rem);
-    --big-text-1: clamp(43.5px, 0.5rem, 0.5rem);
-    --big-text-2: clamp(34.5px, 0.4rem, 0.4rem);
-    --medium-text-1: clamp(35px, 0.25rem, 0.25rem);
-    --medium-text-2: clamp(25px, 0.2rem, 0.2rem);
-    --mini-text: clamp(15px, 0.15rem, 0.15rem);
+    --adaptive-size: calc((100vw - 850px)/(1920 - 850) * (160 - 80) + 80px);
+
+    --giant-text: clamp(90px, var(--adaptive-size), var(--adaptive-size));
+    --big-text-1: clamp(43.5px, 0.5*var(--adaptive-size), 0.5*var(--adaptive-size));
+    --big-text-2: clamp(34.5px, 0.4*var(--adaptive-size), 0.4*var(--adaptive-size));
+    --medium-text-1: clamp(35px, 0.25*var(--adaptive-size), 0.25*var(--adaptive-size));
+    --medium-text-2: clamp(25px, 0.2*var(--adaptive-size), 0.2*var(--adaptive-size));
+    --mini-text: clamp(15px, 0.15*var(--adaptive-size), 0.15*var(--adaptive-size));
 
     --back-img: linear-gradient(135deg, var(--light-1) 25%, transparent 25%), linear-gradient(225deg, var(--light-1) 25%, transparent 25%), linear-gradient(45deg, var(--light-1) 25%, transparent 25%), linear-gradient(315deg, var(--light-1) 25%, var(--light-2) 25%);
     --black-back-img: linear-gradient(135deg, var(--dark-1) 25%, transparent 25%), linear-gradient(225deg, var(--dark-1) 25%, transparent 25%), linear-gradient(45deg, var(--dark-1) 25%, transparent 25%), linear-gradient(315deg, var(--dark-1) 25%, var(--dark-2) 25%);
@@ -44,11 +46,8 @@
     -moz-user-select: none; 
     -webkit-user-select: none; 
     user-select: none; 
-}
 
-html {
-    height: 100vh;
-    font-size: calc((100vw - 850px)/(1920 - 850) * (160 - 80) + 80px);
+    /*transition: var(--speed-1);*/
 }
 
 div {
