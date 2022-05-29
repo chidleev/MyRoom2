@@ -20,7 +20,7 @@ const settings = {
         }
     },
     mounted: onMountFunction,
-    computed: {},
+    watch: {},
     methods: {
         logoutReq() {
             axios({
@@ -46,7 +46,6 @@ const settings = {
 
 const app = Vue.createApp(settings)
 
-app.component('BeatLoader', VueSpinner.BeatLoader)
 app.component('SearchLine', loadComponents.searchLine)
 
 axios({

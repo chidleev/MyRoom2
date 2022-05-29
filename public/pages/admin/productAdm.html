@@ -35,37 +35,57 @@
     </div>
 
     <template v-if="selectedCategory.name">
-        <details id="new-product">
+        <details id="product-card">
             <summary>
                 <span>Добавить новый товар. Категория: "{{selectedCategory.name}}"</span>
-                <button type="submit" form="createProduct">Добавить</button>
+                <button type="submit" form="create-product-form">Добавить</button>
             </summary>
-            <form id="create-product-form" @submit.prevent="createProduct">
+            <form id="create-product-form" class="product-form" @submit.prevent="createProduct">
                 <div class="row">
-                    <input type="text" v-model="newProduct.name" placeholder="Название">
-                    <input type="number" step="0.01" min="0" v-model="newProduct.price" placeholder="Цена">
+                    <div>Название
+                        <input type="text" v-model="newProduct.name" placeholder="Название">
+                    </div>
+                    <div>Цена
+                        <input type="number" step="0.01" min="0" v-model="newProduct.price" placeholder="Цена">
+                    </div>
                 </div>
                 <div class="row">
-                    <textarea v-model="newProduct.description" placeholder="Описание товара"></textarea>
+                    <div>Описание товара
+                        <textarea v-model="newProduct.description" placeholder="Описание товара"></textarea>
+                    </div>
                 </div>
                 <div class="row">
-                    <input type="text" v-model="newProduct.madeIn" placeholder="Страна-производитель">
-                    <input type="text" v-model="newProduct.material" placeholder="Материал">
+                    <div>Страна-производитель
+                        <input type="text" v-model="newProduct.madeIn" placeholder="Страна-производитель">
+                    </div>
+                    <div>Материал
+                        <input type="text" v-model="newProduct.material" placeholder="Материал">
+                    </div>
                 </div>
                 <div class="row">
-                    <input type="number" step="0.01" min="0" v-model="newProduct.dimesions[0]" placeholder="Ширина">
-                    <input type="number" step="0.01" min="0" v-model="newProduct.dimesions[1]" placeholder="Высота">
-                    <input type="number" step="0.01" min="0" v-model="newProduct.dimesions[2]" placeholder="Длина">
+                    <div>Ширина
+                        <input type="number" step="0.01" min="0" v-model="newProduct.dimensions[0]" placeholder="Ширина">
+                    </div>
+                    <div>Высота
+                        <input type="number" step="0.01" min="0" v-model="newProduct.dimensions[1]" placeholder="Высота">
+                    </div>
+                    <div>Длина
+                        <input type="number" step="0.01" min="0" v-model="newProduct.dimensions[2]" placeholder="Длина">
+                    </div>
                 </div>
                 <div class="row">
-                    <input type="number" step="0.01" v-model="newProduct.weight" placeholder="Вес">
-                    <input type="number" v-model="newProduct.warranty" placeholder="Гарантия (мес.)">
+                    <div>Вес
+                        <input type="number" step="0.01" min="0" v-model="newProduct.weight" placeholder="Вес">
+                    </div>
+                    <div>Гарантия (мес.)
+                        <input type="number" min="0" v-model="newProduct.warranty" placeholder="Гарантия (мес.)">
+                    </div>
                 </div>
                 <details id="photos">
-                    <summary>Фотографии продукта ({{newProduct.photoURLs.length}} шт.)</summary>
+                    <summary>Фотографии товара ({{newProduct.photoURLs.length}} шт.)</summary>
                     <div class="row">
-                        <img v-for="photoURL in newProduct.photoURLs" :src="photoURL" alt="Фото продукта">
-                        <div class="new-photo">
+                        <img v-for="photo in newProduct.photoURLs" :src="photo" alt="Фото товара">
+                        <div id="new-photo" @click="addNewProductPhotos">
                             <span class="material-icons">
                                 add_circle_outline
                             </span>
@@ -75,9 +95,64 @@
             </form>
         </details>
     
-        <details>
-            <summary>Details</summary>
-            Something small enough to escape casual notice.
+        <details v-for="product in products" id="product-card">
+            <summary>
+                <span>{{product.name}}</span>
+                <button type="submit" form="patch-product-form">Изменить</button>
+            </summary>
+            <form id="patch-product-form" class="product-form" @submit.prevent="patchProduct(product)">
+                <div class="row">
+                    <div>Название
+                        <input type="text" v-model="product.name" placeholder="Название">
+                    </div>
+                    <div>Цена
+                        <input type="number" step="0.01" min="0" v-model="product.price" placeholder="Цена">
+                    </div>
+                </div>
+                <div class="row">
+                    <div>Описание товара
+                        <textarea v-model="product.description" placeholder="Описание товара"></textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <div>Страна-производитель
+                        <input type="text" v-model="product.madeIn" placeholder="Страна-производитель">
+                    </div>
+                    <div>Материал
+                        <input type="text" v-model="product.material" placeholder="Материал">
+                    </div>
+                </div>
+                <div class="row">
+                    <div>Ширина
+                        <input type="number" step="0.01" min="0" v-model="product.dimensions[0]" placeholder="Ширина">
+                    </div>
+                    <div>Высота
+                        <input type="number" step="0.01" min="0" v-model="product.dimensions[1]" placeholder="Высота">
+                    </div>
+                    <div>Длина
+                        <input type="number" step="0.01" min="0" v-model="product.dimensions[2]" placeholder="Длина">
+                    </div>
+                </div>
+                <div class="row">
+                    <div>Вес
+                        <input type="number" step="0.01" min="0" v-model="product.weight" placeholder="Вес">
+                    </div>
+                    <div>Гарантия (мес.)
+                        <input type="number" min="0" v-model="product.warranty" placeholder="Гарантия (мес.)">
+                    </div>
+                </div>
+                <details id="photos">
+                    <summary>Фотографии товара ({{product.ProductPhotos.length}} шт.)</summary>
+                    <div class="row">
+                        <img v-for="photo in product.ProductPhotos" :src="photo.url" alt="Фото товара">
+                        <div id="new-photo" @click="addProductPhotos($event, product)">
+                            <span class="material-icons">
+                                add_circle_outline
+                            </span>
+                        </div>
+                    </div>
+                </details>
+            </form>
         </details>
     </template>
 </div>

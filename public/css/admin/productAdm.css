@@ -93,7 +93,8 @@
     transition: var(--speed-2);
 }
 
-#new-product {
+#product-card {
+    margin-bottom: calc(0.5 * var(--mini-text));
     padding: calc(0.5 * var(--mini-text));
 
     box-sizing: border-box;
@@ -113,7 +114,7 @@
     transition: var(--speed-1);
 }
 
-#new-product summary, #new-product .row {
+#product-card summary, #product-card .row {
     box-sizing: border-box;
     width: 100%;
 
@@ -123,11 +124,36 @@
     align-items: center;
 }
 
-#new-product summary {
+#product-card summary {
     padding: 0 calc(0.25 * var(--mini-text));
 }
 
-#new-product form {
+#product-card summary button {
+    padding: calc(0.25 * var(--mini-text)) calc(0.5 * var(--mini-text));
+
+    box-sizing: border-box;
+    min-width: calc(7 * var(--mini-text));
+
+    border: calc(0.125 * var(--medium-text-2)) solid var(--light-1);
+
+    color: var(--light-1);
+    background-color: var(--my-green-1);
+    transition: var(--speed-2);
+}
+
+#product-card summary button:hover {
+    background-color: var(--my-yellow);
+    box-shadow: 0px 0px var(--medium-text-1) var(--my-yellow);
+    transition: var(--speed-2);
+}
+
+#product-card summary button:active {
+    background-color: var(--my-orange);
+    box-shadow: 0px 0px var(--medium-text-1) var(--my-orange);
+    transition: var(--speed-2);
+}
+
+#product-card form {
     margin-top: calc(0.5 * var(--mini-text));
 
     width: 100%;
@@ -138,27 +164,58 @@
     align-items: stretch;
 }
 
-#new-product .row input, #new-product .row textarea {
-    margin: calc(.25 * var(--mini-text));
-    padding: calc(.5 * var(--mini-text));
+#product-card .row div:not([id="new-photo"]) {
+    padding: calc(.25 * var(--mini-text));
 
     box-sizing: border-box;
-    min-height: calc(1.5 * var(--mini-text));
+
+    flex: 1 1;
+
+    text-align: center;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#product-card .row div[id="new-photo"] {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#product-card .row div input, #product-card .row div textarea {
+    padding: calc(.5 * var(--mini-text));
+    
+    box-sizing: border-box;
+    width: 100%;
+    height: calc(2*var(--mini-text));
+
+    border: none;
+    outline: none;
 
     text-align: center;
 
-    flex: 1 1;
+    color: var(--my-blue-2);
+    background-color: var(--light-1);
 }
 
-#new-product .row input[type='number'] {
-    width: 30%
+#product-card .row div input::placeholder, #product-card .row div textarea::placeholder {
+    color: var(--my-blue-1);
 }
 
-#new-product .row textarea {
+#product-card .row div input[type='number']::-webkit-inner-spin-button {
+    opacity: 1;
+}
+
+#product-card .row div textarea {
+    width: 100%;
+    resize:vertical;
+    min-height: calc(5 * var(--mini-text));
     text-align: justify;
 }
 
-#create-product-form #photos {
+.product-form #photos {
     margin: calc(0.25 * var(--mini-text));
 
     box-sizing: border-box;
@@ -173,22 +230,23 @@
     background-repeat: repeat;
 }
 
-#create-product-form #photos .row {
+.product-form #photos .row {
     flex-wrap: wrap;
 }
 
-#create-product-form #photos summary {
+.product-form #photos summary {
     padding: calc(.5 * var(--mini-text));
     background-color: var(--light-1);
 }
 
-#create-product-form #photos img, #create-product-form #photos .new-photo {
+.product-form #photos img, .product-form #photos #new-photo {
     margin: calc(0.5 * var(--mini-text));
 
+    object-fit: scale-down;
     box-sizing: border-box;
     min-width: calc(10 * var(--mini-text));
     max-width: calc(12 * var(--mini-text));
-    min-height: calc(7.5 * var(--mini-text));
+    height: calc(7.5 * var(--mini-text));
 
     flex: 1 1;
 
@@ -198,11 +256,104 @@
     background-color: var(--light-1);
 }
 
-#create-product-form #photos .new-photo {
+.product-form #photos #new-photo {
     justify-content: center;
     align-items: center;
 }
 
-#create-product-form #photos .new-photo span {
+.product-form #photos #new-photo span {
     font-size: calc(3 * var(--mini-text));
+    transition: var(--speed-2);
 }
+
+.product-form #photos #new-photo:hover span {
+    color: var(--my-yellow);
+    transition: var(--speed-2);
+}
+
+.product-form #photos #new-photo:active span {
+    color: var(--my-orange);
+    transition: var(--speed-2);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.lds-grid {
+    display: inline-block;
+    position: relative;
+    width: 80px;
+    height: 80px;
+  }
+  .lds-grid div {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--light-2);
+    animation: lds-grid 1.2s linear infinite;
+  }
+  .lds-grid div:nth-child(1) {
+    top: 8px;
+    left: 8px;
+    animation-delay: 0s;
+  }
+  .lds-grid div:nth-child(2) {
+    top: 8px;
+    left: 32px;
+    animation-delay: -0.4s;
+  }
+  .lds-grid div:nth-child(3) {
+    top: 8px;
+    left: 56px;
+    animation-delay: -0.8s;
+  }
+  .lds-grid div:nth-child(4) {
+    top: 32px;
+    left: 8px;
+    animation-delay: -0.4s;
+  }
+  .lds-grid div:nth-child(5) {
+    top: 32px;
+    left: 32px;
+    animation-delay: -0.8s;
+  }
+  .lds-grid div:nth-child(6) {
+    top: 32px;
+    left: 56px;
+    animation-delay: -1.2s;
+  }
+  .lds-grid div:nth-child(7) {
+    top: 56px;
+    left: 8px;
+    animation-delay: -0.8s;
+  }
+  .lds-grid div:nth-child(8) {
+    top: 56px;
+    left: 32px;
+    animation-delay: -1.2s;
+  }
+  .lds-grid div:nth-child(9) {
+    top: 56px;
+    left: 56px;
+    animation-delay: -1.6s;
+  }
+  @keyframes lds-grid {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
+  }
+  

@@ -17,7 +17,7 @@
     justify-content: space-between;
     align-items: stretch;
 
-    border: calc(0.15 * var(--medium-text-2)) dashed var(--my-blue-1);
+    border: calc(0.15 * var(--medium-text-2)) solid var(--light-2);
 
     background-image: var(--back-img);
     background-position:  calc(0.5 * var(--mini-text)) 0, calc(0.5 * var(--mini-text)) 0, 0 0, 0 0;
@@ -85,7 +85,7 @@
 }
 
 .category-item:hover {
-    border: calc(0.15 * var(--medium-text-2)) dashed var(--my-blue-2);
+    border: calc(0.15 * var(--medium-text-2)) solid var(--my-yellow);
     transition: var(--speed-2);
 }
 

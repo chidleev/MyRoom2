@@ -54,9 +54,10 @@
     margin-bottom: var(--mini-text);
 
     box-sizing: border-box;
-    min-height: 250px;
+    min-width: 100%;
+    min-height: calc(15 * var(--mini-text));
 
-    flex: 1 0 100%;
+    flex: 1 0;
 
     display: flex;
     flex-direction: row;

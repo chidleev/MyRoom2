@@ -33,6 +33,7 @@ module.exports = (client, Sequelize, DataTypes) => {
             allowNull: false
         },
         warranty: DataTypes.INTEGER,
+        count: DataTypes.INTEGER,
         description: DataTypes.TEXT
     });
     return Product;
