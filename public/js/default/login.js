@@ -44,7 +44,13 @@ export default function (htmlPage) {
                     }
                 })
                     .then(response => {
-                        alert("Вы успешно вошли в свой аккаунт!")
+                        new Toast({
+                            title: false,
+                            text: "Вы успешно вошли в свой аккаунт!",
+                            theme: 'success',
+                            autohide: true,
+                            interval: 2000
+                        })
                         document.getElementById('logout_icon').style.display = 'flex'
                         if (response.data) {
                             this.$router.go()
@@ -54,7 +60,13 @@ export default function (htmlPage) {
                     .catch(error => {
                         error.response.data.errors.forEach(error => {
                             this.wrongInput[error.type] = true
-                            alert(error.comment)
+                            new Toast({
+                                title: false,
+                                text: error.comment,
+                                theme: 'warning',
+                                autohide: true,
+                                interval: 2000
+                            })
                         })
                     })
             }

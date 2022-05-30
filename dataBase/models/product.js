@@ -20,8 +20,8 @@ module.exports = (client, Sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false
         },
-        material: {
-            type: DataTypes.STRING,
+        materials: {
+            type: DataTypes.ARRAY(DataTypes.STRING),
             allowNull: false
         },
         dimensions: {

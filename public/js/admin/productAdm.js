@@ -8,10 +8,13 @@ export default function (htmlPage) {
                 selectedCategory: {},
                 newProduct: {
                     dimensions: [],
-                    photoURLs: []
+                    photos: [],
+                    materials: []
                 },
                 newProductPhotos: [],
-                loadingImg: false
+                loadingImg: false,
+                countries: ['Италия', 'Германия', 'США', 'Канада', 'Япония', 'Франция', 'Великобритания', 'Китай', 'Россия'],
+                materials: ['Натуральное дерево', 'ДСП', 'ЛДСП', 'МДФ', 'Рогожка', 'Вельвет', 'Велюр', 'Велюр (Лекко)', 'Ткань', 'Металл']
             }
         },
         mounted() {
@@ -25,7 +28,7 @@ export default function (htmlPage) {
                 if (!Boolean(newValue.name)) {
                     this.products = [{
                         dimensions: [],
-                        photoURLs: []
+                        photos: []
                     }]
                 }
                 else {
@@ -39,6 +42,9 @@ export default function (htmlPage) {
                     })
                         .then(response => {
                             that.products = response.data.Products
+                            that.products.forEach(product => {
+                                product.wannaDeleteImages = []
+                            })
                         })
                         .catch(error => {
                             error.response.data.errors.forEach(error => {
@@ -46,7 +52,7 @@ export default function (htmlPage) {
                             });
                             that.products = [{
                                 dimensions: [],
-                                photoURLs: []
+                                photos: []
                             }]
                         })
                 }
@@ -54,7 +60,42 @@ export default function (htmlPage) {
         },
         methods: {
             createProduct() {
-
+                const that = this
+                axios({
+                    url: '/api/admin/product',
+                    method: 'put',
+                    data: {
+                        product: that.newProduct,
+                        categoryUUID: that.selectedCategory.uuid
+                    }
+                })
+                    .then(response => {
+                        new Toast({
+                            title: false,
+                            text: "Товар успешно создан",
+                            theme: 'success',
+                            autohide: true,
+                            interval: 2000
+                        });
+                        that.products.push(response.data)
+                        that.selectedCategory.productsCount = +that.selectedCategory.productsCount + 1
+                        that.newProduct = {
+                            dimensions: [],
+                            photos: [],
+                            materials: []
+                        }
+                    })
+                    .catch(error => {
+                        error.response.data.errors.forEach(error => {
+                            new Toast({
+                                title: false,
+                                text: error.comment,
+                                theme: 'warning',
+                                autohide: true,
+                                interval: 10000
+                            })
+                        })
+                    })
             },
 
             addNewProductPhotos(event) {
@@ -64,7 +105,10 @@ export default function (htmlPage) {
                     if (err) console.error(err)
                     else {
                         if (response.event == 'success') {
-                            this.newProduct.photoURLs.push(response.info.url)
+                            this.newProduct.photos.push({
+                                url: response.info.url,
+                                publicID: response.info.public_id
+                            })
                         }
                         if (response.event == 'close') {
                             this.toggleLoad(el)
@@ -74,7 +118,33 @@ export default function (htmlPage) {
             },
 
             patchProduct(product) {
-
+                axios({
+                    url: '/api/admin/product',
+                    method: 'patch',
+                    data: {
+                        product: product
+                    }
+                })
+                    .then(response => {
+                        new Toast({
+                            title: false,
+                            text: "Товар успешно изменён",
+                            theme: 'success',
+                            autohide: true,
+                            interval: 2000
+                        });
+                    })
+                    .catch(error => {
+                        error.response.data.errors.forEach(error => {
+                            new Toast({
+                                title: false,
+                                text: error.comment,
+                                theme: 'warning',
+                                autohide: true,
+                                interval: 10000
+                            })
+                        })
+                    })
             },
 
             addProductPhotos(event, product) {
@@ -85,7 +155,8 @@ export default function (htmlPage) {
                     else {
                         if (response.event == 'success') {
                             this.newProductPhotos.push({
-                                url: response.info.url
+                                url: response.info.url,
+                                publicID: response.info.public_id
                             })
                         }
                         if (response.event == 'close') {
@@ -117,15 +188,49 @@ export default function (htmlPage) {
                                         new Toast({
                                             title: false,
                                             text: error.comment,
-                                            theme: 'success',
+                                            theme: 'warning',
                                             autohide: true,
-                                            interval: 2000
+                                            interval: 10000
                                         })
                                     })
                                 })
                         }
                     }
                 })
+            },
+
+            deleteProductPhotos(product) {
+                if (confirm("Удалить выбранные фотографии?")) {
+                    axios({
+                        url: '/api/admin/productPhotos',
+                        method: 'delete',
+                        data: {
+                            productPhotos: product.wannaDeleteImages,
+                            productUUID: product.uuid
+                        }
+                    })
+                        .then(response => {
+                            new Toast({
+                                title: false,
+                                text: response.data,
+                                theme: 'success',
+                                autohide: true,
+                                interval: 2000
+                            });
+                            product.wannaDeleteImages = []
+                        })
+                        .catch(error => {
+                            error.response.data.errors.forEach(error => {
+                                new Toast({
+                                    title: false,
+                                    text: error.comment,
+                                    theme: 'warning',
+                                    autohide: true,
+                                    interval: 10000
+                                })
+                            })
+                        })
+                }
             },
 
             showUploadWidget(callBack) {
@@ -175,7 +280,17 @@ export default function (htmlPage) {
                     this.loadingImg = !this.loadingImg
                     el.innerHTML = '<span class="material-icons">add_photo_alternate</span>'
                 }
-            }
+            },
+
+            toggleItemInArr(event, item, arr) {
+                event.target.toggleAttribute('selected')
+                if (arr.indexOf(item) + 1) {
+                    arr.splice(arr.indexOf(item), 1);
+                }
+                else {
+                    arr.push(item)
+                }
+            },
         }
     }
 }

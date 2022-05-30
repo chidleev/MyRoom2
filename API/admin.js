@@ -6,7 +6,7 @@
 */
 
 const axios = require("axios");
-const cloudinary = require('cloudinary')
+const cloudinary = require('cloudinary').v2
 cloudinary.config({
     cloud_name: 'myroom-shop',
     api_key: '714496323915627',
@@ -159,6 +159,134 @@ adminAPI.delete('/category', (req, res) => {
 })
 
 
+adminAPI.put('/product', (req, res) => {
+    const errors = []
+
+    if (!Boolean(req.body.product.name)) {
+        errors.push({
+            type: 'name',
+            comment: 'Вы не ввели название товара'
+        })
+    }
+    if (!Boolean(req.body.product.price)) {
+        errors.push({
+            type: 'price',
+            comment: 'Вы не ввели цену товара'
+        })
+    }
+    if (!Boolean(req.body.product.madeIn)) {
+        errors.push({
+            type: 'madeIn',
+            comment: 'Вы не ввели страну производства товара'
+        })
+    }
+    if (!Boolean(req.body.product.materials.length)) {
+        errors.push({
+            type: 'materials',
+            comment: 'Вы не ввели ни одного материала товара'
+        })
+    }
+    if (!Boolean(req.body.product.dimensions.length)) {
+        errors.push({
+            type: 'dimensions',
+            comment: 'Вы не ввели размеры товара'
+        })
+    }
+    if (!Boolean(req.body.product.weight)) {
+        errors.push({
+            type: 'weight',
+            comment: 'Вы не ввели вес товара'
+        })
+    }
+    if (!Boolean(req.body.categoryUUID)) {
+        errors.push({
+            type: 'category',
+            comment: 'Вы не выбрали категорию товара'
+        })
+    }
+
+    if (errors.length > 0) {
+        res.status(422).json({
+            errors: errors
+        })
+        return
+    }
+
+    db.Products.create(req.body.product)
+    .then(product => {
+        product.setCategory(req.body.categoryUUID)
+        .then(product => {
+            if (req.body.product.photos.length) {
+                db.ProductPhotos.bulkCreate(req.body.product.photos)
+                .then(photos => {
+                    product.addProductPhotos(photos)
+                    .then(product => {
+                        res.json(product)
+                    })
+                    .catch(err => {
+                        res.status(500).json({
+                            errors: [{
+                                type: 'addProductPhotos',
+                                comment: 'Не удалось добавить фотографии к товару',
+                                error: err
+                            }]
+                        })
+                    })
+                })
+                .catch(err => {
+                    res.status(500).json({
+                        errors: [{
+                            type: 'ProductPhotos',
+                            comment: 'Не удалось создать фотографии товара',
+                            error: err
+                        }]
+                    })
+                })
+            }
+            else {
+                res.json(product)
+            }
+        })
+        .catch(err => {
+            res.status(500).json({
+                errors: [{
+                    type: 'Category',
+                    comment: 'Не удалось установить категорию товара',
+                    error: err
+                }]
+            })
+        })
+    })
+    .catch(err => {
+        res.status(500).json({
+            errors: [{
+                type: 'Product',
+                comment: 'Не удалось создать товар',
+                error: err
+            }]
+        })
+    })
+})
+
+adminAPI.patch('/product', (req, res) => {
+    db.Products.update(req.body.product, {
+        where: { uuid: req.body.product.uuid }
+    })
+    .then(product => {
+        res.send('Товар изменен')
+    })
+    .catch(err => {
+        res.status(500).json({
+            errors: [{
+                type: 'Product',
+                comment: 'Не удалось изменить товар',
+                error: err
+            }]
+        })
+    })
+})
+
+
 adminAPI.patch('/productPhotos', (req, res) => {
     db.Products.findOne({
         where: { uuid: req.body.productUUID }
@@ -201,7 +329,63 @@ adminAPI.patch('/productPhotos', (req, res) => {
 })
 
 adminAPI.delete('/productPhotos', (req, res) => {
-    
+    if (!Boolean(req.body.productPhotos.length)) {
+        res.status(422).json({
+            errors: [{
+                type: 'photos',
+                comment: 'Вы не выбрали фотографии'
+            }]
+        })
+        return
+    }
+
+    cloudinary.api.delete_resources(req.body.productPhotos,
+        function(error, result) {
+            if (error) {
+                res.status(422).json({
+                    errors: [{
+                        type: 'photos',
+                        comment: 'Не удалось удалить фотографии'
+                    }]
+                })
+                return
+            }
+            db.Products.findOne({
+                where: { uuid: req.body.productUUID },
+                include: [{
+                    model: db.ProductPhotos,
+                    where: {
+                        publicID: {
+                            [db.Op.or]: req.body.productPhotos
+                        }
+                    }
+                }]
+            })
+            .then(product => {
+                product.removeProductPhotos(product.ProductPhotos)
+                .then(result => {
+                    res.send('Фотографии удалены')
+                })
+                .catch(err => {
+                    console.log(err);
+                    res.status(500).json({
+                        errors: [{
+                            type: 'sequalize',
+                            comment: 'Не удалось удалить фотографии'
+                        }]
+                    })
+                })
+            })
+            .catch(err => {
+                console.log(err);
+                res.status(500).json({
+                    errors: [{
+                        type: 'sequalize',
+                        comment: 'Не удалось найти продукт'
+                    }]
+                })
+            })
+        });
 })
 
 

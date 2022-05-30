@@ -126,6 +126,17 @@
 
 #product-card summary {
     padding: 0 calc(0.25 * var(--mini-text));
+    cursor: pointer;
+}
+
+#product-card summary .material-icons.first, .product-form #photos summary .material-icons {
+    margin-right: calc(0.75 * var(--mini-text));
+    transition: var(--speed-1);
+}
+
+#product-card[open] summary .material-icons.first, .product-form #photos[open] summary .material-icons {
+    transform: rotate(180deg);
+    transition: var(--speed-1);
 }
 
 #product-card summary button {
@@ -184,8 +195,8 @@
     align-items: center;
 }
 
-#product-card .row div input, #product-card .row div textarea {
-    padding: calc(.5 * var(--mini-text));
+#product-card .row div input, #product-card .row div textarea, #product-card .row div select {
+    padding: 0 calc(.5 * var(--mini-text));
     
     box-sizing: border-box;
     width: 100%;
@@ -209,10 +220,24 @@
 }
 
 #product-card .row div textarea {
+    padding: calc(.5 * var(--mini-text));
     width: 100%;
     resize:vertical;
     min-height: calc(5 * var(--mini-text));
     text-align: justify;
+}
+
+#product-card .row div select option:hover {
+    background-color: var(--my-blue-1);
+}
+#product-card .row div select option[selected] {
+    background-color: var(--my-blue-2);
+}
+
+#product-card .row div select[multiple] {
+    padding: calc(.5 * var(--mini-text));
+    overflow-y: auto;
+    min-height: calc(5 * var(--mini-text));
 }
 
 .product-form #photos {
@@ -239,6 +264,19 @@
     background-color: var(--light-1);
 }
 
+.product-form #photos summary .delete-btn {
+    border: calc(0.125 * var(--medium-text-2)) solid var(--light-2);
+    background-color: var(--my-yellow);
+}
+.product-form #photos summary .delete-btn:hover {
+    border: calc(0.125 * var(--medium-text-2)) solid var(--light-2);
+    background-color: var(--my-orange);
+}
+.product-form #photos summary .delete-btn:active {
+    border: calc(0.125 * var(--medium-text-2)) solid var(--light-2);
+    background-color: var(--my-red-1);
+}
+
 .product-form #photos img, .product-form #photos #new-photo {
     margin: calc(0.5 * var(--mini-text));
 
@@ -252,8 +290,15 @@
 
     border: calc(0.125 * var(--medium-text-2)) solid var(--my-blue-1);
 
+    cursor: pointer;
     color: var(--light-2);
     background-color: var(--light-1);
+    transition: var(--speed-2);
+}
+
+.product-form #photos img[selected] {
+    border: calc(0.125 * var(--medium-text-2)) solid var(--my-orange);
+    transition: var(--speed-2);
 }
 
 .product-form #photos #new-photo {

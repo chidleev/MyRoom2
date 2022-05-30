@@ -86,7 +86,7 @@
     flex: 3 0 300px;
 
     display: flex;
-    flex-direction: row-reverse;
+    flex-direction: row;
     align-items: stretch;
 
     background-color: var(--light-1);

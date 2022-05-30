@@ -94,7 +94,13 @@ export default function (htmlPage) {
                     })
                     .catch(error => {
                         error.response.data.errors.forEach(error => {
-                            alert(error.comment)
+                            new Toast({
+                                title: false,
+                                text: error.comment,
+                                theme: 'warning',
+                                autohide: true,
+                                interval: 2000
+                            })
                             this.wrongInput[error.type] = true
                         })
                     })
@@ -113,12 +119,24 @@ export default function (htmlPage) {
                     }
                 })
                     .then(response => {
-                        alert("Вы успешно зарегестрировались!")
+                        new Toast({
+                            title: false,
+                            text: "Вы успешно зарегестрировались!",
+                            theme: 'success',
+                            autohide: true,
+                            interval: 2000
+                        })
                         this.$router.push({ name: 'login' })
                     })
                     .catch(error => {
                         error.response.data.errors.forEach(error => {
-                            alert(error.comment)
+                            new Toast({
+                                title: false,
+                                text: error.comment,
+                                theme: 'warning',
+                                autohide: true,
+                                interval: 2000
+                            })
                             this.wrongInput[error.type] = true
                         })
                     })

@@ -37,6 +37,9 @@
     <template v-if="selectedCategory.name">
         <details id="product-card">
             <summary>
+                <span class="material-icons first">
+                    expand_circle_down
+                </span>
                 <span>Добавить новый товар. Категория: "{{selectedCategory.name}}"</span>
                 <button type="submit" form="create-product-form">Добавить</button>
             </summary>
@@ -56,13 +59,18 @@
                 </div>
                 <div class="row">
                     <div>Страна-производитель
-                        <input type="text" v-model="newProduct.madeIn" placeholder="Страна-производитель">
+                        <select v-model="newProduct.madeIn">
+                            <option disabled selected value="">Страна-производитель</option>
+                            <option v-for="country in countries.sort()">{{country}}</option>
+                        </select>
                     </div>
                     <div>Материал
-                        <input type="text" v-model="newProduct.material" placeholder="Материал">
+                        <select v-model="newProduct.materials" multiple>
+                            <option v-for="material in materials.sort()">{{material}}</option>
+                        </select>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row">x
                     <div>Ширина
                         <input type="number" step="0.01" min="0" v-model="newProduct.dimensions[0]" placeholder="Ширина">
                     </div>
@@ -74,7 +82,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div>Вес
+                    <div>Вес (кг.)
                         <input type="number" step="0.01" min="0" v-model="newProduct.weight" placeholder="Вес">
                     </div>
                     <div>Гарантия (мес.)
@@ -82,9 +90,13 @@
                     </div>
                 </div>
                 <details id="photos">
-                    <summary>Фотографии товара ({{newProduct.photoURLs.length}} шт.)</summary>
+                    <summary>
+                        <span class="material-icons">
+                            expand_circle_down
+                        </span>
+                        Фотографии товара ({{newProduct.photos.length}} шт.)</summary>
                     <div class="row">
-                        <img v-for="photo in newProduct.photoURLs" :src="photo" alt="Фото товара">
+                        <img v-for="photo in newProduct.photos" :src="photo.url" alt="Фото товара">
                         <div id="new-photo" @click="addNewProductPhotos">
                             <span class="material-icons">
                                 add_photo_alternate
@@ -97,6 +109,9 @@
     
         <details v-for="product in products" id="product-card">
             <summary>
+                <span class="material-icons first">
+                    expand_circle_down
+                </span>
                 <span>{{product.name}}</span>
                 <button type="submit" form="patch-product-form">Изменить</button>
             </summary>
@@ -116,10 +131,15 @@
                 </div>
                 <div class="row">
                     <div>Страна-производитель
-                        <input type="text" v-model="product.madeIn" placeholder="Страна-производитель">
+                        <select v-model="product.madeIn">
+                            <option disabled selected value="">Страна-производитель</option>
+                            <option v-for="country in countries.sort()">{{country}}</option>
+                        </select>
                     </div>
-                    <div>Материал
-                        <input type="text" v-model="product.material" placeholder="Материал">
+                    <div>Материал ({{product.materials.join(', ')}})
+                        <select v-model="product.materials" multiple>
+                            <option v-for="material in materials.sort()">{{material}}</option>
+                        </select>
                     </div>
                 </div>
                 <div class="row">
@@ -134,7 +154,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div>Вес
+                    <div>Вес (кг.)
                         <input type="number" step="0.01" min="0" v-model="product.weight" placeholder="Вес">
                     </div>
                     <div>Гарантия (мес.)
@@ -142,9 +162,15 @@
                     </div>
                 </div>
                 <details id="photos">
-                    <summary>Фотографии товара ({{product.ProductPhotos.length}} шт.)</summary>
+                    <summary>
+                        <span class="material-icons">
+                            expand_circle_down
+                        </span>
+                        Фотографии товара ({{product.ProductPhotos.length}} шт.)
+                        <button class="delete-btn" @click="deleteProductPhotos(product)">Удалить выбранные</button>
+                    </summary>
                     <div class="row">
-                        <img v-for="photo in product.ProductPhotos" :src="photo.url" alt="Фото товара">
+                        <img v-for="photo in product.ProductPhotos" :src="photo.url" alt="Фото товара" @click="toggleItemInArr($event, photo.publicID, product.wannaDeleteImages)">
                         <div id="new-photo" @click="addProductPhotos($event, product)">
                             <span class="material-icons">
                                 add_photo_alternate

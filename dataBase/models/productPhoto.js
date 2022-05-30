@@ -10,6 +10,10 @@ module.exports = (client, Sequelize, DataTypes) => {
         url: {
             type: DataTypes.STRING,
             unique: true
+        },
+        publicID: {
+            type: DataTypes.STRING,
+            unique: true
         }
     });
     return ProductPhoto;
