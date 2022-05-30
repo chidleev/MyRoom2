@@ -5,8 +5,10 @@
 
     <div id="productsContainer">
         <div v-for="product in categoryData.Products" id="productCard">
-            <div :id="product.uuid+'-miniGallery'" class="miniGallery">
-                <div v-for="n in 4" :id="'trigger-'+n" class="trigger" @mouseover="changeImage(product.uuid, n)"></div>
+            <div :id="product.uuid+'-miniGallery'" class="miniGallery" :style="{'background-image': `url(${(product.ProductPhotos[0])? product.ProductPhotos[0].url : '/icon/noImg.svg'})`}">
+                <div v-for="(photo, id) in product.ProductPhotos" :id="'trigger-'+id" class="trigger">
+                    <img :src="photo.url" @mouseover="changeImage(product.uuid, photo.url)">
+                </div>
             </div>
             <div id="text">
                 <div id="head">
@@ -18,6 +20,9 @@
                         {{getShortDesc(product.description)}}
                         <router-link :to="$route.path +'/'+ product.name">подробнее>></router-link>
                     </span>
+                </div>
+                <div id="bottom">
+                    {{product.price}}
                 </div>
             </div>
         </div>

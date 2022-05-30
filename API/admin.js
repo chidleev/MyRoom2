@@ -17,6 +17,7 @@ const checkIsAdmin = require('./validators').isAdmin
 
 const express = require('express');
 const db = require("../dataBase/models");
+const productPhoto = require("../dataBase/models/productPhoto");
 const adminAPI = express()
 
 adminAPI.use(checkIsAdmin)
@@ -155,6 +156,52 @@ adminAPI.delete('/category', (req, res) => {
             }]
         })
     })
+})
+
+
+adminAPI.patch('/productPhotos', (req, res) => {
+    db.Products.findOne({
+        where: { uuid: req.body.productUUID }
+    })
+    .then(product => {
+        db.ProductPhotos.bulkCreate(req.body.newProductPhotos)
+        .then(productPhotos => {
+            product.addProductPhotos(productPhotos)
+            .then(product => {
+                res.send('Фотографии успешно добавлены')
+            })
+            .catch(err => {
+                console.log(err);
+                res.status(500).json({
+                    errors: [{
+                        type: 'sequalize',
+                        comment: "Не удалось добавить фотографии данному продукту"
+                    }]
+                })
+            })
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                errors: [{
+                    type: 'sequalize',
+                    comment: "Не удалось создать фотографии для данного продукта"
+                }]
+            })
+        })
+    })
+    .catch(err => {
+        res.status(500).json({
+            errors: [{
+                type: 'sequalize',
+                comment: "Не удалось получить доступ к данному продукту"
+            }]
+        })
+    })
+})
+
+adminAPI.delete('/productPhotos', (req, res) => {
+    
 })
 
 

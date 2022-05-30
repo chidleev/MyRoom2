@@ -90,14 +90,32 @@
     align-items: stretch;
 
     background-color: var(--light-1);
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
 
     transition: var(--speed-1);
 }
 
 .miniGallery .trigger {
+    padding: calc(0.25*var(--mini-text));
     box-sizing: border-box;
-    flex: 1 0 0px;
-    /*border: 2px dashed black;*/
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    flex: 1 0;
+}
+
+.miniGallery .trigger img {
+    max-height: calc(2.5*var(--mini-text));
+    opacity: 0;
+    border: calc(0.125 * var(--medium-text-2)) solid var(--light-2);
+    transition: var(--speed-2);
+}
+
+.miniGallery:hover .trigger img {
+    opacity: 0.75;
+    transition: var(--speed-2);
 }
 
 #productCard #text {

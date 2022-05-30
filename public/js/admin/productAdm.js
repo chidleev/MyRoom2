@@ -10,6 +10,7 @@ export default function (htmlPage) {
                     dimensions: [],
                     photoURLs: []
                 },
+                newProductPhotos: [],
                 loadingImg: false
             }
         },
@@ -83,10 +84,45 @@ export default function (htmlPage) {
                     if (err) console.error(err)
                     else {
                         if (response.event == 'success') {
-                            product.photoURLs.push(response.info.url)
+                            this.newProductPhotos.push({
+                                url: response.info.url
+                            })
                         }
                         if (response.event == 'close') {
                             this.toggleLoad(el)
+                            var that = this
+                            axios({
+                                url: '/api/admin/productPhotos',
+                                method: 'patch',
+                                data: {
+                                    newProductPhotos: that.newProductPhotos,
+                                    productUUID: product.uuid
+                                }
+                            })
+                                .then(response => {
+                                    new Toast({
+                                        title: false,
+                                        text: response.data,
+                                        theme: 'success',
+                                        autohide: true,
+                                        interval: 2000
+                                    });
+                                    that.newProductPhotos.forEach(productPhoto => {
+                                        product.ProductPhotos.push(productPhoto)
+                                    })
+                                    that.newProductPhotos = []
+                                })
+                                .catch(error => {
+                                    error.response.data.errors.forEach(error => {
+                                        new Toast({
+                                            title: false,
+                                            text: error.comment,
+                                            theme: 'success',
+                                            autohide: true,
+                                            interval: 2000
+                                        })
+                                    })
+                                })
                         }
                     }
                 })
@@ -137,7 +173,7 @@ export default function (htmlPage) {
                 }
                 else {
                     this.loadingImg = !this.loadingImg
-                    el.innerHTML = '<span class="material-icons">add_circle_outline</span>'
+                    el.innerHTML = '<span class="material-icons">add_photo_alternate</span>'
                 }
             }
         }

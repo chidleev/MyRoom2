@@ -87,7 +87,7 @@
                         <img v-for="photo in newProduct.photoURLs" :src="photo" alt="Фото товара">
                         <div id="new-photo" @click="addNewProductPhotos">
                             <span class="material-icons">
-                                add_circle_outline
+                                add_photo_alternate
                             </span>
                         </div>
                     </div>
@@ -147,7 +147,7 @@
                         <img v-for="photo in product.ProductPhotos" :src="photo.url" alt="Фото товара">
                         <div id="new-photo" @click="addProductPhotos($event, product)">
                             <span class="material-icons">
-                                add_circle_outline
+                                add_photo_alternate
                             </span>
                         </div>
                     </div>

@@ -47,9 +47,8 @@ export default function (htmlPage) {
                 })
         },
         methods: {
-            changeImage(productUuid, n) {
-                const colors = ['var(--light-1)', 'orange', 'green', 'yellow']
-                document.getElementById(productUuid + '-miniGallery').style.backgroundColor = colors[n - 1]
+            changeImage(productUuid, photoURL) {
+                document.getElementById(productUuid + '-miniGallery').style.backgroundImage = `url(${photoURL})`
             },
 
             getShortDesc(description) {

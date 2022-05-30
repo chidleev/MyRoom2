@@ -48,7 +48,10 @@ sendData.app.post('/productsByCategory', (req, res) => {
         where: { ENname: req.body.categoryENname },
         include: [{
             model: db.Products,
-            include: [db.ProductPhotos]
+            include: [{
+                model: db.ProductPhotos,
+                order: [['url', 'ASC']]
+            }]
         }]
     })
         .then(category => {
