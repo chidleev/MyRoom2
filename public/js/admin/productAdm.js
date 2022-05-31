@@ -22,6 +22,13 @@ export default function (htmlPage) {
                 this.categories = event.detail.categories
             })
             window.dispatchEvent(new Event('categoriesRequest'))
+
+            window.addEventListener('productsDistribution', (event) => {
+                this.products = event.detail.products
+                this.products.forEach(product => {
+                    product.wannaDeleteImages = []
+                })
+            })
         },
         watch: {
             selectedCategory: function(newValue) {
@@ -32,29 +39,9 @@ export default function (htmlPage) {
                     }]
                 }
                 else {
-                    const that = this
-                    axios({
-                        url: '/api/getData/productsByCategory',
-                        method: 'post',
-                        data: {
-                            categoryENname: newValue.ENname
-                        }
-                    })
-                        .then(response => {
-                            that.products = response.data.Products
-                            that.products.forEach(product => {
-                                product.wannaDeleteImages = []
-                            })
-                        })
-                        .catch(error => {
-                            error.response.data.errors.forEach(error => {
-                                alert(error.comment)
-                            });
-                            that.products = [{
-                                dimensions: [],
-                                photos: []
-                            }]
-                        })
+                    window.dispatchEvent(new CustomEvent('productsRequest', { detail: {
+                        categoryENname: newValue.ENname
+                    }}))
                 }
             }
         },
@@ -77,13 +64,15 @@ export default function (htmlPage) {
                             autohide: true,
                             interval: 2000
                         });
-                        that.products.push(response.data)
-                        that.selectedCategory.productsCount = +that.selectedCategory.productsCount + 1
                         that.newProduct = {
                             dimensions: [],
                             photos: [],
                             materials: []
                         }
+                        window.dispatchEvent(new Event('updateCategories'))
+                        window.dispatchEvent(new CustomEvent('productsRequest', { detail: {
+                            categoryENname: this.selectedCategory.ENname
+                        }}))
                     })
                     .catch(error => {
                         error.response.data.errors.forEach(error => {
@@ -133,6 +122,10 @@ export default function (htmlPage) {
                             autohide: true,
                             interval: 2000
                         });
+                        window.dispatchEvent(new Event('updateCategories'))
+                        window.dispatchEvent(new CustomEvent('productsRequest', { detail: {
+                            categoryENname: this.selectedCategory.ENname
+                        }}))
                     })
                     .catch(error => {
                         error.response.data.errors.forEach(error => {

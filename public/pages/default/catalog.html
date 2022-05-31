@@ -1,10 +1,10 @@
 <div id="catalog">
     <div id="catalogName">
-        <span>Ассортимент товаров категории "{{categoryData.name}}"</span>
+        <span>Ассортимент товаров категории "{{categoryName}}"</span>
     </div>
 
     <div id="productsContainer">
-        <div v-for="product in categoryData.Products" id="productCard">
+        <div v-for="product in products" id="productCard">
             <div :id="product.uuid+'-miniGallery'" class="miniGallery" :style="{'background-image': `url(${(product.ProductPhotos[0])? product.ProductPhotos[0].url : '/icon/noImg.svg'})`}">
                 <div v-for="(photo, id) in getSortedPhotos(product.ProductPhotos)" :id="'trigger-'+id" class="trigger">
                     <img :src="photo.url" @mouseover="changeImage(product.uuid, photo.url)">

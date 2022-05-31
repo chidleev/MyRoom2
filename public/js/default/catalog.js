@@ -3,48 +3,28 @@ export default function (htmlPage) {
         template: htmlPage,
         data() {
             return {
-                categoryData: {}
+                products: [],
+                categoryName: ''
             }
         },
         watch: {
             '$route.params.categoryENname': function () {
                 if (this.$route.name == 'catalog') {
-                    const that = this
-                    axios({
-                        url: '/api/getData/productsByCategory',
-                        method: 'post',
-                        data: {
-                            categoryENname: that.$route.params.categoryENname
-                        }
-                    })
-                        .then(response => {
-                            this.categoryData = response.data
-                        })
-                        .catch(error => {
-                            error.response.data.errors.forEach(error => {
-                                alert(error.comment)
-                            });
-                        })
+                    window.dispatchEvent(new CustomEvent('productsRequest', { detail: {
+                        categoryENname: this.$route.params.categoryENname
+                    }}))
                 }
             }
         },
         mounted() {
-            const that = this
-            axios({
-                url: '/api/getData/productsByCategory',
-                method: 'post',
-                data: {
-                    categoryENname: that.$route.params.categoryENname
-                }
+            window.addEventListener('productsDistribution', (event) => {
+                this.products = event.detail.products,
+                this.categoryName = event.detail.categoryName
             })
-                .then(response => {
-                    this.categoryData = response.data
-                })
-                .catch(error => {
-                    error.response.data.errors.forEach(error => {
-                        alert(error.comment)
-                    });
-                })
+            
+            window.dispatchEvent(new CustomEvent('productsRequest', { detail: {
+                categoryENname: this.$route.params.categoryENname
+            }}))
         },
         methods: {
             changeImage(productUuid, photoURL) {

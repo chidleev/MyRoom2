@@ -41,9 +41,9 @@
                     expand_circle_down
                 </span>
                 <span>Добавить новый товар. Категория: "{{selectedCategory.name}}"</span>
-                <button type="submit" form="create-product-form">Добавить</button>
+                <button type="submit" :form="'create-product'+selectedCategory.uuid">Добавить</button>
             </summary>
-            <form id="create-product-form" class="product-form" @submit.prevent="createProduct">
+            <form :id="'create-product'+selectedCategory.uuid" class="product-form" @submit.prevent="createProduct">
                 <div class="row">
                     <div>Название
                         <input type="text" v-model="newProduct.name" placeholder="Название">
@@ -64,13 +64,13 @@
                             <option v-for="country in countries.sort()">{{country}}</option>
                         </select>
                     </div>
-                    <div>Материал
+                    <div>Материал ({{newProduct.materials.join(', ')}})
                         <select v-model="newProduct.materials" multiple>
                             <option v-for="material in materials.sort()">{{material}}</option>
                         </select>
                     </div>
                 </div>
-                <div class="row">x
+                <div class="row">
                     <div>Ширина
                         <input type="number" step="0.01" min="0" v-model="newProduct.dimensions[0]" placeholder="Ширина">
                     </div>
@@ -113,9 +113,9 @@
                     expand_circle_down
                 </span>
                 <span>{{product.name}}</span>
-                <button type="submit" form="patch-product-form">Изменить</button>
+                <button type="submit" :form='"patch-"+product.uuid'>Изменить</button>
             </summary>
-            <form id="patch-product-form" class="product-form" @submit.prevent="patchProduct(product)">
+            <form :id='"patch-"+product.uuid' class="product-form" @submit.prevent="patchProduct(product)">
                 <div class="row">
                     <div>Название
                         <input type="text" v-model="product.name" placeholder="Название">
@@ -163,11 +163,13 @@
                 </div>
                 <details id="photos">
                     <summary>
-                        <span class="material-icons">
-                            expand_circle_down
+                        <span>
+                            <span class="material-icons">
+                                expand_circle_down
+                            </span>
+                            Фотографии товара ({{product.ProductPhotos.length}} шт.)
                         </span>
-                        Фотографии товара ({{product.ProductPhotos.length}} шт.)
-                        <button class="delete-btn" @click="deleteProductPhotos(product)">Удалить выбранные</button>
+                        <button v-if="product.wannaDeleteImages.length" class="delete-btn" @click="deleteProductPhotos(product)">Удалить выбранные</button>
                     </summary>
                     <div class="row">
                         <img v-for="photo in product.ProductPhotos" :src="photo.url" alt="Фото товара" @click="toggleItemInArr($event, photo.publicID, product.wannaDeleteImages)">
