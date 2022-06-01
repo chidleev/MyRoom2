@@ -14,14 +14,21 @@
 
 .toast-container {
   position: absolute;
-  bottom: 5%;
-  width: max-content;
+  bottom: var(--mini-text);
+  z-index: 10;
+  overflow: auto;
+  display: flex;
+  max-height: 20%;
+  flex-direction: column;
+  width: 50%;
   font-size: calc(0.75*var(--mini-text));
 }
 
 .toast {
+  min-height: calc(2*var(--mini-text));
   font-size: calc(0.75*var(--mini-text));
   font-size: 0.875rem;
+  text-align: center;
   background-clip: padding-box;
   border: 1px solid rgba(0, 0, 0, 0.05);
   border-radius: var(--toast-border-radius);

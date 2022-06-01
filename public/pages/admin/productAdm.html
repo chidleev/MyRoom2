@@ -32,15 +32,24 @@
                 <div v-for="category in categories" @click="selectedCategory = category" :class="{'active': selectedCategory == category}">{{category.name}}</div>
             </div>
         </div>
+
+
+        <label v-if="selectedCategory.uuid" id="products-file-input-label" for="products-file-input">
+            Загрузить из файла
+            <input id="products-file-input" name="productsFile" type="file" @change="createProductsFromFile" accept=".xlsx"/>
+        </label>
     </div>
 
-    <template v-if="selectedCategory.name">
+    <template v-if="selectedCategory.uuid">
         <details id="product-card">
             <summary>
-                <span class="material-icons first">
-                    expand_circle_down
+                <span>
+                    <span class="material-icons first">
+                        expand_circle_down
+                    </span>
+                    Добавить новый товар. Категория: "{{selectedCategory.name}}"
                 </span>
-                <span>Добавить новый товар. Категория: "{{selectedCategory.name}}"</span>
+               
                 <button type="submit" :form="'create-product'+selectedCategory.uuid">Добавить</button>
             </summary>
             <form :id="'create-product'+selectedCategory.uuid" class="product-form" @submit.prevent="createProduct">
@@ -91,13 +100,15 @@
                 </div>
                 <details id="photos">
                     <summary>
-                        <span class="material-icons">
-                            expand_circle_down
+                        <span>
+                            <span class="material-icons">
+                                expand_circle_down
+                            </span>
+                            Фотографии товара ({{newProduct.photos.length}} шт.)</summary>
                         </span>
-                        Фотографии товара ({{newProduct.photos.length}} шт.)</summary>
                     <div class="row">
                         <img v-for="photo in newProduct.photos" :src="photo.url" alt="Фото товара">
-                        <div id="new-photo" @click="addNewProductPhotos">
+                        <div new-photo id="new-photo" @click="addNewProductPhotos">
                             <span class="material-icons">
                                 add_photo_alternate
                             </span>
@@ -109,10 +120,12 @@
     
         <details v-for="product in products" id="product-card">
             <summary>
-                <span class="material-icons first">
-                    expand_circle_down
+                <span>
+                    <span class="material-icons first">
+                        expand_circle_down
+                    </span>
+                    {{product.name}}
                 </span>
-                <span>{{product.name}}</span>
                 <button type="submit" :form='"patch-"+product.uuid'>Изменить</button>
             </summary>
             <form :id='"patch-"+product.uuid' class="product-form" @submit.prevent="patchProduct(product)">
@@ -173,7 +186,7 @@
                     </summary>
                     <div class="row">
                         <img v-for="photo in product.ProductPhotos" :src="photo.url" alt="Фото товара" @click="toggleItemInArr($event, photo.publicID, product.wannaDeleteImages)">
-                        <div id="new-photo" @click="addProductPhotos($event, product)">
+                        <div new-photo id="new-photo" @click="addProductPhotos($event, product)">
                             <span class="material-icons">
                                 add_photo_alternate
                             </span>

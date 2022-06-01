@@ -5,7 +5,9 @@ export default function (htmlPage) {
             return {
                 categories: [],
                 products: [],
-                selectedCategory: {},
+                selectedCategory: {
+                    uuid: null
+                },
                 newProduct: {
                     dimensions: [],
                     photos: [],
@@ -31,7 +33,7 @@ export default function (htmlPage) {
             })
         },
         watch: {
-            selectedCategory: function(newValue) {
+            selectedCategory: function (newValue) {
                 if (!Boolean(newValue.name)) {
                     this.products = [{
                         dimensions: [],
@@ -39,9 +41,11 @@ export default function (htmlPage) {
                     }]
                 }
                 else {
-                    window.dispatchEvent(new CustomEvent('productsRequest', { detail: {
-                        categoryENname: newValue.ENname
-                    }}))
+                    window.dispatchEvent(new CustomEvent('productsRequest', {
+                        detail: {
+                            categoryENname: newValue.ENname
+                        }
+                    }))
                 }
             }
         },
@@ -62,7 +66,7 @@ export default function (htmlPage) {
                             text: "Товар успешно создан",
                             theme: 'success',
                             autohide: true,
-                            interval: 2000
+                            interval: 5000
                         });
                         that.newProduct = {
                             dimensions: [],
@@ -70,9 +74,51 @@ export default function (htmlPage) {
                             materials: []
                         }
                         window.dispatchEvent(new Event('updateCategories'))
-                        window.dispatchEvent(new CustomEvent('productsRequest', { detail: {
-                            categoryENname: this.selectedCategory.ENname
-                        }}))
+                        window.dispatchEvent(new CustomEvent('productsRequest', {
+                            detail: {
+                                categoryENname: this.selectedCategory.ENname
+                            }
+                        }))
+                    })
+                    .catch(error => {
+                        error.response.data.errors.forEach(error => {
+                            new Toast({
+                                title: false,
+                                text: error.comment,
+                                theme: 'warning',
+                                autohide: true,
+                                interval: 10000
+                            })
+                        })
+                    })
+            },
+
+            createProductsFromFile(event) {
+                var formData = new FormData();
+                formData.append("productsFile", event.target.files[0]);
+                formData.append("categoryUUID", this.selectedCategory.uuid)
+                axios({
+                    url: '/api/admin/products-from-file',
+                    method: 'put',
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    },
+                    data: formData,
+                })
+                    .then(response => {
+                        new Toast({
+                            title: false,
+                            text: "Товары успешно загружены",
+                            theme: 'success',
+                            autohide: true,
+                            interval: 5000
+                        });
+                        window.dispatchEvent(new Event('updateCategories'))
+                        window.dispatchEvent(new CustomEvent('productsRequest', {
+                            detail: {
+                                categoryENname: this.outerApp.selectedCategory.ENname
+                            }
+                        }))
                     })
                     .catch(error => {
                         error.response.data.errors.forEach(error => {
@@ -89,7 +135,7 @@ export default function (htmlPage) {
 
             addNewProductPhotos(event) {
                 var el = event.target
-                this.toggleLoad(el)
+                this.toggleLoad(event)
                 this.showUploadWidget((err, response) => {
                     if (err) console.error(err)
                     else {
@@ -100,7 +146,7 @@ export default function (htmlPage) {
                             })
                         }
                         if (response.event == 'close') {
-                            this.toggleLoad(el)
+                            this.toggleLoad(event)
                         }
                     }
                 })
@@ -120,12 +166,14 @@ export default function (htmlPage) {
                             text: "Товар успешно изменён",
                             theme: 'success',
                             autohide: true,
-                            interval: 2000
+                            interval: 5000
                         });
                         window.dispatchEvent(new Event('updateCategories'))
-                        window.dispatchEvent(new CustomEvent('productsRequest', { detail: {
-                            categoryENname: this.selectedCategory.ENname
-                        }}))
+                        window.dispatchEvent(new CustomEvent('productsRequest', {
+                            detail: {
+                                categoryENname: this.selectedCategory.ENname
+                            }
+                        }))
                     })
                     .catch(error => {
                         error.response.data.errors.forEach(error => {
@@ -141,7 +189,7 @@ export default function (htmlPage) {
             },
 
             addProductPhotos(event, product) {
-                var el = event.target
+                var el = event.target.hasAttribute('new-photo') ? event.target : event.target.parentElement
                 this.toggleLoad(el)
                 this.showUploadWidget((err, response) => {
                     if (err) console.error(err)
@@ -154,39 +202,41 @@ export default function (htmlPage) {
                         }
                         if (response.event == 'close') {
                             this.toggleLoad(el)
-                            var that = this
-                            axios({
-                                url: '/api/admin/productPhotos',
-                                method: 'patch',
-                                data: {
-                                    newProductPhotos: that.newProductPhotos,
-                                    productUUID: product.uuid
-                                }
-                            })
-                                .then(response => {
-                                    new Toast({
-                                        title: false,
-                                        text: response.data,
-                                        theme: 'success',
-                                        autohide: true,
-                                        interval: 2000
-                                    });
-                                    that.newProductPhotos.forEach(productPhoto => {
-                                        product.ProductPhotos.push(productPhoto)
-                                    })
-                                    that.newProductPhotos = []
+                            if (this.newProductPhotos.length > 0) {
+                                var that = this
+                                axios({
+                                    url: '/api/admin/productPhotos',
+                                    method: 'patch',
+                                    data: {
+                                        newProductPhotos: that.newProductPhotos,
+                                        productUUID: product.uuid
+                                    }
                                 })
-                                .catch(error => {
-                                    error.response.data.errors.forEach(error => {
+                                    .then(response => {
                                         new Toast({
                                             title: false,
-                                            text: error.comment,
-                                            theme: 'warning',
+                                            text: response.data,
+                                            theme: 'success',
                                             autohide: true,
-                                            interval: 10000
+                                            interval: 5000
+                                        });
+                                        that.newProductPhotos.forEach(productPhoto => {
+                                            product.ProductPhotos.push(productPhoto)
+                                        })
+                                        that.newProductPhotos = []
+                                    })
+                                    .catch(error => {
+                                        error.response.data.errors.forEach(error => {
+                                            new Toast({
+                                                title: false,
+                                                text: error.comment,
+                                                theme: 'warning',
+                                                autohide: true,
+                                                interval: 10000
+                                            })
                                         })
                                     })
-                                })
+                            }
                         }
                     }
                 })
@@ -208,7 +258,7 @@ export default function (htmlPage) {
                                 text: response.data,
                                 theme: 'success',
                                 autohide: true,
-                                interval: 2000
+                                interval: 5000
                             });
                             product.wannaDeleteImages = []
                         })
@@ -263,11 +313,10 @@ export default function (htmlPage) {
                 }, callBack);
             },
 
-            toggleLoad(element) {
-                var el = element.children[0] || element
+            toggleLoad(el) {
                 if (!this.loadingImg) {
                     this.loadingImg = !this.loadingImg
-                    el.innerHTML = '<div class="lds-grid"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>'
+                    el.innerHTML = '<span class="lds-grid"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></span>'
                 }
                 else {
                     this.loadingImg = !this.loadingImg
