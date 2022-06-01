@@ -33,6 +33,7 @@
             </div>
         </div>
 
+        <button v-if="wannaDeleteProducts.length" @click="deleteProducts">Удалить выбранные товары</button>
 
         <label v-if="selectedCategory.uuid" id="products-file-input-label" for="products-file-input">
             Загрузить из файла
@@ -117,7 +118,7 @@
                 </details>
             </form>
         </details>
-    
+
         <details v-for="product in products" id="product-card">
             <summary>
                 <span>
@@ -126,7 +127,12 @@
                     </span>
                     {{product.name}}
                 </span>
-                <button type="submit" :form='"patch-"+product.uuid'>Изменить</button>
+                <span>
+                    <button type="submit" :form='"patch-"+product.uuid'>Изменить</button>
+                    <label :for="'check-product-'+product.uuid" class="delete-check-label" :checked="wannaDeleteProducts.find(thisProduct => thisProduct.uuid == product.uuid)">
+                        <input type="checkbox" :id="'check-product-'+product.uuid" v-model="wannaDeleteProducts" :value="{ uuid: product.uuid, photos: product.ProductPhotos.map(photo => photo.publicID) }">
+                    </label>
+                </span>
             </summary>
             <form :id='"patch-"+product.uuid' class="product-form" @submit.prevent="patchProduct(product)">
                 <div class="row">

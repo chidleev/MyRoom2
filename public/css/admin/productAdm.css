@@ -14,8 +14,28 @@
     align-items: center;
 }
 
-#products-file-input {
-    display: none;
+#head-menu button {
+    margin: 0 calc(0.5 * var(--mini-text));
+    padding: calc(0.125 * var(--mini-text)) calc(0.5 * var(--mini-text));
+
+    box-sizing: border-box;
+
+    border: calc(0.125 * var(--medium-text-2)) solid var(--light-1);
+
+    color: var(--light-1);
+    background-color: var(--my-green-1);
+    transition: var(--speed-2);
+}
+
+#head-menu button:hover {
+    background-color: var(--my-yellow);
+    box-shadow: 0px 0px var(--medium-text-1) var(--my-yellow);
+    transition: var(--speed-2);
+}
+#head-menu button:active {
+    background-color: var(--my-orange);
+    box-shadow: 0px 0px var(--medium-text-1) var(--my-orange);
+    transition: var(--speed-2);
 }
 
 /* The container <div> - needed to position the dropdown content */
@@ -44,6 +64,10 @@
     color: var(--light-1);
     
     transition: var(--speed-2);
+}
+
+#products-file-input {
+    display: none;
 }
 
 #products-file-input-label:hover {
@@ -165,10 +189,15 @@
 
 #product-card summary button {
     display: none;
-    padding: calc(0.25 * var(--mini-text)) calc(0.5 * var(--mini-text));
+    padding: calc(0.125 * var(--mini-text)) calc(0.5 * var(--mini-text));
+
+    z-index: 5;
 
     box-sizing: border-box;
     min-width: calc(7 * var(--mini-text));
+
+    justify-content: center;
+    align-items: center;
 
     border: calc(0.125 * var(--medium-text-2)) solid var(--light-1);
 
@@ -225,7 +254,7 @@
 }
 
 #product-card .row div input, #product-card .row div textarea, #product-card .row div select {
-    padding: 0 calc(.5 * var(--mini-text));
+    padding: 0 calc(0.5 * var(--mini-text));
     
     box-sizing: border-box;
     width: 100%;
@@ -250,9 +279,14 @@
 
 #product-card .row div textarea {
     padding: calc(.5 * var(--mini-text));
+
     width: 100%;
-    resize:vertical;
     min-height: calc(5 * var(--mini-text));
+
+    resize:vertical;
+
+    border: calc(0.125 * var(--medium-text-2)) solid var(--light-2);
+
     text-align: justify;
 }
 
@@ -267,6 +301,7 @@
     padding: calc(.5 * var(--mini-text));
     overflow-y: auto;
     min-height: calc(5 * var(--mini-text));
+    border: calc(0.125 * var(--medium-text-2)) solid var(--light-2);
 }
 
 .product-form #photos {

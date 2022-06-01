@@ -25,7 +25,7 @@
         <div id="text">Панель управления. Категории</div>
     </div>
 
-    <div class="category-item" id="category-head">
+    <div id="head-menu">
         <div>
             <input type="text" v-model="newCategory.name" placeholder="Название новой категории">
             <button @click="createCategory()">
@@ -34,19 +34,18 @@
                 </span>
             </button>
         </div>
-        
-        <span>Количество категорий: {{categories.length}}шт.</span>
-        
-        <div>
-            <button @click="deleteCategories()">
-                Удалить выбранное <span class="material-icons delete-btn">
-                    delete_forever
-                </span>
-            </button>
-        </div>
+
+        <span>Всего категорий: {{categories.length}}шт.</span>
+
+        <button v-if="checkedCategories.length" id="delete-btn" @click="deleteCategories()">
+            Удалить выбранные категории
+            <span class="material-icons">
+                delete_forever
+            </span>
+        </button>
     </div>
 
-    <div v-for="category in categories" class="category-item" :id="'category-item-'+category.uuid" @click.self="checkItem(category.uuid)">
+    <div v-for="category in categories" class="category-item" :id="'category-item-'+category.uuid">
         <div>
             <input type="text" v-model="category.name" @change="renameCategory(category)" :id="'category-name-'+category.uuid">
             <label :for="'category-name-'+category.uuid">
@@ -56,8 +55,10 @@
             </label>
         </div>
         <div>
-            <span @click.self="checkItem(category.uuid)">Количество товара: {{category.productsCount}}шт.</span>
-            <input type="checkbox" :id="'check-'+category.uuid" v-model="checkedCategories" :value="category.uuid">
+            <span>Количество товаров: {{category.productsCount}}шт.</span>
+            <label :for="'check-category-'+category.uuid" class="delete-check-label" :checked="checkedCategories.find(thisCategoryUUID => thisCategoryUUID == category.uuid)">
+                <input type="checkbox" :id="'check-category-'+category.uuid" v-model="checkedCategories" :value="category.uuid">
+            </label>
         </div>
     </div>
 </div>

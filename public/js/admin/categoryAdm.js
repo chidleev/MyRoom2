@@ -15,14 +15,6 @@ export default function (htmlPage) {
             window.dispatchEvent(new Event('categoriesRequest'))
         },
         methods: {
-            checkItem(uuid) {
-                if (this.checkedCategories.indexOf(uuid) + 1) {
-                    this.checkedCategories.splice(this.checkedCategories.indexOf(uuid), 1);
-                }
-                else {
-                    this.checkedCategories.push(uuid)
-                }
-            },
             createCategory() {
                 axios({
                     url: '/api/admin/category',
@@ -76,11 +68,12 @@ export default function (htmlPage) {
             deleteCategories() {
                 var answer = confirm('Вы действительно хотите удалить выбранные категории?')
                 if (answer) {
+                    const that = this
                     axios({
                         url: '/api/admin/category',
                         method: 'delete',
                         data: {
-                            uuids: this.checkedCategories
+                            uuids: that.checkedCategories
                         }
                     })
                         .then(res => {
@@ -91,6 +84,7 @@ export default function (htmlPage) {
                                 autohide: true,
                                 interval: 2000
                             });
+                            this.checkedCategories = []
                             window.dispatchEvent(new Event('updateCategories'))
                         })
                         .catch(err => {

@@ -28,9 +28,18 @@ db.ProductPhotos = require("./productPhoto.js")(client, Sequelize, DataTypes)
 db.Orders = require("./order.js")(client, Sequelize, DataTypes)
 
 /*Устанавливаем связи между таблицами*/
-db.Users.hasMany(db.Tokens)
-db.Users.hasMany(db.BasketOrders)
-db.Users.hasMany(db.Comments)
+db.Users.hasMany(db.Tokens, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE'
+})
+db.Users.hasMany(db.BasketOrders, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE'
+})
+db.Users.hasMany(db.Comments, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE'
+})
 
 db.Tokens.belongsTo(db.Users)
 
@@ -40,12 +49,24 @@ db.Comments.belongsTo(db.Products)
 db.BasketOrders.belongsTo(db.Users)
 db.BasketOrders.belongsTo(db.Products)
 
-db.Categories.hasMany(db.Products)
+db.Categories.hasMany(db.Products, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE'
+})
 
 db.Products.belongsTo(db.Categories)
-db.Products.hasMany(db.BasketOrders)
-db.Products.hasMany(db.Comments)
-db.Products.hasMany(db.ProductPhotos)
+db.Products.hasMany(db.BasketOrders, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE'
+})
+db.Products.hasMany(db.Comments, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE'
+})
+db.Products.hasMany(db.ProductPhotos, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE'
+})
 db.Products.hasMany(db.Orders)
 
 db.ProductPhotos.belongsTo(db.Products)

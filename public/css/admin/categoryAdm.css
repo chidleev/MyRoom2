@@ -1,15 +1,114 @@
 @import url('/css/profile.css');
 
 #categories-box {
-    box-sizing: border-box;
     width: 100%;
-
     flex-direction: column;
     align-items: stretch;
 }
 
+#categories-box * {
+    box-sizing: border-box;
+}
+
+input {
+    padding: 0 calc(0.5 * var(--mini-text));
+
+    height: 100%;
+    flex: 1 1;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border: none;
+    outline: none;
+
+    text-align: center;
+
+    color: var(--my-blue-2);
+    background-color: var(--light-1);
+}
+
+input::placeholder {
+    font-size: calc(0.8 * var(--mini-text));
+    white-space: normal;
+    color: var(--my-blue-1)
+}
+
+#head-menu {
+    margin-bottom: var(--mini-text);
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#head-menu div {
+    height: 100%;
+    flex: 1 1;
+}
+
+#head-menu button {
+    margin: 0 calc(0.5 * var(--mini-text));
+    padding: calc(0.25 * var(--mini-text));
+
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border: calc(0.125 * var(--medium-text-2)) solid var(--light-1);
+
+    color: var(--light-1);
+    background-color: var(--my-green-1);
+    transition: var(--speed-2);
+}
+
+#head-menu button:hover {
+    background-color: var(--my-yellow);
+    box-shadow: 0px 0px var(--medium-text-1) var(--my-yellow);
+    transition: var(--speed-2);
+}
+#head-menu button:active {
+    background-color: var(--my-orange);
+    box-shadow: 0px 0px var(--medium-text-1) var(--my-orange);
+    transition: var(--speed-2);
+}
+
+#head-menu button#delete-btn {
+    font-size: calc(0.75 * var(--mini-text));
+    background-color: var(--my-orange);
+}
+#head-menu button#delete-btn:hover {
+    background-color: var(--my-yellow);
+    box-shadow: 0px 0px var(--medium-text-1) var(--my-yellow);
+}
+#head-menu button#delete-btn:active {
+    background-color: var(--my-red-1);
+    box-shadow: 0px 0px var(--medium-text-1) var(--my-red-1);
+}
+
+#head-menu span:not(.material-icons) {
+    padding: 0 calc(0.5 * var(--mini-text));
+
+    box-sizing: border-box;
+    height: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border: calc(0.125 * var(--medium-text-2)) solid var(--light-2);
+    
+    font-size: calc(0.75 * var(--mini-text));
+
+    background-color: var(--my-blue-2);
+    color: var(--light-2);
+}
+
 .category-item {
-    margin: calc(0.25 * var(--mini-text)) 0;
+    margin-bottom: calc(0.5 * var(--mini-text));
+    padding: calc(0.25 * var(--mini-text));
 
     min-height: calc(2 * var(--mini-text));
 
@@ -17,148 +116,46 @@
     justify-content: space-between;
     align-items: stretch;
 
-    border: calc(0.15 * var(--medium-text-2)) solid var(--light-2);
+    border: calc(0.125 * var(--medium-text-2)) dashed var(--light-1);
 
-    background-image: var(--back-img);
-    background-position:  calc(0.5 * var(--mini-text)) 0, calc(0.5 * var(--mini-text)) 0, 0 0, 0 0;
-    background-size: calc(0.5 * var(--mini-text)) calc(0.5 * var(--mini-text));
-    background-repeat: repeat;
-    
-    transition: var(--speed-2);
-}
-
-#category-head.category-item {
-    background-image: none;
-    border: none;
-}
-
-#category-head.category-item > div, #category-head.category-item > span {
-    width: 30%;
-
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-
-    text-align: center;
-
-    border: calc(0.15 * var(--medium-text-2)) solid var(--light-1);
-    background-color: var(--light-2);
-}
-
-#category-head.category-item > div input {
-    height: 100%;
-    width: 10px;
-    flex: 4 1;
-}
-
-#category-head.category-item > div input::placeholder {
-    top: 0;
-    white-space: normal;
-    font-size: calc(0.75*var(--mini-text));
-}
-
-#category-head.category-item > div button {
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex: 1 1;
-    border: none;
-    outline: none;
-    color: var(--light-1);
     background-color: var(--my-blue-1);
-    transition: var(--speed-2);
 }
 
-#category-head.category-item > div button span {
-    color: var(--my-red-1);
+.category-item div {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: stretch;
 }
 
-#category-head.category-item > div input ~ button:hover {
-    background-color: var(--my-yellow);
-    box-shadow: 0px 0px var(--medium-text-1) var(--my-yellow);
-    transition: var(--speed-2);
-}
-
-#category-head.category-item > div input ~ button span {
-    color: var(--light-1);
-}
-
-.category-item:hover {
-    border: calc(0.15 * var(--medium-text-2)) solid var(--my-yellow);
-    transition: var(--speed-2);
-}
-
-.category-item input[type='text'] {
-    padding: 0 calc(0.5 * var(--mini-text));
-
-    font-size: calc(0.8 * var(--medium-text-2));
-    /*border: calc(0.15 * var(--medium-text-2)) solid var(--light-2);*/
-    border: none;
-
-    color: var(--my-blue-2);
-    background-color: var(--light-1);
-}
-
-.category-item input[type='text']:focus {
-    outline: none;
-}
-
-.category-item label {
-    padding: 0 calc(0.5 * var(--mini-text));
-    
-    line-height: calc(0.5*var(--medium-text-2));
+.category-item input[type="text"] ~ label {
+    margin-right: calc(0.5 * var(--mini-text));
+    padding: calc(0.25 * var(--mini-text)) calc(0.5 * var(--mini-text));
 
     display: flex;
-    flex-direction: row;
+
     justify-content: center;
     align-items: center;
 
-    /*border: calc(0.15 * var(--medium-text-2)) solid var(--light-2);*/
-    border: none;
-    color: var(--my-blue-1);
-    background-color: var(--light-1);
-}
-
-.category-item input[type='checkbox'] {
-    margin: 0 calc(0.5 * var(--mini-text));
-
-    width: var(--mini-text);
-    height: var(--mini-text);
-
-    outline: none;
-    border: none;
-
-    align-self: center;
-}
-
-.category-item span {
     color: var(--my-blue-2);
-
-    line-height: calc(0.5*var(--medium-text-2));
-
-    display: flex;
-    align-items: center;
-    
+    background-color: var(--light-1);
     transition: var(--speed-2);
 }
 
-.category-item label:hover .material-icons {
+.category-item input[type="text"]:hover ~ label {
     color: var(--my-yellow);
     transition: var(--speed-2);
 }
 
-.category-item label .delete-btn {
-    color: var(--my-orange);
-    transition: var(--speed-2);
+.category-item span:not(.material-icons) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    color: var(--light-2);
 }
 
-.category-item label:hover .delete-btn {
-    color: var(--my-red-1);
-    transition: var(--speed-2);
-}
-
-.category-item label:active .delete-btn {
-    color: var(--my-red-2);
-    transition: var(--speed-2);
+.delete-check-label {
+    min-width: calc(1.75 * var(--mini-text));
+    max-height: calc(1.75 * var(--mini-text));
+    align-self: center;
 }

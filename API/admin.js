@@ -272,25 +272,137 @@ adminAPI.put('/product', (req, res) => {
         })
 })
 
+function chekProduct(product, id) {
+    const checkErrors = []
+
+    if (!Boolean(product.name)) {
+        checkErrors.push({
+            type: 'name',
+            comment: `Вы не ввели название товара №${id} в файле`
+        })
+    }
+    if (!Boolean(product.price)) {
+        checkErrors.push({
+            type: 'price',
+            comment: `Вы не ввели цену товара №${id} в файле`
+        })
+    }
+    if (!Boolean(product.madeIn)) {
+        checkErrors.push({
+            type: 'madeIn',
+            comment: `Вы не ввели страну производства товара №${id} в файле`
+        })
+    }
+    if (!Boolean(product.materials)) {
+        checkErrors.push({
+            type: 'materials',
+            comment: `Вы не ввели ни одного материала товара №${id} в файле`
+        })
+    }
+    else if (!Boolean(product.materials.length)) {
+        checkErrors.push({
+            type: 'materials',
+            comment: `Вы не ввели ни одного материала товара №${id} в файле`
+        })
+    }
+    if (!Boolean(product.dimensions)) {
+        checkErrors.push({
+            type: 'dimensions',
+            comment: `Вы не ввели размеры товара №${id} в файле`
+        })
+    }
+    else if (!Boolean(product.dimensions.length)) {
+        checkErrors.push({
+            type: 'dimensions',
+            comment: `Вы не ввели размеры товара №${id} в файле`
+        })
+    }
+    if (!Boolean(product.weight)) {
+        checkErrors.push({
+            type: 'weight',
+            comment: `Вы не ввели вес товара №${id} в файле`
+        })
+    }
+
+    return checkErrors
+}
+
 adminAPI.put('/products-from-file', (req, res) => {
+    const errors = []
+
     try {
-        if(!req.files) {
+        if (req.files) {
+            let productsFile = req.files.productsFile;
+            productsFile.mv('./uploads/' + productsFile.name);
+            const productsData = xlsx.parse(productsFile.data);
+
+            var productsObjects = []
+            productsData[0].data.forEach(productRow => {
+                const productObj = {}
+                productRow.forEach((value, id) => {
+                    if (productsData[0].data[0][id] == 'materials') {
+                        productObj[productsData[0].data[0][id]] = value.split('/').map(value => value[0].toUpperCase() + value.slice(1))
+                    }
+                    else if (productsData[0].data[0][id] == 'dimensions') {
+                        productObj[productsData[0].data[0][id]] = value.split('/').map(value => +value)
+                    }
+                    else (
+                        productObj[productsData[0].data[0][id]] = value
+                    )
+
+                })
+                productsObjects.push(productObj)
+            })
+            productsObjects.shift()
+
+            productsObjects.forEach((product, id) => {
+                errors.concat(chekProduct(product, id + 1))
+            });
+
+            if (errors.length > 0) {
+                res.status(422).json({
+                    errors: errors
+                })
+                return
+            }
+
+            var createdCount = 0
+            db.Products.bulkCreate(productsObjects)
+                .then(products => {
+                    products.forEach(product => {
+                        product.setCategory(req.body.categoryUUID)
+                            .then(product => {
+                                createdCount += 1
+                                if (createdCount == productsObjects.length) {
+                                    res.sendStatus(200)
+                                }
+                            })
+                            .catch(err => {
+                                res.status(500).json({
+                                    errors: [{
+                                        type: 'Product',
+                                        comment: 'Не удалось добавить категорию товарам',
+                                        error: err
+                                    }]
+                                })
+                            })
+                    })
+                })
+                .catch(err => {
+                    console.error(err);
+                })
+        }
+        else {
             res.status(422).json({
                 errors: [{
                     type: 'files',
                     comment: 'Файл не был получен'
                 }]
             })
-        } else {
-            let productsFile = req.files.productsFile;
-            productsFile.mv('./uploads/' + productsFile.name);
-            const workSheetsFromFile = xlsx.parse(productsFile.data);
-
-            console.log(JSON.stringify(workSheetsFromFile));
-
-            res.sendStatus(200);
         }
-    } catch (err) {
+    }
+    catch (err) {
+        console.log(err);
         res.status(500).json({
             errors: [{
                 type: 'Product',
@@ -320,103 +432,94 @@ adminAPI.patch('/product', (req, res) => {
         })
 })
 
-adminAPI.put('/products-from-json', (req, res) => {
-    const errors = []
-
-    if (!Boolean(req.body.categoryUUID)) {
-        errors.push({
-            type: 'category',
-            comment: 'Вы не выбрали категорию товара'
-        })
-    }
-
-    function chekProduct(product, id) {
-        if (!Boolean(product.name)) {
-            errors.push({
-                type: 'name',
-                comment: `Вы не ввели название товара №${id} в файле`
-            })
-        }
-        if (!Boolean(product.price)) {
-            errors.push({
-                type: 'price',
-                comment: `Вы не ввели цену товара №${id} в файле`
-            })
-        }
-        if (!Boolean(product.madeIn)) {
-            errors.push({
-                type: 'madeIn',
-                comment: `Вы не ввели страну производства товара №${id} в файле`
-            })
-        }
-        if (!Boolean(product.materials)) {
-            errors.push({
-                type: 'materials',
-                comment: `Вы не ввели ни одного материала товара №${id} в файле`
-            })
-        }
-        else if (!Boolean(product.materials.length)) {
-            errors.push({
-                type: 'materials',
-                comment: `Вы не ввели ни одного материала товара №${id} в файле`
-            })
-        }
-        if (!Boolean(product.dimensions)) {
-            errors.push({
-                type: 'dimensions',
-                comment: `Вы не ввели размеры товара №${id} в файле`
-            })
-        }
-        else if (!Boolean(product.dimensions.length)) {
-            errors.push({
-                type: 'dimensions',
-                comment: `Вы не ввели размеры товара №${id} в файле`
-            })
-        }
-        if (!Boolean(product.weight)) {
-            errors.push({
-                type: 'weight',
-                comment: `Вы не ввели вес товара №${id} в файле`
-            })
-        }
-    }
-
-    req.body.products.forEach((product, id) => {
-        chekProduct(product, id + 1)
-    });
-
-    if (errors.length > 0) {
+adminAPI.delete('/products', (req, res) => {
+    if (!Boolean(req.body.products.length)) {
         res.status(422).json({
-            errors: errors
+            errors: [{
+                type: 'products',
+                comment: 'Вы не выбрали товары'
+            }]
         })
         return
     }
 
-    var createdCount = 0
-    db.Products.bulkCreate(req.body.products)
-        .then(products => {
-            products.forEach(product => {
-                product.setCategory(req.body.categoryUUID)
-                .then(product => {
-                    createdCount += 1
-                    if (createdCount == req.body.products.length) {
+    var productsCount = 0
+
+    req.body.products.forEach(product => {
+        if (product.photos.length) {
+            cloudinary.api.delete_resources(product.photos,
+                function (error, result) {
+                    if (!error) {
+                        db.ProductPhotos.destroy({
+                            where: {
+                                publicID: {
+                                    [db.Op.or]: product.photos
+                                }
+                            }
+                        })
+                            .then(result => {
+                                db.Products.destroy({
+                                    where: { uuid: product.uuid }
+                                })
+                                    .then(result => {
+                                        productsCount += 1
+                                        if (productsCount == req.body.products.length) {
+                                            res.sendStatus(200)
+                                        }
+                                    })
+                                    .catch(err => {
+                                        console.log(err);
+                                        res.status(500).json({
+                                            errors: [{
+                                                type: 'sequalize',
+                                                comment: 'Не удалось удалить продукт'
+                                            }]
+                                        })
+                                        return
+                                    })
+                            })
+                            .catch(err => {
+                                console.log(err);
+                                res.status(500).json({
+                                    errors: [{
+                                        type: 'sequalize',
+                                        comment: 'Не удалось удалить фотографии из базы данных'
+                                    }]
+                                })
+                            })
+                    }
+                    else {
+                        res.status(500).json({
+                            errors: [{
+                                type: 'cloudinary',
+                                comment: 'Не удалось удалить фотографии выбранных товаров'
+                            }]
+                        })
+                    }
+                })
+        }
+        else {
+            db.Products.destroy({
+                where: { uuid: product.uuid }
+            })
+                .then(result => {
+                    productsCount += 1
+                    if (productsCount == req.body.products.length) {
                         res.sendStatus(200)
                     }
                 })
                 .catch(err => {
+                    console.log(err);
                     res.status(500).json({
                         errors: [{
-                            type: 'Product',
-                            comment: 'Не удалось добавить категорию товарам',
-                            error: err
+                            type: 'sequalize',
+                            comment: 'Не удалось удалить продукт'
                         }]
                     })
+                    return
                 })
-            })
-        })
-        .catch(err => {
-            console.error(err);
-        })
+        }
+    })
 })
 
 

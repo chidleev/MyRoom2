@@ -13,6 +13,7 @@ export default function (htmlPage) {
                     photos: [],
                     materials: []
                 },
+                wannaDeleteProducts: [],
                 newProductPhotos: [],
                 loadingImg: false,
                 countries: ['Италия', 'Германия', 'США', 'Канада', 'Япония', 'Франция', 'Великобритания', 'Китай', 'Россия'],
@@ -116,7 +117,7 @@ export default function (htmlPage) {
                         window.dispatchEvent(new Event('updateCategories'))
                         window.dispatchEvent(new CustomEvent('productsRequest', {
                             detail: {
-                                categoryENname: this.outerApp.selectedCategory.ENname
+                                categoryENname: this.selectedCategory.ENname
                             }
                         }))
                     })
@@ -186,6 +187,46 @@ export default function (htmlPage) {
                             })
                         })
                     })
+            },
+
+            deleteProducts() {
+                if (confirm(`Удалить выбранные товары? (${this.wannaDeleteProducts.length}шт.)`)) {
+                    const that = this
+                    axios({
+                        url: '/api/admin/products',
+                        method: 'delete',
+                        data: {
+                            products: that.wannaDeleteProducts
+                        }
+                    })
+                        .then(response => {
+                            new Toast({
+                                title: false,
+                                text: "Выбранные товары удалены",
+                                theme: 'success',
+                                autohide: true,
+                                interval: 5000
+                            });
+                            this.wannaDeleteProducts = []
+                            window.dispatchEvent(new Event('updateCategories'))
+                            window.dispatchEvent(new CustomEvent('productsRequest', {
+                                detail: {
+                                    categoryENname: this.selectedCategory.ENname
+                                }
+                            }))
+                        })
+                        .catch(error => {
+                            error.response.data.errors.forEach(error => {
+                                new Toast({
+                                    title: false,
+                                    text: error.comment,
+                                    theme: 'warning',
+                                    autohide: true,
+                                    interval: 10000
+                                })
+                            })
+                        })
+                }
             },
 
             addProductPhotos(event, product) {
@@ -332,7 +373,7 @@ export default function (htmlPage) {
                 else {
                     arr.push(item)
                 }
-            },
+            }
         }
     }
 }
