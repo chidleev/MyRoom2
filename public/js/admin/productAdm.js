@@ -302,6 +302,11 @@ export default function (htmlPage) {
                                 interval: 5000
                             });
                             product.wannaDeleteImages = []
+                            window.dispatchEvent(new CustomEvent('productsRequest', {
+                                detail: {
+                                    categoryENname: this.selectedCategory.ENname
+                                }
+                            }))
                         })
                         .catch(error => {
                             error.response.data.errors.forEach(error => {

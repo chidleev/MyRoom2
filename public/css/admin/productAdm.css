@@ -18,23 +18,28 @@
     margin: 0 calc(0.5 * var(--mini-text));
     padding: calc(0.125 * var(--mini-text)) calc(0.5 * var(--mini-text));
 
+    width: fit-content;
+    min-height: calc(1.75*var(--medium-text-2));
     box-sizing: border-box;
 
-    border: calc(0.125 * var(--medium-text-2)) solid var(--light-1);
+    border: calc(0.125 * var(--medium-text-2)) dashed var(--light-1);
+
+    font-size: calc(0.75 * var(--mini-text));
 
     color: var(--light-1);
-    background-color: var(--my-green-1);
+    background-color: var(--my-orange);
     transition: var(--speed-2);
 }
 
 #head-menu button:hover {
     background-color: var(--my-yellow);
     box-shadow: 0px 0px var(--medium-text-1) var(--my-yellow);
+    border-style: solid;
     transition: var(--speed-2);
 }
 #head-menu button:active {
-    background-color: var(--my-orange);
-    box-shadow: 0px 0px var(--medium-text-1) var(--my-orange);
+    background-color: var(--my-red-1);
+    box-shadow: 0px 0px var(--medium-text-1) var(--my-red-1);
     transition: var(--speed-2);
 }
 
@@ -51,7 +56,7 @@
     padding: 0 calc(0.5 * var(--mini-text));
 
     box-sizing: border-box;
-    height: calc(1.75*var(--medium-text-2));
+    min-height: calc(1.75*var(--medium-text-2));
 
     display: flex;
     align-items: center;
@@ -137,7 +142,7 @@
 
 #product-card {
     margin-bottom: calc(0.5 * var(--mini-text));
-    padding: calc(0.5 * var(--mini-text));
+    padding: calc(0.25 * var(--mini-text));
 
     box-sizing: border-box;
     min-height: calc(1.75*var(--medium-text-2));
