@@ -9,7 +9,7 @@ const adminPages = ['categoryAdm', 'commentAdm', 'employeeAdm', 'productAdm', 'p
 const accountantPages = []
 const managerPages = []
 
-const components = ['searchLine']
+const components = ['searchLine', 'productCard']
 
 const sendHtml = {}
 

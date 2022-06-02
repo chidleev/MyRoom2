@@ -4,27 +4,6 @@
     </div>
 
     <div id="productsContainer">
-        <div v-for="product in products" id="productCard">
-            <div :id="product.uuid+'-miniGallery'" class="miniGallery" :style="{'background-image': `url(${(product.ProductPhotos[0])? product.ProductPhotos[0].url : '/icon/noImg.svg'})`}">
-                <div v-for="(photo, id) in getSortedPhotos(product.ProductPhotos)" :id="'trigger-'+id" class="trigger">
-                    <img :src="photo.url" @mouseover="changeImage(product.uuid, photo.url)">
-                </div>
-            </div>
-            <div id="text">
-                <div id="head">
-                    <router-link :to="$route.path +'/'+ product.name" id="name">{{product.name}}</router-link>
-                    <div id="rate">Оценка товара</div>
-                </div>
-                <div id="description">
-                    <span>
-                        {{getShortDesc(product.description)}}
-                        <router-link :to="$route.path +'/'+ product.name">подробнее>></router-link>
-                    </span>
-                </div>
-                <div id="bottom">
-                    {{product.price}}
-                </div>
-            </div>
-        </div>
+            <ProductCard v-for="product in products" :product="product"/>
     </div>
 </div>

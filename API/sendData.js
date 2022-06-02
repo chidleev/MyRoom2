@@ -51,6 +51,9 @@ sendData.app.post('/productsByCategory', (req, res) => {
             include: [{
                 model: db.ProductPhotos,
                 order: [['url', 'ASC']]
+            }, {
+                model: db.Comments,
+                order: [['postedAt', 'ASC']]
             }]
         }]
     })

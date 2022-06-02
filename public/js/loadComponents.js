@@ -1,4 +1,5 @@
 import searchLine from '/js/component/searchLine.js'
+import productCard from '/js/component/productCard.js'
 
 var componentHTML = {}
 
@@ -10,5 +11,6 @@ if (request.status == 200) {
 }
 
 export default {
-        searchLine: searchLine(componentHTML.searchLine)
+        searchLine: searchLine(componentHTML.searchLine),
+        productCard: productCard(componentHTML.productCard)
     }

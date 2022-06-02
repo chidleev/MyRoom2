@@ -1,0 +1,59 @@
+<div id="productCard">
+    <div :id="product.uuid+'-miniGallery'" class="miniGallery" :style="{'background-image': `url(${(product.ProductPhotos[0])? product.ProductPhotos[0].url : '/icon/noImg.svg'})`}">
+        <div v-for="(photo, id) in getSortedPhotos(product.ProductPhotos)" :id="'trigger-'+id" class="trigger">
+            <img :src="photo.url" @mouseover="changeImage(product.uuid, photo.url)">
+        </div>
+    </div>
+    <div id="text">
+        <div id="head">
+            <router-link :to="$route.path +'/'+ product.name" id="name">{{product.name}}</router-link>
+            <div id="rate">
+                <div class="stars">
+                    <span v-for="i in 5" class="material-icons star">
+                        star
+                    </span>
+                </div>
+                <span class="comments-count" title="Количество отзывов">| {{product.Comments.length}}</span>
+            </div>
+            <span class="material-icons favorite" title="В избранное">
+                bookmark_add
+            </span>
+        </div>
+        <div id="description">
+            <span>
+                {{getShortDesc(product.description)}}
+                <router-link :to="$route.path +'/'+ product.name">подробнее</router-link>
+            </span>
+        </div>
+        <div id="characteristic">
+            <span class="item">
+                <span>Размеры (ШxВxГ):</span>
+                <span class="dots"></span>
+                <span>{{product.dimensions.join(' x ')}}см.</span>
+            </span>
+
+            <span class="item">
+                <span>Вес:</span>
+                <span class="dots"></span>
+                <span>{{product.weight}}кг.</span>
+            </span>
+
+            <span class="item">
+                <span>Материал:</span>
+                <span class="dots"></span>
+                <span>{{product.materials.join(', ')}}</span>
+            </span>
+        </div>
+        <div id="bottom">
+            <div class="buttons">
+                <button class="to-basket-btn">В корзину</button>
+                <span class="price">
+                    {{product.price.toString().slice(0, 2)+' '+product.price.toString().slice(2)}} руб.
+                </span>
+            </div>
+            <span class="count" :class="{'no-product': !product.count}">
+                Доступно для покупки: {{product.count || 0}}шт.
+            </span>
+        </div>
+    </div>
+</div>

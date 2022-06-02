@@ -78,3 +78,281 @@
     line-height: calc(0.8*var(--medium-text-1));
     color: var(--light-1)
 }
+
+
+
+#productCard {
+    margin-bottom: var(--mini-text);
+
+    box-sizing: border-box;
+    min-width: 100%;
+    min-height: calc(15 * var(--mini-text));
+
+    flex: 1 0;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: stretch;
+    flex-wrap: wrap;
+
+    border: calc(0.2 * var(--medium-text-2)) dashed var(--my-blue-1);
+    box-shadow: 0px 0px var(--medium-text-1) var(--dark-3),
+                inset 0px 0px calc(7.5 * var(--mini-text)) var(--light-1),
+                inset 0px 0px calc(7.5 * var(--mini-text)) var(--light-1);
+
+    background-image: var(--back-img);
+    background-position:  calc(0.5 * var(--mini-text)) 0, calc(0.5 * var(--mini-text)) 0, 0 0, 0 0;
+    background-size: calc(0.5 * var(--mini-text)) calc(0.5 * var(--mini-text));
+    background-repeat: repeat;
+    
+    transition: var(--speed-1);
+}
+
+#productCard:hover {
+    border: calc(0.2 * var(--medium-text-2)) dashed var(--my-blue-2);
+    transition: var(--speed-1);
+}
+
+#productCard .miniGallery {
+    min-height: 250px;
+    flex: 3 0 300px;
+
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+
+    background-color: var(--light-1);
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+
+    transition: var(--speed-1);
+}
+
+#productCard .miniGallery .trigger {
+    padding: calc(0.25*var(--mini-text));
+    box-sizing: border-box;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    flex: 1 0;
+}
+
+#productCard .miniGallery .trigger img {
+    max-height: calc(2.5*var(--mini-text));
+    opacity: 0;
+    border: calc(0.125 * var(--medium-text-2)) solid var(--light-2);
+    background-color: var(--light-1);
+    transition: var(--speed-2);
+}
+
+#productCard .miniGallery:hover .trigger img {
+    opacity: 0.75;
+    transition: var(--speed-2);
+}
+
+#productCard #text {
+    padding: calc(0.5*var(--mini-text)) var(--mini-text);
+
+    flex: 4 1 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: stretch;
+}
+
+#productCard #text #head {
+    margin-bottom: calc(0.5*var(--mini-text));
+
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+}
+
+#productCard #text #head #name {
+    flex: 4 1 200px;
+    display: flex;
+    align-items: center;
+
+    font-size: calc(1.5 * var(--mini-text));
+    line-height: calc(1.5 * var(--mini-text));
+    font-weight: 600;
+    text-decoration: none;
+
+    color: var(--my-blue-2);
+    transition: var(--speed-2);
+}
+
+#productCard #text #head #name:hover {
+    color: var(--my-yellow);
+    transition: var(--speed-2);
+}
+
+#productCard #text #head #name:active {
+    color: var(--my-orange);
+    transition: var(--speed-2);
+}
+
+#productCard #text #head #rate {
+    min-width: max-content;
+
+    flex: 1 1;
+    
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+#productCard #text #head #rate .stars .star {
+    color: var(--my-yellow);
+}
+
+#productCard #text #head .favorite {
+    margin-left: calc(0.5*var(--mini-text));
+
+    box-sizing: border-box;
+    height: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    cursor: pointer;
+
+    font-size: calc(1.5*var(--mini-text));
+
+    color: var(--my-blue-1);
+    transition: var(--speed-2);
+}
+#productCard #text #head .favorite:hover {
+    color: var(--my-yellow);
+    text-shadow: 0px 0px var(--medium-text-1) var(--my-yellow);
+    transition: var(--speed-2);
+}
+#productCard #text #head .favorite:active {
+    color: var(--my-orange);
+    text-shadow: 0px 0px var(--medium-text-1) var(--my-orange);
+    transition: var(--speed-2);
+}
+
+#productCard #text #description {
+    margin-bottom: calc(0.5*var(--mini-text));
+}
+
+#productCard #text #description span {
+    text-align: justify;
+
+    line-height: var(--mini-text);
+    font-weight: 500;
+
+    text-shadow: 0px 0px calc(0.75*var(--mini-text)) var(--light-1);
+
+    color: var(--dark-1);
+}
+
+#productCard #text #description a {
+    text-decoration: none;
+    color: var(--my-blue-2);
+    transition: var(--speed-2);
+}
+
+#productCard #text #description a:hover {
+    color: var(--my-yellow);
+    transition: var(--speed-2);
+}
+
+#productCard #text #description a:active {
+    color: var(--my-orange);
+    transition: var(--speed-2);
+}
+
+#productCard #text #characteristic {
+    margin-bottom: calc(0.5*var(--mini-text));
+
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: stretch;
+
+    color: var(--my-blue-2);
+}
+
+#productCard #text #characteristic .item {
+    margin-bottom: calc(0.15*var(--mini-text));
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#productCard #text #characteristic .item span:not(.dots) {
+    min-width: max-content;
+    flex: 0 1;
+    
+    font-size: calc(0.8*var(--mini-text));
+}
+#productCard #text #characteristic .item .dots {
+    margin: 0 calc(0.25*var(--mini-text));
+    box-sizing: border-box;
+    height: 55%;
+    flex: 1 1;
+    border-bottom: calc(0.1*var(--mini-text)) dotted var(--my-blue-2);
+}
+
+#productCard #text #bottom {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#productCard #text #bottom .buttons {
+    height: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#productCard #text #bottom .buttons .price {
+    margin-left: calc(0.5*var(--mini-text));
+    font-size: calc(1.25*var(--mini-text));
+    font-weight: 400;
+    color: var(--my-blue-2)
+}
+
+#productCard #text #bottom .buttons .to-basket-btn {
+    padding: calc(0.25*var(--mini-text)) calc(0.5 * var(--mini-text));
+
+    box-sizing: border-box;
+    height: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border: calc(0.125 * var(--medium-text-2)) solid var(--my-green-2);
+
+    color: var(--light-1);
+    background-color: var(--my-green-1);
+    transition: var(--speed-2);
+}
+#productCard #text #bottom .buttons .to-basket-btn:hover {
+    background-color: var(--my-yellow);
+    box-shadow: 0px 0px var(--medium-text-1) var(--my-yellow);
+    border: calc(0.125 * var(--medium-text-2)) solid var(--light-1);
+    transition: var(--speed-2);
+}
+#productCard #text #bottom .buttons .to-basket-btn:active {
+    background-color: var(--my-orange);
+    box-shadow: 0px 0px var(--medium-text-1) var(--my-orange);
+    border: calc(0.125 * var(--medium-text-2)) solid var(--light-1);
+    transition: var(--speed-2);
+}
+
+#productCard #text #bottom .count {
+    font-size: calc(0.8*var(--mini-text));
+    color: var(--my-green-2)
+}
+#productCard #text #bottom .count.no-product {
+    color: var(--my-orange)
+}
