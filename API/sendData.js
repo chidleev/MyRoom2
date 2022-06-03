@@ -14,8 +14,8 @@ sendData.app.get('/', (req, res) => {
 
 sendData.app.get('/categories', (req, res) => {
     db.Categories.findAll({
-        attributes: { 
-            include: [[db.Sequelize.fn("COUNT", db.Sequelize.col("Products.uuid")), "productsCount"]] 
+        attributes: {
+            include: [[db.Sequelize.fn("COUNT", db.Sequelize.col("Products.uuid")), "productsCount"]]
         },
         include: [{
             model: db.Products,
@@ -63,6 +63,42 @@ sendData.app.post('/productsByCategory', (req, res) => {
         .catch(error => {
             console.log(error);
             res.sendStatus(404)
+        })
+})
+
+sendData.app.post('/productsSearch', (req, res) => {
+    const whereProps = {}
+
+    if (Boolean(req.body.categoryUUID)) {
+        whereProps.CategoryUuid = req.body.categoryUUID
+    }
+    if (Boolean(req.body.searchLine)) {
+        whereProps.name = {
+            [db.Op.iLike]: '%' + req.body.searchLine + '%'
+        }
+    }
+
+    db.Products.findAll({
+        where: whereProps,
+        include: [{
+            model: db.ProductPhotos,
+            order: [['url', 'ASC']]
+        }, {
+            model: db.Comments,
+            order: [['postedAt', 'ASC']]
+        }]
+    })
+        .then(products => {
+            res.json(products)
+        })
+        .catch(error => {
+            console.log(error);
+            res.status(422).json({
+                errors: [{
+                    type: 'sequilize',
+                    comment: 'Не удалось сделать запрос к БД'
+                }]
+            })
         })
 })
 

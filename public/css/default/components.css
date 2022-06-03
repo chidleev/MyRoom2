@@ -12,7 +12,9 @@
 }
 
 #search input {
-    padding-left: calc(0.2 * var(--medium-text-2));
+    padding-left: calc(0.5 * var(--medium-text-2));
+
+    box-sizing: border-box;
     width: 100%;
     height: calc(1.25 * var(--medium-text-1));
 
@@ -61,6 +63,7 @@
 
     border: calc(0.15 * var(--medium-text-2)) dashed var(--light-1);
     border-left: none;
+    outline: none;
 
     background: var(--my-blue-1);
     cursor: pointer;
@@ -97,9 +100,7 @@
     flex-wrap: wrap;
 
     border: calc(0.2 * var(--medium-text-2)) dashed var(--my-blue-1);
-    box-shadow: 0px 0px var(--medium-text-1) var(--dark-3),
-                inset 0px 0px calc(7.5 * var(--mini-text)) var(--light-1),
-                inset 0px 0px calc(7.5 * var(--mini-text)) var(--light-1);
+    box-shadow: 0px 0px var(--medium-text-1) var(--dark-3);
 
     background-image: var(--back-img);
     background-position:  calc(0.5 * var(--mini-text)) 0, calc(0.5 * var(--mini-text)) 0, 0 0, 0 0;
@@ -207,6 +208,10 @@
 
 #productCard #text #head #rate .stars .star {
     color: var(--my-yellow);
+}
+
+#productCard #text #head #rate .comments-count {
+    color: var(--my-blue-2);
 }
 
 #productCard #text #head .favorite {

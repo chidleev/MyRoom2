@@ -28,7 +28,7 @@ export default function(defaultPageScripts, loggedPageScripts) {
         {
             path: "/catalog",
             component: {
-                template: "<searchLine/><router-view></router-view>"
+                template: "<router-view></router-view>"
             },
             children: [
                 {

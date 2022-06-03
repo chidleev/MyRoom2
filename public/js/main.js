@@ -15,7 +15,7 @@ const settings = {
     data() {
         return {
             categories: [],
-            categoryData: {},
+            products: [],
             pages: {},
             components: {}
         }

@@ -1,5 +1,10 @@
 export default function(htmlCode) {
     return {
-        template: htmlCode
+        template: htmlCode,
+        data() {
+            return {
+                lineText: ''
+            }
+        }
     }
 }

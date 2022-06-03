@@ -14,6 +14,12 @@ export default function(htmlCode) {
             getSortedPhotos(photos) {
                 var s = photos.sort((a, b) => a.publicID > b.publicID ? 1 : -1);
                 return s
+            },
+            getProductRate(product) {
+                if (!product.rate) {
+                    product.rate = Math.round(Math.random() * 5)
+                }
+                return product.rate
             }
         }
     }

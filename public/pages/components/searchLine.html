@@ -1,5 +1,5 @@
-<form id="search" :submit.prevent="">
-    <input type="search" placeholder="Искать...">
+<form id="search" @submit.prevent="$emit('searchByName', lineText)">
+    <input type="search" v-model="lineText" placeholder="Искать...">
     <button type="submit">
         <span class="material-icons">
             search

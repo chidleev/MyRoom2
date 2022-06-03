@@ -14,13 +14,12 @@ export default function() {
     })
 
     window.addEventListener('categoriesRequest', () => {
-        const that = this
         window.dispatchEvent(new CustomEvent('categoriesDistribution', { detail: {
-            categories: that.categories
+            categories: this.categories
         }}))
     })
 
-    window.addEventListener('productsRequest', (event) => {
+    /*window.addEventListener('productsRequest', (event) => {
         const that = this
         axios({
             url: '/api/getData/productsByCategory',
@@ -47,7 +46,38 @@ export default function() {
                     })
                 });
             })
-    })
+    })*/
 
     window.dispatchEvent(new Event('updateCategories'))
+
+    window.addEventListener('productsRequest', (event) => {
+        const that = this
+        axios({
+            url: '/api/getData/productsSearch',
+            method: 'post',
+            data: {
+                categoryUUID: that.categories.find(category => category.ENname == event.detail.categoryENname).uuid,
+                searchLine: event.detail.searchLine
+            }
+        })
+            .then(response => {
+                that.products = response.data
+                window.dispatchEvent(new CustomEvent('productsDistribution', { detail: {
+                    products: that.products,
+                    categoryName: that.categories.find(category => category.ENname == event.detail.categoryENname).name
+                }}))
+            })
+            .catch(error => {
+                console.log(error);
+                error.response.data.errors.forEach(error => {
+                    new Toast({
+                        title: false,
+                        text: error.comment,
+                        theme: 'warning',
+                        autohide: true,
+                        interval: 10000
+                    })
+                });
+            })
+    })
 }

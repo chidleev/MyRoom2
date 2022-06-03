@@ -4,30 +4,43 @@ export default function (htmlPage) {
         data() {
             return {
                 products: [],
-                categoryName: ''
+                categoryName: '',
+                searchLineText: ''
             }
         },
         watch: {
             '$route.params.categoryENname': function () {
                 if (this.$route.name == 'catalog') {
-                    window.dispatchEvent(new CustomEvent('productsRequest', { detail: {
-                        categoryENname: this.$route.params.categoryENname
-                    }}))
+                    window.dispatchEvent(new CustomEvent('productsRequest', {
+                        detail: {
+                            categoryENname: this.$route.params.categoryENname,
+                            searchLine: this.searchLineText
+                        }
+                    }))
                 }
+            },
+            'searchLineText': function () {
+                window.dispatchEvent(new CustomEvent('productsRequest', {
+                    detail: {
+                        categoryENname: this.$route.params.categoryENname,
+                        searchLine: this.searchLineText
+                    }
+                }))
             }
         },
         mounted() {
             window.addEventListener('productsDistribution', (event) => {
                 this.products = event.detail.products,
-                this.categoryName = event.detail.categoryName
+                    this.categoryName = event.detail.categoryName
             })
-            
-            window.dispatchEvent(new CustomEvent('productsRequest', { detail: {
-                categoryENname: this.$route.params.categoryENname
-            }}))
-        },
-        methods: {
-            
+            window.addEventListener('categoriesDistribution', event => {
+                window.dispatchEvent(new CustomEvent('productsRequest', {
+                    detail: {
+                        categoryENname: this.$route.params.categoryENname,
+                        searchLine: this.searchLineText
+                    }
+                }))
+            })
         }
     }
 }
