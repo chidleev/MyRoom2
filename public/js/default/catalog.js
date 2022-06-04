@@ -41,6 +41,7 @@ export default function (htmlPage) {
                     }
                 }))
             })
+            window.dispatchEvent(new Event('categoriesRequest'))
         }
     }
 }
