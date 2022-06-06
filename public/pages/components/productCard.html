@@ -18,7 +18,7 @@
                 </div>
                 <span class="comments-count" title="Количество отзывов">| {{product.Comments.length}}</span>
             </div>
-            <span class="material-icons favorite" title="В избранное">
+            <span class="material-icons favorite" title="В избранное" @click="toggleFavorite(product)">
                 bookmark_add
             </span>
         </div>

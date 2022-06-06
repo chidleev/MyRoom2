@@ -5,6 +5,36 @@ export default function(htmlCode) {
             product: {}
         },
         methods: {
+            toggleFavorite(product) {
+                axios({
+                    url: '/api/user/toggleFavorite',
+                    method: 'post',
+                    data: {
+                        productUuid: product.uuid
+                    }
+                })
+                    .then(res => {
+                        new Toast({
+                            title: false,
+                            text: res.data,
+                            theme: 'success',
+                            autohide: true,
+                            interval: 2000
+                        });
+                        window.dispatchEvent(new Event('updateFavorite'))
+                    })
+                    .catch(err => {
+                        err.response.data.errors.forEach(error => {
+                            new Toast({
+                                title: false,
+                                text: error.comment,
+                                theme: 'warning',
+                                autohide: true,
+                                interval: 2000
+                            });
+                        });
+                    })
+            },
             changeImage(productUuid, photoURL) {
                 document.getElementById(productUuid + '-miniGallery').style.backgroundImage = `url(${photoURL})`
             },

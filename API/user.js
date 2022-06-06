@@ -179,7 +179,7 @@ userAPI.post('/login', (req, res) => {
                                         res.cookie('token', token, {
                                             signed: true,
                                             maxAge: 604800000
-                                        }).json((user.roleUUID == globalVars.userRoleUUID)? false : true)
+                                        }).json((user.roleUUID == globalVars.userRoleUUID) ? false : true)
                                     })
                                     .catch(error => {
                                         console.log(error);
@@ -303,6 +303,77 @@ userAPI.get('/info', (req, res) => {
                     }]
                 })
             }
+        })
+})
+
+userAPI.post('/toggleFavorite', (req, res) => {
+    db.Tokens.findOne({
+        where: { value: req.signedCookies.token }
+    })
+        .then(token => {
+            if (token) {
+                token.getUser()
+                    .then(user => {
+                        user.getBasketOrders({
+                            where: {
+                                ProductUuid: req.body.productUuid,
+                                status: 0
+                            }
+                        })
+                            .then(orders => {
+                                if (!orders.length) {
+                                    db.BasketOrders.create({
+                                        status: 0
+                                    })
+                                        .then(order => {
+                                            order.setUser(user.uuid)
+                                                .then(order => {
+                                                    order.setProduct(req.body.productUuid)
+                                                        .then(order => {
+                                                            res.send("Добавлено в избранное")
+                                                        })
+                                                        .catch(err => {
+
+                                                        })
+                                                })
+                                                .catch(err => {
+
+                                                })
+                                        })
+                                        .catch(err => {
+
+                                        })
+                                }
+                                else {
+                                    user.removeBasketOrders(orders)
+                                    .then(order => {
+                                        res.send('Удалено из избранного')
+                                    })
+                                    .catch(err => {
+
+                                    })
+                                }
+
+                            })
+                            .catch(err => {
+
+                            })
+                    })
+                    .catch(err => {
+
+                    })
+            }
+            else {
+                res.status(404).clearCookie('token').json({
+                    errors: [{
+                        type: 'authentification',
+                        comment: 'В нашей базе данных Вы числитесь как неаутентифицированный пользователь'
+                    }]
+                })
+            }
+        })
+        .catch(err => {
+
         })
 })
 
