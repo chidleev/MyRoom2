@@ -31,7 +31,13 @@ const settings = {
                     if (localStorage.getItem('userAllData')) {
                         localStorage.removeItem('userAllData')
                     }
-                    alert("Вы вышли из аккаунта")
+                    new Toast({
+                        title: false,
+                        text: "Вы вышли из аккаунта",
+                        theme: 'success',
+                        autohide: true,
+                        interval: 10000
+                    })
                     document.getElementById('logout_icon').style.display = 'none'
                     this.$router.go()
                 })
@@ -54,10 +60,10 @@ axios({
     url: '/api/user/checkRole'
 })
     .then(response => {
-        console.log(response.data);
         switch (response.data) {
             case 'admin':
                 console.log('its admin');
+                document.getElementById('logout_icon').style.display = 'flex'
                 initRouter.adminRouter().then(router => {
                     app.use(router)
                     app.mount('div#app')
@@ -65,7 +71,7 @@ axios({
                 break;
 
             default:
-                console.log('its user');
+                document.getElementById('logout_icon').style.display = 'flex'
                 initRouter.defaultRouter().then(router => {
                     app.use(router)
                     app.mount('div#app')
@@ -74,7 +80,9 @@ axios({
         }
     })
     .catch(error => {
-        console.log('its user');
+        if (localStorage.getItem('userAllData')) {
+            localStorage.removeItem('userAllData')
+        }
         initRouter.defaultRouter().then(router => {
             app.use(router)
             app.mount('div#app')

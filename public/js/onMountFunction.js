@@ -13,42 +13,13 @@ export default function() {
         })
     })
 
+    window.dispatchEvent(new Event('updateCategories'))
+
     window.addEventListener('categoriesRequest', () => {
         window.dispatchEvent(new CustomEvent('categoriesDistribution', { detail: {
             categories: this.categories
         }}))
     })
-
-    /*window.addEventListener('productsRequest', (event) => {
-        const that = this
-        axios({
-            url: '/api/getData/productsByCategory',
-            method: 'post',
-            data: {
-                categoryENname: event.detail.categoryENname
-            }
-        })
-            .then(response => {
-                that.categoryData = response.data
-                window.dispatchEvent(new CustomEvent('productsDistribution', { detail: {
-                    products: that.categoryData.Products,
-                    categoryName: that.categoryData.name
-                }}))
-            })
-            .catch(error => {
-                error.response.data.errors.forEach(error => {
-                    new Toast({
-                        title: false,
-                        text: error.comment,
-                        theme: 'warning',
-                        autohide: true,
-                        interval: 10000
-                    })
-                });
-            })
-    })*/
-
-    window.dispatchEvent(new Event('updateCategories'))
 
     window.addEventListener('productsRequest', (event) => {
         const that = this
