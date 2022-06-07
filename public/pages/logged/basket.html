@@ -1,0 +1,24 @@
+<div id="panel">
+    <div id="buttons">
+        <div class="block">
+            <button 
+                v-for="(tabName, key) in {favorite: 'Избранное', basket: 'Корзина'}"
+                class="button" 
+                :class="{'active-btn': key == currentTab}"
+                @click="currentTab = key"
+            >
+            {{tabName}}
+            </button>
+        </div>
+        <div class="block">
+            <button 
+                v-for="(tabName, key) in {bought: 'Куплено'}"
+                class="button" 
+                :class="{'active-btn': key == currentTab}"
+                @click="currentTab = key"
+            >
+            {{tabName}}
+            </button>
+        </div>
+    </div>
+</div>

@@ -2,7 +2,8 @@ export default function(htmlCode) {
     return {
         template: htmlCode,
         props: {
-            product: {}
+            product: {},
+            isFavorite: false
         },
         methods: {
             toggleFavorite(product) {

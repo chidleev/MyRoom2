@@ -13,8 +13,6 @@ export default function() {
         })
     })
 
-    window.dispatchEvent(new Event('updateCategories'))
-
     window.addEventListener('categoriesRequest', () => {
         window.dispatchEvent(new CustomEvent('categoriesDistribution', { detail: {
             categories: this.categories
@@ -51,4 +49,28 @@ export default function() {
                 });
             })
     })
+
+    window.addEventListener('updateFavorite', () => {
+        const that = this
+        axios.get('/api/user/getFavorite')
+        .then(response => {
+            that.favoriteProducts = response.data
+            window.dispatchEvent(new CustomEvent('favoriteDistribution', { detail: {
+                favoriteProducts: that.favoriteProducts
+            }}))
+        })
+        .catch(error => {
+            console.log(error)
+        })
+    })
+
+    window.addEventListener('favoriteRequest', () => {
+        window.dispatchEvent(new CustomEvent('favoriteDistribution', { detail: {
+            favoriteProducts: this.favoriteProducts
+        }}))
+    })
+    
+
+    window.dispatchEvent(new Event('updateCategories'))
+    window.dispatchEvent(new Event('updateFavorite'))
 }

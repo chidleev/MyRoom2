@@ -16,6 +16,7 @@ const settings = {
         return {
             categories: [],
             products: [],
+            favoriteProducts: [],
             pages: {},
             components: {}
         }

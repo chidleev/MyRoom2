@@ -333,34 +333,70 @@ userAPI.post('/toggleFavorite', (req, res) => {
                                                             res.send("Добавлено в избранное")
                                                         })
                                                         .catch(err => {
-
+                                                            console.log(err);
+                                                            res.status(500).json({
+                                                                errors: [{
+                                                                    type: 'order',
+                                                                    comment: 'Не удалось добавить продукт в избранное (5)'
+                                                                }]
+                                                            })
                                                         })
                                                 })
                                                 .catch(err => {
-
+                                                    console.log(err);
+                                                    res.status(500).json({
+                                                        errors: [{
+                                                            type: 'order',
+                                                            comment: 'Не удалось добавить продукт в избранное (4)'
+                                                        }]
+                                                    })
                                                 })
                                         })
                                         .catch(err => {
-
+                                            console.log(err);
+                                            res.status(500).json({
+                                                errors: [{
+                                                    type: 'order',
+                                                    comment: 'Не удалось добавить продукт в избранное (3)'
+                                                }]
+                                            })
                                         })
                                 }
                                 else {
                                     user.removeBasketOrders(orders)
-                                    .then(order => {
-                                        res.send('Удалено из избранного')
-                                    })
-                                    .catch(err => {
-
-                                    })
+                                        .then(user => {
+                                            res.send('Удалено из избранного')
+                                        })
+                                        .catch(err => {
+                                            console.log(err);
+                                            res.status(500).json({
+                                                errors: [{
+                                                    type: 'order',
+                                                    comment: 'Не удалось удалить продукт из избранного'
+                                                }]
+                                            })
+                                        })
                                 }
 
                             })
                             .catch(err => {
-
+                                console.log(err);
+                                res.status(500).json({
+                                    errors: [{
+                                        type: 'user',
+                                        comment: 'Не удалось добавить продукт в избранное (2)'
+                                    }]
+                                })
                             })
                     })
                     .catch(err => {
-
+                        console.log(err);
+                        res.status(500).json({
+                            errors: [{
+                                type: 'order',
+                                comment: 'Не удалось добавить продукт в избранное (1)'
+                            }]
+                        })
                     })
             }
             else {
@@ -373,7 +409,65 @@ userAPI.post('/toggleFavorite', (req, res) => {
             }
         })
         .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                errors: [{
+                    type: 'token',
+                    comment: 'Не удалось добавить продукт в избранное (0)'
+                }]
+            })
+        })
+})
 
+userAPI.get('/getFavorite', (req, res) => {
+    db.Tokens.findOne({
+        where: { value: req.signedCookies.token }
+    })
+        .then(token => {
+            if (token) {
+                token.getUser()
+                    .then(user => {
+                        user.getBasketOrders({
+                            where: {
+                                status: 0
+                            },
+                            attributes: {
+                                exclude: ['UserUuid']
+                            },
+                            include: [db.Products]
+                        })
+                            .then(orders => {
+                                res.json(orders)
+                            })
+                            .catch(err => {
+                                console.log(err);
+                                res.status(500).json({
+                                    errors: [{
+                                        type: 'orders',
+                                        comment: 'Не удалось получить избранное'
+                                    }]
+                                })
+                            })
+                    })
+                    .catch(err => {
+                        console.log(err);
+                        res.status(500).json({
+                            errors: [{
+                                type: 'user',
+                                comment: 'Не удалось получить избранное'
+                            }]
+                        })
+                    })
+            }
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                errors: [{
+                    type: 'token',
+                    comment: 'Не удалось получить избранное'
+                }]
+            })
         })
 })
 

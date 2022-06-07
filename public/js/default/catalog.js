@@ -4,6 +4,7 @@ export default function (htmlPage) {
         data() {
             return {
                 products: [],
+                favoriteProducts: [],
                 categoryName: '',
                 searchLineText: ''
             }
@@ -29,9 +30,12 @@ export default function (htmlPage) {
             }
         },
         mounted() {
-            window.addEventListener('productsDistribution', (event) => {
-                this.products = event.detail.products,
-                    this.categoryName = event.detail.categoryName
+            window.addEventListener('productsDistribution', event => {
+                this.products = event.detail.products
+                this.categoryName = event.detail.categoryName
+            })
+            window.addEventListener('favoriteDistribution', event => {
+                this.favoriteProducts = event.detail.favoriteProducts
             })
             window.addEventListener('categoriesDistribution', event => {
                 window.dispatchEvent(new CustomEvent('productsRequest', {
@@ -42,6 +46,7 @@ export default function (htmlPage) {
                 }))
             })
             window.dispatchEvent(new Event('categoriesRequest'))
+            window.dispatchEvent(new Event('favoriteRequest'))
         }
     }
 }
