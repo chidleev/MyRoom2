@@ -6,7 +6,7 @@
     </div>
     <div id="text">
         <div id="head">
-            <router-link :to="$route.path +'/'+ product.name" id="name">{{product.name}}</router-link>
+            <router-link :to="{ name: 'product', params: { categoryENname: categoryENname || product.Category.ENname, productName: product.name } }" id="name">{{product.name}}</router-link>
             <div id="rate">
                 <div class="stars">
                     <span v-for="i in getProductRate(product)" class="material-icons star">

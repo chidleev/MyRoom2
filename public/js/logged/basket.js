@@ -4,9 +4,16 @@ export default function (htmlPage) {
         data() {
             return {
                 currentTab: 'basket',
-                orders: []
+                orders: [],
+                favoriteProducts: []
             }
         },
-        
+        computed: {},
+        mounted() {
+            window.addEventListener('favoriteDistribution', event => {
+                this.favoriteProducts = event.detail.favoriteProducts
+            })
+            window.dispatchEvent(new Event('favoriteRequest'))
+        }
     }
 }

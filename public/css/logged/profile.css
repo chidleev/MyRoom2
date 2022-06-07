@@ -82,11 +82,16 @@
 
     box-sizing: border-box;
     width: 100%;
-    min-height: calc(6 * var(--mini-text));
+    height: max-content;
+    min-height: min-content;
+
+    z-index: 10;
 
     flex-direction: column;
     justify-content: center;
     align-items: stretch;
+
+    flex: 0 0;
 
     border: calc(0.15 * var(--medium-text-2)) dashed var(--my-blue-1);
 

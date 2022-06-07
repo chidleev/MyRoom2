@@ -6,6 +6,6 @@
     </div>
 
     <div id="productsContainer">
-            <ProductCard v-for="product in products" :product="product" :isFavorite="favoriteProducts.find(favorite => favorite.ProductUuid == product.uuid) != null"/>
+            <ProductCard v-for="product in products" :product="product" :isFavorite="favoriteProducts.find(favorite => favorite.ProductUuid == product.uuid) != null" :categoryENname="$route.params.categoryENname"/>
     </div>
 </div>

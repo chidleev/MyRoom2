@@ -434,7 +434,13 @@ userAPI.get('/getFavorite', (req, res) => {
                             attributes: {
                                 exclude: ['UserUuid']
                             },
-                            include: [db.Products]
+                            include: [{
+                                model: db.Products,
+                                include: [db.ProductPhotos, db.Comments, {
+                                    model: db.Categories,
+                                    attributes: ['ENname']
+                                }]
+                            }]
                         })
                             .then(orders => {
                                 res.json(orders)

@@ -22,3 +22,7 @@
         </div>
     </div>
 </div>
+
+<div v-if="currentTab == 'favorite'" id="favorite" class="productsContainer">
+    <ProductCard v-for="order in favoriteProducts" :product="order.Product" :isFavorite="true"/>
+</div>

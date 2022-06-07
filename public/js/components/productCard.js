@@ -3,7 +3,8 @@ export default function(htmlCode) {
         template: htmlCode,
         props: {
             product: {},
-            isFavorite: false
+            isFavorite: false,
+            categoryENname: ''
         },
         methods: {
             toggleFavorite(product) {
