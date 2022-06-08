@@ -1,0 +1,122 @@
+#title {
+    margin-bottom: var(--mini-text);
+    padding: calc(0.25*var(--mini-text));
+
+    box-sizing: border-box;
+    width: 100%;
+    height: max-content;
+    min-height: min-content;
+
+    z-index: 10;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex: 0 0;
+
+    text-align: center;
+    font-size: calc(1.5*var(--mini-text));
+    font-weight: 600;
+
+    border: calc(0.15 * var(--medium-text-2)) dashed var(--my-blue-1);
+
+    color: var(--my-blue-2);
+    background-image: var(--back-img);
+    background-position: calc(0.5 * var(--mini-text)) 0, calc(0.5 * var(--mini-text)) 0, 0 0, 0 0;
+    background-size: calc(0.5 * var(--mini-text)) calc(0.5 * var(--mini-text));
+    background-repeat: repeat;
+}
+
+.flickity-cell {
+    margin: calc(0.5*var(--mini-text));
+    display: block;
+    box-sizing: border-box;
+    height: calc(20*var(--mini-text));
+    background-color: var(--light-1);
+}
+
+.flickity-viewport {
+    max-height: calc(20*var(--mini-text));
+}
+
+#menu {
+    margin: calc(1.75*var(--mini-text)) 0;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    align-items: stretch;
+    flex-wrap: wrap;
+}
+
+#menu #description {
+    padding: calc(0.5*var(--mini-text)) var(--mini-text);
+    margin: calc(0.5*var(--mini-text));
+
+    box-sizing: border-box;
+    min-width: 400px;
+
+    flex: 3 3;
+
+    text-align: justify;
+
+    border: calc(0.2 * var(--medium-text-2)) dashed var(--my-blue-1);
+
+    color: var(--my-blue-2);
+    background-image: var(--back-img);
+    background-position:  calc(0.5 * var(--mini-text)) 0, calc(0.5 * var(--mini-text)) 0, 0 0, 0 0;
+    background-size: calc(0.5 * var(--mini-text)) calc(0.5 * var(--mini-text));
+    background-repeat: repeat;
+}
+
+#menu #sidebar {
+    padding: calc(0.5*var(--mini-text));
+    margin: calc(0.5*var(--mini-text));
+
+    box-sizing: border-box;
+    min-width: 350px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    flex: 1 0;
+    
+    border: calc(0.2 * var(--medium-text-2)) dashed var(--my-blue-1);
+
+    background-image: var(--back-img);
+    background-position:  calc(0.5 * var(--mini-text)) 0, calc(0.5 * var(--mini-text)) 0, 0 0, 0 0;
+    background-size: calc(0.5 * var(--mini-text)) calc(0.5 * var(--mini-text));
+    background-repeat: repeat;
+}
+
+#menu #sidebar #characteristic {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: stretch;
+
+    color: var(--my-blue-2);
+}
+
+#menu #sidebar #characteristic .item {
+    margin-bottom: calc(0.15*var(--mini-text));
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#menu #sidebar #characteristic .item span:not(.dots) {
+    min-width: max-content;
+    flex: 0 1;
+    
+    font-size: calc(0.8*var(--mini-text));
+}
+#menu #sidebar #characteristic .item .dots {
+    margin: 0 calc(0.25*var(--mini-text));
+    box-sizing: border-box;
+    height: 55%;
+    flex: 1 1;
+    border-bottom: calc(0.1*var(--mini-text)) dotted var(--my-blue-2);
+}

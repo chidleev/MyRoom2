@@ -2,6 +2,7 @@
     padding: var(--mini-text) 0;
     width: 100%;
 
+    display: flex;
     flex-direction: column;
     justify-content: stretch;
     align-items: center;
@@ -12,6 +13,7 @@
 
     width: 100%;
 
+    display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
@@ -23,6 +25,7 @@
     width: calc(7.5 * var(--medium-text-1));
     height: calc(7.5 * var(--medium-text-1));
 
+    display: flex;
     justify-content: center;
     align-items: center;
     flex-grow: 0;
@@ -46,6 +49,7 @@
 }
 
 #header #text {
+    display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
@@ -87,6 +91,7 @@
 
     z-index: 10;
 
+    display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: stretch;
@@ -102,6 +107,7 @@
 }
 
 #panel #buttons {
+    display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: stretch;
@@ -109,6 +115,7 @@
 }
 
 #panel #buttons .block {
+    display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: stretch;
@@ -160,6 +167,7 @@
 #panel #text {
     margin-bottom: calc(0.5*var(--mini-text));
 
+    display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;

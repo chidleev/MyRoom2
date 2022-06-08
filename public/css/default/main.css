@@ -50,10 +50,6 @@
     /*transition: var(--speed-1);*/
 }
 
-div {
-    display: flex;
-}
-
 button {
     cursor: pointer;
 }
@@ -63,6 +59,7 @@ body, #app {
     min-width: 850px;
     height: 100vh;
     min-height: 480px;
+    display: flex;
 
     flex-direction: row;
     justify-content: space-between;

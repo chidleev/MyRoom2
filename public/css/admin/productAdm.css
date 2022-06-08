@@ -2,6 +2,7 @@
 
 #product-box {
     width: 100%;
+    display: flex;
     flex-direction: column;
     align-items: stretch;
 }
@@ -9,6 +10,7 @@
 #head-menu {
     margin-bottom: var(--mini-text);
     width: 100%;
+    display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
@@ -48,8 +50,6 @@
     width: 47%;
     position: relative;
     display: inline-block;
-    flex-direction: column;
-    align-items: stretch;
 }
 
 .dropdown-text, #products-file-input-label {
@@ -246,6 +246,7 @@
     flex: 1 1;
 
     text-align: center;
+    display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;

@@ -2,6 +2,8 @@
 
 #categories-box {
     width: 100%;
+    
+    display: flex;
     flex-direction: column;
     align-items: stretch;
 }
@@ -13,7 +15,7 @@
 input {
     padding: 0 calc(0.5 * var(--mini-text));
 
-    height: 100%;
+    height: calc(2 * var(--mini-text));
     flex: 1 1;
 
     display: flex;
@@ -38,12 +40,16 @@ input::placeholder {
 #head-menu {
     margin-bottom: var(--mini-text);
     width: 100%;
+    
+    display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
 }
 
 #head-menu div {
+    display: flex;
+    align-items: stretch;
     height: 100%;
     flex: 1 1;
 }
@@ -111,7 +117,8 @@ input::placeholder {
     padding: calc(0.25 * var(--mini-text));
 
     min-height: calc(2 * var(--mini-text));
-
+    
+    display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: stretch;
@@ -122,6 +129,7 @@ input::placeholder {
 }
 
 .category-item div {
+    display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: stretch;
@@ -132,7 +140,6 @@ input::placeholder {
     padding: calc(0.25 * var(--mini-text)) calc(0.5 * var(--mini-text));
 
     display: flex;
-
     justify-content: center;
     align-items: center;
 

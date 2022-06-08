@@ -1,1 +1,43 @@
-<div>{{$route.params.categoryName + ' ' + $route.params.productName}}</div>
+<div id="title">{{$route.params.productName}}</div>
+<div class="carousel">
+    <img v-for="photo in product.ProductPhotos" :src="photo.url" alt="Фото товара" />
+</div>
+<div id="menu">
+    <div id="sidebar">
+        <div id="characteristic">
+            <span class="item">
+                <span>Размеры (ШxВxГ):</span>
+                <span class="dots"></span>
+                <span>{{product.dimensions.join(' x ')}}см.</span>
+            </span>
+
+            <span class="item">
+                <span>Вес:</span>
+                <span class="dots"></span>
+                <span>{{product.weight}}кг.</span>
+            </span>
+
+            <span class="item">
+                <span>Материал:</span>
+                <span class="dots"></span>
+                <span>{{product.materials.join(', ')}}</span>
+            </span>
+            
+            <span class="item">
+                <span>Страна-производитель:</span>
+                <span class="dots"></span>
+                <span>{{product.madeIn}}</span>
+            </span>
+
+            <span class="item">
+                <span>Гарантия:</span>
+                <span class="dots"></span>
+                <span>{{product.warranty || 'отсутствует'}}мес.</span>
+            </span>
+        </div>
+    </div>
+
+    <div id="description">
+        {{product.description}}
+    </div>
+</div>

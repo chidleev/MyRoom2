@@ -20,6 +20,7 @@
     "cookie-parser": "^1.4.6",
     "express": "^4.17.1",
     "express-fileupload": "^1.4.0",
+    "flickity": "^3.0.0",
     "node-xlsx": "^0.21.0",
     "pg": "^8.7.3",
     "pg-hstore": "^2.3.4",

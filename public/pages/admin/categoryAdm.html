@@ -35,7 +35,7 @@
             </button>
         </div>
 
-        <span>Всего категорий: {{categories.length}}шт.</span>
+        <span style="height:calc(2 * var(--mini-text));">Всего категорий: {{categories.length}}шт.</span>
 
         <button v-if="checkedCategories.length" id="delete-btn" @click="deleteCategories()">
             Удалить выбранные категории

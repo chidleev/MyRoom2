@@ -1,4 +1,6 @@
 #main-content {
+    
+    display: flex;
     justify-content: center;
     align-items: center;
 
@@ -8,6 +10,8 @@
 .about-text-block {
     margin-bottom: 0;
 
+    
+    display: flex;
     flex-direction: column;
     align-items: center;
 }
