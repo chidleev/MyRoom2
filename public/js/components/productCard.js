@@ -4,6 +4,7 @@ export default function(htmlCode) {
         props: {
             product: {},
             isFavorite: false,
+            inBasket: false,
             categoryENname: ''
         },
         methods: {
@@ -24,6 +25,36 @@ export default function(htmlCode) {
                             interval: 2000
                         });
                         window.dispatchEvent(new Event('updateFavorite'))
+                    })
+                    .catch(err => {
+                        err.response.data.errors.forEach(error => {
+                            new Toast({
+                                title: false,
+                                text: error.comment,
+                                theme: 'warning',
+                                autohide: true,
+                                interval: 2000
+                            });
+                        });
+                    })
+            },
+            toggleBasket(product) {
+                axios({
+                    url: '/api/user/toggleBasket',
+                    method: 'post',
+                    data: {
+                        productUuid: product.uuid
+                    }
+                })
+                    .then(res => {
+                        new Toast({
+                            title: false,
+                            text: res.data,
+                            theme: 'success',
+                            autohide: true,
+                            interval: 2000
+                        });
+                        window.dispatchEvent(new Event('updateBasket'))
                     })
                     .catch(err => {
                         err.response.data.errors.forEach(error => {

@@ -49,7 +49,7 @@
         </div>
         <div id="bottom">
             <div class="buttons">
-                <button class="to-basket-btn">В корзину</button>
+                <button class="to-basket-btn" :class="{'in-basket': inBasket}" @click="toggleBasket(product)">{{(inBasket)?'Убрать из корзины':'В корзину'}}</button>
                 <span class="price">
                     {{product.price.toString().slice(0, 2)+' '+product.price.toString().slice(2)}} руб.
                 </span>

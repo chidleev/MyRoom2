@@ -69,8 +69,29 @@ export default function() {
             favoriteProducts: this.favoriteProducts
         }}))
     })
+
+    window.addEventListener('updateBasket', () => {
+        const that = this
+        axios.get('/api/user/getBasket')
+        .then(response => {
+            that.basketProducts = response.data
+            window.dispatchEvent(new CustomEvent('basketDistribution', { detail: {
+                basketProducts: that.basketProducts
+            }}))
+        })
+        .catch(error => {
+            console.log(error)
+        })
+    })
+
+    window.addEventListener('basketRequest', () => {
+        window.dispatchEvent(new CustomEvent('basketDistribution', { detail: {
+            basketProducts: this.basketProducts
+        }}))
+    })
     
 
     window.dispatchEvent(new Event('updateCategories'))
     window.dispatchEvent(new Event('updateFavorite'))
+    window.dispatchEvent(new Event('updateBasket'))
 }

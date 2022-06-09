@@ -5,6 +5,7 @@ export default function (htmlPage) {
             return {
                 products: [],
                 favoriteProducts: [],
+                basketProducts: [],
                 categoryName: '',
                 searchLineText: ''
             }
@@ -37,6 +38,9 @@ export default function (htmlPage) {
             window.addEventListener('favoriteDistribution', event => {
                 this.favoriteProducts = event.detail.favoriteProducts
             })
+            window.addEventListener('basketDistribution', event => {
+                this.basketProducts = event.detail.basketProducts
+            })
             window.addEventListener('categoriesDistribution', event => {
                 window.dispatchEvent(new CustomEvent('productsRequest', {
                     detail: {
@@ -47,6 +51,7 @@ export default function (htmlPage) {
             })
             window.dispatchEvent(new Event('categoriesRequest'))
             window.dispatchEvent(new Event('favoriteRequest'))
+            window.dispatchEvent(new Event('basketRequest'))
         }
     }
 }

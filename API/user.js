@@ -477,6 +477,178 @@ userAPI.get('/getFavorite', (req, res) => {
         })
 })
 
+
+userAPI.post('/toggleBasket', (req, res) => {
+    db.Tokens.findOne({
+        where: { value: req.signedCookies.token }
+    })
+        .then(token => {
+            if (token) {
+                token.getUser()
+                    .then(user => {
+                        user.getBasketOrders({
+                            where: {
+                                ProductUuid: req.body.productUuid,
+                                status: 1
+                            }
+                        })
+                            .then(orders => {
+                                if (!orders.length) {
+                                    db.BasketOrders.create({
+                                        status: 1
+                                    })
+                                        .then(order => {
+                                            order.setUser(user.uuid)
+                                                .then(order => {
+                                                    order.setProduct(req.body.productUuid)
+                                                        .then(order => {
+                                                            res.send("Добавлено в корзину")
+                                                        })
+                                                        .catch(err => {
+                                                            console.log(err);
+                                                            res.status(500).json({
+                                                                errors: [{
+                                                                    type: 'order',
+                                                                    comment: 'Не удалось добавить продукт в корзину (ERR:5)'
+                                                                }]
+                                                            })
+                                                        })
+                                                })
+                                                .catch(err => {
+                                                    console.log(err);
+                                                    res.status(500).json({
+                                                        errors: [{
+                                                            type: 'order',
+                                                            comment: 'Не удалось добавить продукт в корзину (ERR:4)'
+                                                        }]
+                                                    })
+                                                })
+                                        })
+                                        .catch(err => {
+                                            console.log(err);
+                                            res.status(500).json({
+                                                errors: [{
+                                                    type: 'order',
+                                                    comment: 'Не удалось добавить продукт в корзину (ERR:3)'
+                                                }]
+                                            })
+                                        })
+                                }
+                                else {
+                                    user.removeBasketOrders(orders)
+                                        .then(user => {
+                                            res.send('Удалено из избранного')
+                                        })
+                                        .catch(err => {
+                                            console.log(err);
+                                            res.status(500).json({
+                                                errors: [{
+                                                    type: 'order',
+                                                    comment: 'Не удалось удалить продукт из избранного'
+                                                }]
+                                            })
+                                        })
+                                }
+
+                            })
+                            .catch(err => {
+                                console.log(err);
+                                res.status(500).json({
+                                    errors: [{
+                                        type: 'user',
+                                        comment: 'Не удалось добавить продукт в корзину (ERR:2)'
+                                    }]
+                                })
+                            })
+                    })
+                    .catch(err => {
+                        console.log(err);
+                        res.status(500).json({
+                            errors: [{
+                                type: 'order',
+                                comment: 'Не удалось добавить продукт в корзину (ERR:1)'
+                            }]
+                        })
+                    })
+            }
+            else {
+                res.status(404).clearCookie('token').json({
+                    errors: [{
+                        type: 'authentification',
+                        comment: 'В нашей базе данных Вы числитесь как неаутентифицированный пользователь'
+                    }]
+                })
+            }
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                errors: [{
+                    type: 'token',
+                    comment: 'Не удалось добавить продукт в корзину (ERR:0)'
+                }]
+            })
+        })
+})
+
+userAPI.get('/getBasket', (req, res) => {
+    db.Tokens.findOne({
+        where: { value: req.signedCookies.token }
+    })
+        .then(token => {
+            if (token) {
+                token.getUser()
+                    .then(user => {
+                        user.getBasketOrders({
+                            where: {
+                                status: 1
+                            },
+                            attributes: {
+                                exclude: ['UserUuid']
+                            },
+                            include: [{
+                                model: db.Products,
+                                include: [db.ProductPhotos, db.Comments, {
+                                    model: db.Categories,
+                                    attributes: ['ENname']
+                                }]
+                            }]
+                        })
+                            .then(orders => {
+                                res.json(orders)
+                            })
+                            .catch(err => {
+                                console.log(err);
+                                res.status(500).json({
+                                    errors: [{
+                                        type: 'orders',
+                                        comment: 'Не удалось получить товары из корзины'
+                                    }]
+                                })
+                            })
+                    })
+                    .catch(err => {
+                        console.log(err);
+                        res.status(500).json({
+                            errors: [{
+                                type: 'user',
+                                comment: 'Не удалось получить товары из корзины'
+                            }]
+                        })
+                    })
+            }
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                errors: [{
+                    type: 'token',
+                    comment: 'Не удалось получить товары из корзины'
+                }]
+            })
+        })
+})
+
 userAPI.get('/logout', (req, res) => {
     db.Tokens.destroy({
         where: { value: req.signedCookies.token }

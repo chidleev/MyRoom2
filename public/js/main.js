@@ -17,6 +17,7 @@ const settings = {
             categories: [],
             products: [],
             favoriteProducts: [],
+            basketProducts: [],
             pages: {},
             components: {}
         }

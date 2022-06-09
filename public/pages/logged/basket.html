@@ -24,5 +24,22 @@
 </div>
 
 <div v-if="currentTab == 'favorite'" id="favorite" class="productsContainer">
-    <ProductCard v-for="order in favoriteProducts" :product="order.Product" :isFavorite="true"/>
+    <ProductCard 
+        v-for="order in favoriteProducts" 
+        :product="order.Product" 
+        :isFavorite="true" 
+        :inBasket="basketProducts.find(basket => basket.ProductUuid == order.Product.uuid) != null" 
+    />
 </div>
+
+<div v-if="currentTab == 'basket'" id="basket" class="productsContainer">
+    <ProductCard 
+        v-for="order in basketProducts" 
+        :product="order.Product" 
+        :isFavorite="favoriteProducts.find(favorite => favorite.ProductUuid == order.Product.uuid) != null" 
+        :inBasket="true" 
+    />
+</div>
+
+
+                
