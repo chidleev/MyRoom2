@@ -9,15 +9,21 @@ export default function (htmlPage) {
             return {
                 product: {
                     dimensions: [],
-                    materials: []
-                }
+                    materials: [],
+                    price: 0
+                },
+                inBasket: false,
+                inFavorite: false
             }
         },
         mounted() {
             window.addEventListener('productsDistribution', this.gettingProduct)
             window.addEventListener('categoriesDistribution', this.reqProduct)
+            window.addEventListener('favoriteDistribution', this.setInFavorite)
+            window.addEventListener('basketDistribution', this.setInBasket)
 
             window.dispatchEvent(new Event('categoriesRequest'))
+
 
             var onAppend = function (elem, f) {
                 var observer = new MutationObserver(function (mutations) {
@@ -43,10 +49,14 @@ export default function (htmlPage) {
         beforeDestroy() {
             window.removeEventListener('productsDistribution', this.gettingProduct)
             window.removeEventListener('categoriesDistribution', this.reqProduct)
+            window.removeEventListener('favoriteDistribution', this.setInFavorite)
+            window.removeEventListener('basketDistribution', this.setInBasket)
         },
         methods: {
             gettingProduct(event) {
                 this.product = event.detail.products.find(product => product.name == this.$route.params.productName)
+                window.dispatchEvent(new Event('favoriteRequest'))
+                window.dispatchEvent(new Event('basketRequest'))
             },
             reqProduct(event) {
                 window.dispatchEvent(new CustomEvent('productsRequest', {
@@ -55,6 +65,72 @@ export default function (htmlPage) {
                         searchLine: this.$route.params.productName
                     }
                 }))
+            },
+            setInBasket(event) {
+                this.inBasket = event.detail.basketProducts.find(basket => basket.Product.name == this.product.name)
+            },
+            setInFavorite(event) {
+                this.inFavorite = event.detail.favoriteProducts.find(favorite => favorite.Product.name == this.product.name)
+            },
+            toggleFavorite(product) {
+                axios({
+                    url: '/api/user/toggleFavorite',
+                    method: 'post',
+                    data: {
+                        productUuid: product.uuid
+                    }
+                })
+                    .then(res => {
+                        new Toast({
+                            title: false,
+                            text: res.data,
+                            theme: 'success',
+                            autohide: true,
+                            interval: 2000
+                        });
+                        window.dispatchEvent(new Event('updateFavorite'))
+                    })
+                    .catch(err => {
+                        err.response.data.errors.forEach(error => {
+                            new Toast({
+                                title: false,
+                                text: error.comment,
+                                theme: 'warning',
+                                autohide: true,
+                                interval: 2000
+                            });
+                        });
+                    })
+            },
+            toggleBasket(product) {
+                axios({
+                    url: '/api/user/toggleBasket',
+                    method: 'post',
+                    data: {
+                        productUuid: product.uuid
+                    }
+                })
+                    .then(res => {
+                        new Toast({
+                            title: false,
+                            text: res.data,
+                            theme: 'success',
+                            autohide: true,
+                            interval: 2000
+                        });
+                        window.dispatchEvent(new Event('updateBasket'))
+                    })
+                    .catch(err => {
+                        err.response.data.errors.forEach(error => {
+                            new Toast({
+                                title: false,
+                                text: error.comment,
+                                theme: 'warning',
+                                autohide: true,
+                                interval: 2000
+                            });
+                        });
+                    })
             }
         }
     }

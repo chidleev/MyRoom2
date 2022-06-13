@@ -14,13 +14,14 @@
 
 .toast-container {
   position: absolute;
+  left: var(--mini-text);
   bottom: var(--mini-text);
   z-index: 10;
   overflow: auto;
   display: flex;
   max-height: 20%;
   flex-direction: column;
-  width: 50%;
+  width: 20%;
   font-size: calc(0.75*var(--mini-text));
 }
 

@@ -4,6 +4,17 @@
 </div>
 <div id="menu">
     <div id="sidebar">
+        <div class="buttons">
+            <div>
+                <button class="to-basket-btn" :class="{'in-basket': inBasket}" @click="toggleBasket(product)">{{(inBasket)?'Убрать из корзины':'В корзину'}}</button>
+                <span class="price">
+                    {{product.price.toString().slice(0, 2)+' '+product.price.toString().slice(2)}} руб.
+                </span>
+            </div>
+            <span class="material-icons favorite" :class="{'in-favorite': inFavorite}" title="В избранное" @click="toggleFavorite(product)">
+                bookmark_add
+            </span>
+        </div>
         <div id="characteristic">
             <span class="item">
                 <span>Размеры (ШxВxГ):</span>
