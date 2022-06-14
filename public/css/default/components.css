@@ -1,6 +1,6 @@
 #search {
     margin-bottom: var(--mini-text);
-    
+
     box-sizing: border-box;
     width: 100%;
 
@@ -78,7 +78,7 @@
     transition: var(--speed-2);
 }
 
-#search button span{
+#search button span {
     font-size: calc(0.8*var(--medium-text-1));
     line-height: calc(0.8*var(--medium-text-1));
     color: var(--light-1)
@@ -105,10 +105,10 @@
     box-shadow: 0px 0px var(--medium-text-1) var(--dark-3);
 
     background-image: var(--back-img);
-    background-position:  calc(0.5 * var(--mini-text)) 0, calc(0.5 * var(--mini-text)) 0, 0 0, 0 0;
+    background-position: calc(0.5 * var(--mini-text)) 0, calc(0.5 * var(--mini-text)) 0, 0 0, 0 0;
     background-size: calc(0.5 * var(--mini-text)) calc(0.5 * var(--mini-text));
     background-repeat: repeat;
-    
+
     transition: var(--speed-1);
 }
 
@@ -202,7 +202,7 @@
     min-width: max-content;
 
     flex: 1 1;
-    
+
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -234,12 +234,15 @@
     color: var(--my-blue-1);
     transition: var(--speed-2);
 }
+
 #productCard #text #head .favorite:hover {
     color: var(--my-yellow);
     text-shadow: 0px 0px var(--medium-text-1) var(--my-yellow);
     transition: var(--speed-2);
 }
-#productCard #text #head .favorite:active, #productCard #text #head .favorite.in-favorite {
+
+#productCard #text #head .favorite:active,
+#productCard #text #head .favorite.in-favorite {
     color: var(--my-orange);
     text-shadow: 0px 0px var(--medium-text-1) var(--my-orange);
     transition: var(--speed-2);
@@ -299,9 +302,10 @@
 #productCard #text #characteristic .item span:not(.dots) {
     min-width: max-content;
     flex: 0 1;
-    
+
     font-size: calc(0.8*var(--mini-text));
 }
+
 #productCard #text #characteristic .item .dots {
     margin: 0 calc(0.25*var(--mini-text));
     box-sizing: border-box;
@@ -347,18 +351,23 @@
     background-color: var(--my-green-1);
     transition: var(--speed-2);
 }
-#productCard #text #bottom .buttons .to-basket-btn:hover, #productCard #text #bottom .buttons .to-basket-btn.in-basket {
+
+#productCard #text #bottom .buttons .to-basket-btn:hover,
+#productCard #text #bottom .buttons .to-basket-btn.in-basket {
     background-color: var(--my-yellow);
     box-shadow: 0px 0px var(--medium-text-1) var(--my-yellow);
     border: calc(0.125 * var(--medium-text-2)) solid var(--light-1);
     transition: var(--speed-2);
 }
-#productCard #text #bottom .buttons .to-basket-btn:active, #productCard #text #bottom .buttons .to-basket-btn.in-basket:hover {
+
+#productCard #text #bottom .buttons .to-basket-btn:active,
+#productCard #text #bottom .buttons .to-basket-btn.in-basket:hover {
     background-color: var(--my-orange);
     box-shadow: 0px 0px var(--medium-text-1) var(--my-orange);
     border: calc(0.125 * var(--medium-text-2)) solid var(--light-1);
     transition: var(--speed-2);
 }
+
 #productCard #text #bottom .buttons .to-basket-btn.in-basket:active {
     background-color: var(--my-red-1);
     box-shadow: 0px 0px var(--medium-text-1) var(--my-red-1);
@@ -370,6 +379,195 @@
     font-size: calc(0.8*var(--mini-text));
     color: var(--my-green-2)
 }
+
 #productCard #text #bottom .count.no-product {
     color: var(--my-orange)
+}
+
+
+.comment-container {
+    margin-bottom: var(--mini-text);
+
+    box-sizing: border-box;
+    width: 100%;
+    min-height: calc(5*var(--mini-text));
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: stretch;
+
+    border: calc(0.2 * var(--medium-text-2)) dashed var(--my-blue-1);
+    box-shadow: 0px 0px var(--medium-text-1) var(--dark-3);
+
+    background-image: var(--back-img);
+    background-position: calc(0.5 * var(--mini-text)) 0, calc(0.5 * var(--mini-text)) 0, 0 0, 0 0;
+    background-size: calc(0.5 * var(--mini-text)) calc(0.5 * var(--mini-text));
+    background-repeat: repeat;
+}
+
+.comment-container textarea, .comment-container div.text {
+    padding: calc(.5 * var(--mini-text));
+
+    box-sizing: border-box;
+    min-width: 200px;
+    min-height: calc(5*var(--mini-text));
+    flex: 10 1;
+
+    resize: vertical;
+
+    border: calc(0.125 * var(--medium-text-2)) solid var(--light-2);
+    outline: none;
+
+    text-align: justify;
+
+    color: var(--my-blue-2);
+    background-color: var(--light-1);
+}
+
+.comment-container textarea::placeholder {
+    color: var(--my-blue-1);
+}
+
+.comment-container div.text {
+    min-height: 100%;
+}
+
+.comment-container #rate {
+    box-sizing: border-box;
+    min-width: 125px;
+    flex: 2 0;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+
+    color: var(--my-blue-2);
+}
+
+.comment-container .user-info #rate {
+    margin: 0;
+}
+
+.comment-container #rate .stars {
+    color: var(--my-yellow);
+    font-size: calc(1.25 * var(--mini-text));
+    cursor: pointer;
+}
+
+.comment-container button {
+    box-sizing: border-box;
+    width: 50px;
+    min-width: 50px;
+    min-height: 100%;
+    flex: 1 1;
+
+    border: none;
+    outline: none;
+
+    background-color: transparent;
+}
+
+.comment-container button span {
+    color: var(--my-blue-1);
+    font-size: calc(2.5 * var(--mini-text));
+    transition: var(--speed-2);
+}
+
+.comment-container button:hover span {
+    color: var(--my-yellow);
+    text-shadow: 0px 0px var(--medium-text-1) var(--my-yellow);
+    transition: var(--speed-2);
+}
+
+.comment-container button:active span {
+    color: var(--my-orange);
+    text-shadow: 0px 0px var(--medium-text-1) var(--my-orange);
+    transition: var(--speed-2);
+}
+
+.comment-container .user-info {
+    padding: calc(.25 * var(--mini-text));
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-self: flex-start;
+
+    text-align: center;
+
+    color: var(--my-blue-2);
+}
+
+.comment-container .user-info .user-name {
+    font-size: calc(0.8 * var(--mini-text));
+    width: min-content;
+    word-wrap: normal;
+}
+
+.comment-container .user-info img {
+    height: calc(5*var(--mini-text));
+    border: calc(0.125 * var(--medium-text-2)) solid var(--my-blue-1);
+}
+
+.comment-container .user-info .no-photo {
+    font-size: calc(5*var(--mini-text));
+    border: calc(0.125 * var(--medium-text-2)) solid var(--my-blue-1);
+    color: var(--dark-2);
+    background-color: var(--dark-1);
+}
+
+.comment-container .comment-rate {
+    padding: calc(.25 * var(--mini-text));
+
+    height: 100%;
+    min-height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.comment-container .comment-rate * {
+    color: var(--my-blue-2);
+    font-size: calc(0.75 * var(--mini-text));
+}
+
+.comment-container .comment-rate > div {
+    width: min-content;
+    height: 100%;
+    text-align: center;
+    word-wrap: normal;
+    flex: 1 1;
+}
+
+.comment-container .comment-rate > div span {
+    color: var(--my-orange);
+    font-size: calc(2 * var(--mini-text));
+}
+
+.comment-container .comment-rate .hands {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    cursor: pointer;
+}
+
+.comment-container .comment-rate .date {
+    margin-top: calc(0.25 * var(--mini-text));
+    width: min-content;
+    word-wrap: normal;
+    text-align: center;
+    flex: 0 1;
+}
+
+.comment-container .comment-rate .good {
+    color: var(--my-green-1);
 }

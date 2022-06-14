@@ -537,7 +537,7 @@ userAPI.post('/toggleBasket', (req, res) => {
                                 else {
                                     user.removeBasketOrders(orders)
                                         .then(user => {
-                                            res.send('Удалено из избранного')
+                                            res.send('Удалено из корзины')
                                         })
                                         .catch(err => {
                                             console.log(err);
@@ -637,6 +637,14 @@ userAPI.get('/getBasket', (req, res) => {
                         })
                     })
             }
+            else {
+                res.status(404).clearCookie('token').json({
+                    errors: [{
+                        type: 'authentification',
+                        comment: 'В нашей базе данных Вы числитесь как неаутентифицированный пользователь'
+                    }]
+                })
+            }
         })
         .catch(err => {
             console.log(err);
@@ -647,6 +655,135 @@ userAPI.get('/getBasket', (req, res) => {
                 }]
             })
         })
+})
+
+userAPI.post('/sendComment', (req, res) => {
+    const errors = []
+
+    if (!Boolean(req.body.content)) {
+        errors.push({
+            type: 'comment',
+            comment: 'Вы ничего не написали в комментрии'
+        })
+    }
+
+    if (errors.length > 0) {
+        res.status(422).json({
+            errors: errors
+        })
+        return
+    }
+
+    db.Tokens.findOne({
+        where: { value: req.signedCookies.token }
+    })
+        .then(token => {
+            if (token) {
+                token.getUser()
+                    .then(user => {
+                        db.Comments.create({
+                            content: req.body.content,
+                            productRate: req.body.productRate
+                        })
+                            .then(comment => {
+                                comment.setProduct(req.body.productUuid)
+                                    .then(comment => {
+                                        console.log(user);
+                                        comment.setUser(user.uuid)
+                                            .then(comment => {
+                                                res.send('Комментарий опубликован')
+                                            })
+                                            .catch(err => {
+                                                console.log(err);
+                                                res.status(500).json({
+                                                    errors: [{
+                                                        type: 'setUser',
+                                                        comment: 'Не удалось опубликовать комментарий'
+                                                    }]
+                                                })
+                                            })
+                                    })
+                                    .catch(err => {
+                                        console.log(err);
+                                        res.status(500).json({
+                                            errors: [{
+                                                type: 'setProduct',
+                                                comment: 'Не удалось опубликовать комментарий'
+                                            }]
+                                        })
+                                    })
+                            })
+                            .catch(err => {
+                                console.log(err);
+                                res.status(500).json({
+                                    errors: [{
+                                        type: 'comment',
+                                        comment: 'Не удалось опубликовать комментарий'
+                                    }]
+                                })
+                            })
+                    })
+                    .catch(err => {
+                        console.log(err);
+                        res.status(500).json({
+                            errors: [{
+                                type: 'user',
+                                comment: 'Не удалось получить товары из корзины'
+                            }]
+                        })
+                    })
+            }
+            else {
+                res.status(404).clearCookie('token').json({
+                    errors: [{
+                        type: 'authentification',
+                        comment: 'В нашей базе данных Вы числитесь как неаутентифицированный пользователь'
+                    }]
+                })
+            }
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                errors: [{
+                    type: 'token',
+                    comment: 'Не удалось опубликовать комментарий'
+                }]
+            })
+        })
+})
+
+userAPI.patch('/setRateComment', (req, res) => {
+    db.Comments.findOne({
+        where: { uuid: req.body.commentUuid }
+    })
+    .then(comment => {
+        comment.increment({
+            selfRate : req.body.rate,
+            rateCount: 1
+        })
+        .then(comment => {
+            res.send('Комментарий оценён')
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                errors: [{
+                    type: 'comment',
+                    comment: 'Не удалось оценить комментарий'
+                }]
+            })
+        })
+    })
+    .catch(err => {
+        console.log(err);
+        res.status(500).json({
+            errors: [{
+                type: 'comment',
+                comment: 'Не удалось оценить комментарий'
+            }]
+        })
+    })
 })
 
 userAPI.get('/logout', (req, res) => {

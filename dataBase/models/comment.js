@@ -28,6 +28,7 @@ module.exports = (client, Sequelize, DataTypes) => {
         },
         rateCount: {
             type: DataTypes.DOUBLE,
+            defaultValue: 0.0,
             allowNull: false
         }
     }, {

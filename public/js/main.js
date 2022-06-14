@@ -57,6 +57,7 @@ const app = Vue.createApp(settings)
 
 app.component('SearchLine', loadComponents.searchLine)
 app.component('ProductCard', loadComponents.productCard)
+app.component('CommentCard', loadComponents.commentCard)
 
 axios({
     url: '/api/user/checkRole'

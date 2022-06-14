@@ -55,6 +55,7 @@ export default function (htmlPage) {
         methods: {
             gettingProduct(event) {
                 this.product = event.detail.products.find(product => product.name == this.$route.params.productName)
+                this.product.newRate = 1
                 window.dispatchEvent(new Event('favoriteRequest'))
                 window.dispatchEvent(new Event('basketRequest'))
             },
@@ -119,6 +120,44 @@ export default function (htmlPage) {
                             interval: 2000
                         });
                         window.dispatchEvent(new Event('updateBasket'))
+                    })
+                    .catch(err => {
+                        err.response.data.errors.forEach(error => {
+                            new Toast({
+                                title: false,
+                                text: error.comment,
+                                theme: 'warning',
+                                autohide: true,
+                                interval: 2000
+                            });
+                        });
+                    })
+            },
+            sendComment() {
+                const that = this
+                axios({
+                    url: '/api/user/sendComment',
+                    method: 'post',
+                    data: {
+                        productUuid: that.product.uuid,
+                        content: that.product.newComment,
+                        productRate: that.product.newRate
+                    }
+                })
+                    .then(res => {
+                        new Toast({
+                            title: false,
+                            text: res.data,
+                            theme: 'success',
+                            autohide: true,
+                            interval: 2000
+                        });
+                        window.dispatchEvent(new CustomEvent('productsRequest', {
+                            detail: {
+                                categoryENname: this.$route.params.categoryENname,
+                                searchLine: this.$route.params.productName
+                            }
+                        }))
                     })
                     .catch(err => {
                         err.response.data.errors.forEach(error => {

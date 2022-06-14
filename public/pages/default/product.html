@@ -52,3 +52,29 @@
         {{product.description}}
     </div>
 </div>
+
+<div id="title">Комментарии</div>
+
+<div class="comment-container">
+    <textarea v-model="product.newComment" placeholder="Напишите что-нибудь.." class="text"></textarea>
+
+    <div id="rate">
+        Ваша оценка товара:
+        <div class="stars">
+            <span v-for="i in product.newRate" class="material-icons star" @click="product.newRate = i">
+                star
+            </span>
+            <span v-for="i in (5-product.newRate)" class="material-icons star" @click="product.newRate = i+product.newRate">
+                star_border
+            </span>
+        </div>
+    </div>
+
+    <button @click="sendComment" title="Отправить комментарий">
+        <span class="material-icons">
+            send
+        </span>
+    </button>
+</div>
+
+<CommentCard v-for="comment in product.Comments" :comment="comment" />

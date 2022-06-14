@@ -1,0 +1,38 @@
+<div class="comment-container">
+    <div class="user-info">
+        <img v-if="comment.User.photoURL" :src="comment.User.photoURL" alt="Фотография пользователя">
+        <span v-else class="material-icons no-photo">
+            account_box
+        </span>
+        <span class="user-name">{{comment.User.name}}</span>
+        <div id="rate">
+            <div class="stars">
+                <span v-for="i in comment.productRate" class="material-icons star">
+                    star
+                </span>
+                <span v-for="i in (5-comment.productRate)" class="material-icons star">
+                    star_border
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div class="text">{{comment.content}}</div>
+
+    <div class="comment-rate">
+        <div>
+            Рейтинг комментария:
+            <span :class="{'good': comment.selfRate > 0}">{{getRate(comment.selfRate) || 0}}</span>
+            <div class="hands">
+                <span class="material-icons good" @click="setCommentRate(comment.uuid, 1)">
+                    thumb_up
+                </span>
+                <span class="material-icons" @click="setCommentRate(comment.uuid, -1)">
+                    thumb_down
+                </span>
+            </div>
+        </div>
+        <span class="count">Кол-во оценок: {{comment.rateCount}}</span>
+        <span class="date">Опубликован: {{getDate(comment.postedAt)}}</span>
+    </div>
+</div>

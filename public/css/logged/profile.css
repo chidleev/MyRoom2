@@ -42,10 +42,9 @@
     height: 100%;
 }
 
-#header #photo img[src='/icons/profile.svg'] {
-    width: calc(5 * var(--medium-text-1));
-    height: calc(5 * var(--medium-text-1));
-    filter: invert(15%) sepia(15%) saturate(532%) hue-rotate(169deg) brightness(91%) contrast(80%);
+#header #photo span {
+    font-size: calc(5 * var(--medium-text-1));
+    color: var(--dark-3)
 }
 
 #header #text {

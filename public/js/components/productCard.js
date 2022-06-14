@@ -79,10 +79,14 @@ export default function(htmlCode) {
                 return s
             },
             getProductRate(product) {
-                if (!product.rate) {
-                    product.rate = Math.round(Math.random() * 5)
+                if (product.Comments.length) {
+                    var sum = 0
+                    product.Comments.forEach(comment => {
+                        sum += comment.productRate
+                    })
+                    return Math.round(sum/product.Comments.length)
                 }
-                return product.rate
+                else return 0
             }
         }
     }

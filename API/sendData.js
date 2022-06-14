@@ -85,7 +85,11 @@ sendData.app.post('/productsSearch', (req, res) => {
             order: [['url', 'ASC']]
         }, {
             model: db.Comments,
-            order: [['postedAt', 'ASC']]
+            order: [['postedAt', 'ASC']],
+            include: [{
+                model: db.Users,
+                attributes: ['name', 'photoURL']
+            }]
         }]
     })
         .then(products => {
