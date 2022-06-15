@@ -1,7 +1,7 @@
 <div id="profile-content">
     <div id="header" class="row">
-        <div id="photo">
-            <img v-if="userData.photoURL" :src="userData.photoURL || '/icon/profile.svg'" alt="Фотография профиля">
+        <div id="photo" @click="uploadProfilePhoto" new-photo>
+            <img v-if="userData.photoURL" :src="userData.photoURL" alt="Фотография профиля">
             <span v-else class="material-icons">
                 account_box
             </span>

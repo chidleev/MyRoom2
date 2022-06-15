@@ -135,8 +135,8 @@ export default function (htmlPage) {
             },
 
             addNewProductPhotos(event) {
-                var el = event.target
-                this.toggleLoad(event)
+                var el = event.target.hasAttribute('new-photo') ? event.target : event.target.parentElement
+                this.toggleLoad(el)
                 this.showUploadWidget((err, response) => {
                     if (err) console.error(err)
                     else {
@@ -147,7 +147,7 @@ export default function (htmlPage) {
                             })
                         }
                         if (response.event == 'close') {
-                            this.toggleLoad(event)
+                            this.toggleLoad(el)
                         }
                     }
                 })

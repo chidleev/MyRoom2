@@ -69,6 +69,59 @@
     background-repeat: repeat;
 }
 
+#menu #description .info {
+    padding: calc(0.25*var(--mini-text));
+    margin-top: calc(var(--mini-text));
+
+    box-sizing: border-box;
+    width: 100%;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: stretch;
+
+    border: calc(0.125 * var(--medium-text-2)) solid var(--light-2);
+    background-color: var(--light-1);
+}
+
+#menu #description .info #rate {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-size: calc(0.8*var(--mini-text));
+    flex: 1 0;
+}
+
+#menu #description .info #rate > span {
+    font-size: calc(0.8*var(--mini-text));
+    flex: 0 1;
+}
+
+#menu #description .info #rate .comments-count {
+    min-width: max-content;
+}
+
+#menu #description .info #rate .stars {
+    padding-top: calc(0.25 * var(--mini-text));
+    margin: 0 calc(0.25 * var(--mini-text));
+    word-wrap: unset;
+    color: var(--my-yellow);
+}
+
+#menu #description .info .count {
+    min-width: max-content;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-size: calc(0.8*var(--mini-text));
+    flex: 0 1;
+}
+
+#menu #description .info .count.no-product {
+    color: var(--my-orange);
+}
+
 #menu #sidebar {
     padding: calc(0.5*var(--mini-text));
     margin: calc(0.5*var(--mini-text));
@@ -126,7 +179,7 @@
     height: 100%;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    flex: 0 1;
 }
 
 #menu #sidebar .buttons > div {

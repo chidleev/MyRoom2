@@ -786,6 +786,66 @@ userAPI.patch('/setRateComment', (req, res) => {
     })
 })
 
+userAPI.patch('/changePhoto', (req, res) => {
+    db.Tokens.findOne({
+        where: { value: req.signedCookies.token }
+    })
+        .then(token => {
+            if (token) {
+                token.getUser()
+                    .then(user => {
+                        user.update({ photoURL: req.body.newPhotoURL })
+                        .then(user => {
+                            res.send('Фотография изменена')
+                        })
+                        .catch(err => {
+                            console.log(err);
+                            res.status(500).json({
+                                errors: [{
+                                    type: 'updatePhoto',
+                                    comment: 'Не удалось заменить фотографию'
+                                }]
+                            })
+                        })
+                    })
+                    .catch(err => {
+                        console.log(err);
+                        res.status(500).json({
+                            errors: [{
+                                type: 'user',
+                                comment: 'Не удалось заменить фотографию'
+                            }]
+                        })
+                    })
+            }
+            else {
+                res.status(404).clearCookie('token').json({
+                    errors: [{
+                        type: 'authentification',
+                        comment: 'В нашей базе данных Вы числитесь как неаутентифицированный пользователь'
+                    }]
+                })
+            }
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                errors: [{
+                    type: 'token',
+                    comment: 'Не удалось заменить фотографию'
+                }]
+            })
+        })
+})
+
+userAPI.post('/buyProducts', (req, res) => {
+    db.BasketOrders.update({
+        status: 2
+    }, {
+        where: { uuid: { [db.Op.in]: req.body.basketOrderUUIDs } }
+    })
+})
+
 userAPI.get('/logout', (req, res) => {
     db.Tokens.destroy({
         where: { value: req.signedCookies.token }

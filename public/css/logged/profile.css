@@ -30,10 +30,12 @@
     align-items: center;
     flex-grow: 0;
 
+    cursor: pointer;
+
     border: calc(0.2 * var(--medium-text-2)) dashed var(--my-blue-1);
     box-shadow: 0px 0px var(--giant-text) var(--dark-3);
 
-    background-color: var(--dark-2);
+    background-color: var(--dark-1);
 }
 
 #header #photo img {
@@ -42,9 +44,9 @@
     height: 100%;
 }
 
-#header #photo span {
+#header #photo .material-icons {
     font-size: calc(5 * var(--medium-text-1));
-    color: var(--dark-3)
+    color: var(--dark-2)
 }
 
 #header #text {
@@ -202,3 +204,74 @@
     box-shadow: 0px 0px var(--medium-text-1) var(--my-orange);
     transition: var(--speed-1)
 }
+
+
+
+.lds-grid {
+    display: inline-block;
+    position: relative;
+    width: 80px;
+    height: 80px;
+  }
+  .lds-grid div {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--dark-2);
+    animation: lds-grid 1.2s linear infinite;
+  }
+  .lds-grid div:nth-child(1) {
+    top: 8px;
+    left: 8px;
+    animation-delay: 0s;
+  }
+  .lds-grid div:nth-child(2) {
+    top: 8px;
+    left: 32px;
+    animation-delay: -0.4s;
+  }
+  .lds-grid div:nth-child(3) {
+    top: 8px;
+    left: 56px;
+    animation-delay: -0.8s;
+  }
+  .lds-grid div:nth-child(4) {
+    top: 32px;
+    left: 8px;
+    animation-delay: -0.4s;
+  }
+  .lds-grid div:nth-child(5) {
+    top: 32px;
+    left: 32px;
+    animation-delay: -0.8s;
+  }
+  .lds-grid div:nth-child(6) {
+    top: 32px;
+    left: 56px;
+    animation-delay: -1.2s;
+  }
+  .lds-grid div:nth-child(7) {
+    top: 56px;
+    left: 8px;
+    animation-delay: -0.8s;
+  }
+  .lds-grid div:nth-child(8) {
+    top: 56px;
+    left: 32px;
+    animation-delay: -1.2s;
+  }
+  .lds-grid div:nth-child(9) {
+    top: 56px;
+    left: 56px;
+    animation-delay: -1.6s;
+  }
+  @keyframes lds-grid {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
+  }
+  

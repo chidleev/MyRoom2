@@ -50,6 +50,23 @@
 
     <div id="description">
         {{product.description}}
+        <div class="info">
+            <div id="rate">
+                <span>Оценка товара:</span>
+                <div class="stars">
+                    <span v-for="i in getProductRate(product)" class="material-icons star">
+                        star
+                    </span>
+                    <span v-for="i in (5-getProductRate(product))" class="material-icons star">
+                        star_border
+                    </span>
+                </div>
+                <span class="comments-count" title="Количество отзывов">| {{product.Comments.length}}</span>
+            </div>
+            <span class="count" :class="{'no-product': !product.count}">
+                Доступно для покупки: {{product.count || 0}}шт.
+            </span>
+        </div>
     </div>
 </div>
 

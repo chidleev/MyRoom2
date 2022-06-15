@@ -33,12 +33,35 @@
 </div>
 
 <div v-if="currentTab == 'basket'" id="basket" class="productsContainer">
-    <ProductCard 
-        v-for="order in basketProducts" 
-        :product="order.Product" 
-        :isFavorite="favoriteProducts.find(favorite => favorite.ProductUuid == order.Product.uuid) != null" 
-        :inBasket="true" 
-    />
+    <details id="product-card">
+        <summary>
+            <span>Можете приобрести сейчас. Сумма заказа: {{getTotalPrice(canBuyNow(basketProducts))}}руб.</span>
+           
+            <button @click="buyProducts(canBuyNow(basketProducts))">Оформить заказ</button>
+        </summary>
+        <br>
+        <ProductCard 
+            v-for="order in canBuyNow(basketProducts)" 
+            :product="order.Product" 
+            :isFavorite="favoriteProducts.find(favorite => favorite.ProductUuid == order.Product.uuid) != null" 
+            :inBasket="true" 
+            class="no-shadow"
+        />
+    </details>
+
+    <details id="product-card">
+        <summary>
+            <span>Сможете приобрести потом. Сумма заказа: {{getTotalPrice(canBuyLater(basketProducts))}}руб.</span>
+        </summary>
+        <br>
+        <ProductCard 
+            v-for="order in canBuyLater(basketProducts)" 
+            :product="order.Product" 
+            :isFavorite="favoriteProducts.find(favorite => favorite.ProductUuid == order.Product.uuid) != null" 
+            :inBasket="true" 
+            class="no-shadow"
+        />
+    </details>
 </div>
 
 

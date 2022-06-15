@@ -10,7 +10,8 @@ export default function (htmlPage) {
                 product: {
                     dimensions: [],
                     materials: [],
-                    price: 0
+                    price: 0,
+                    Comments: []
                 },
                 inBasket: false,
                 inFavorite: false
@@ -170,6 +171,16 @@ export default function (htmlPage) {
                             });
                         });
                     })
+            },
+            getProductRate(product) {
+                if (product.Comments.length) {
+                    var sum = 0
+                    product.Comments.forEach(comment => {
+                        sum += comment.productRate
+                    })
+                    return Math.round(sum/product.Comments.length)
+                }
+                else return 0
             }
         }
     }
