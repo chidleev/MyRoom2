@@ -844,6 +844,57 @@ userAPI.post('/buyProducts', (req, res) => {
     }, {
         where: { uuid: { [db.Op.in]: req.body.basketOrderUUIDs } }
     })
+
+    db.BasketOrders.findAll({
+        where: { uuid: { [db.Op.in]: req.body.basketOrderUUIDs } }
+    })
+    .then(basketOrders => {
+        var basketCount = 0
+        basketOrders.forEach(basketOrder => {
+            basketOrder.getProduct()
+            .then(product => {
+                if (product.count > 0) {
+                    product.increment({ count: -1 })
+                    .then(product => {
+                        basketCount += 1
+                        if (basketCount == req.body.basketOrderUUIDs.length) {
+                            res.send('Товары ожидают подтверждения оплаты')
+                        }
+                    })
+                    .catch(err => {
+                        console.log(err);
+                        res.status(500).json({
+                            errors: [{
+                                type: 'count',
+                                comment: 'Не удалось купить товары'
+                            }]
+                        })
+                    })
+                }
+                else {
+                    basketCount += 1
+                }
+            })
+            .catch(err => {
+                console.log(err);
+                res.status(500).json({
+                    errors: [{
+                        type: 'getProduct',
+                        comment: 'Не удалось купить товары'
+                    }]
+                })
+            })
+        });
+    })
+    .catch(err => {
+        console.log(err);
+        res.status(500).json({
+            errors: [{
+                type: 'orders',
+                comment: 'Не удалось купить товары'
+            }]
+        })
+    })
 })
 
 userAPI.get('/logout', (req, res) => {

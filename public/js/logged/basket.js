@@ -57,7 +57,7 @@ export default function (htmlPage) {
                                 autohide: true,
                                 interval: 5000
                             });
-                            window.dispatchEvent(new Event('basketRequest'))
+                            window.dispatchEvent(new Event('updateBasket'))
                         })
                         .catch(error => {
                             console.log(error);
