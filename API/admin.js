@@ -625,21 +625,36 @@ adminAPI.delete('/productPhotos', (req, res) => {
         });
 })
 
-
-adminAPI.get('/uploadimg', (req, res) => {
-    /*cloudinary.v2.uploader.upload(
-        __dirname + '/../public/icons/up.svg',
-        { public_id: "up" },
-        function (error, result) {
-            if (error) {
-
-                res.json(error);
-                return
+adminAPI.post('/deleteComments', (req, res) => {
+    if (req.body.commentUuids.length) {
+        db.Comments.destroy({
+            where: {
+                uuid: {
+                    [db.Op.or]: req.body.commentUuids,
+                }
             }
-            res.json(result);
-        });*/
-
-    res.send(cloudinary.image('up'))
+        })
+        .then(result => {
+            res.send('Комментарии удалены')
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                errors: [{
+                    type: 'sequalize',
+                    comment: 'Не удалось удалить комментарии'
+                }]
+            })
+        })
+    }
+    else {
+        res.status(422).json({
+            errors: [{
+                type: 'empty',
+                comment: 'Вы не выбрали комментарии'
+            }]
+        })
+    }
 })
 
 module.exports = adminAPI

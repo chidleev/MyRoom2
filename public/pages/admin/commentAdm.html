@@ -23,3 +23,24 @@
     </div>
     <div id="text">Панель управления. Комментарии</div>
 </div>
+
+<template v-for="productComments in groupBy(comments, 'ProductUuid')">
+    <details id="comments-card">
+        <summary>
+            <span>
+                <span class="material-icons">
+                    expand_circle_down
+                </span>
+                <span>{{productComments[0].Product.name}} ({{productComments.length}}шт.)</span>
+            </span>
+            <button @click="deleteChecked">Удалить выбранное</button>
+        </summary>
+        <br>
+        <CommentCard v-for="comment in productComments" :comment="comment">
+            <label :for="'check-comment-'+comment.uuid" class="delete-check-label" :checked="wannaDelete.find(commentUuid => commentUuid == comment.uuid)">
+                Удалить
+                <input type="checkbox" :id="'check-comment-'+comment.uuid" v-model="wannaDelete" :value="comment.uuid">
+            </label>
+        </CommentCard>
+    </details>
+</template>

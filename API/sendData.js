@@ -85,11 +85,11 @@ sendData.app.post('/productsSearch', (req, res) => {
             order: [['url', 'ASC']]
         }, {
             model: db.Comments,
-            order: [['postedAt', 'ASC']],
             include: [{
                 model: db.Users,
                 attributes: ['name', 'photoURL']
-            }]
+            }],
+            order: [['selfRate', 'DESC']]
         }]
     })
         .then(products => {
@@ -103,6 +103,30 @@ sendData.app.post('/productsSearch', (req, res) => {
                     comment: 'Не удалось сделать запрос к БД'
                 }]
             })
+        })
+})
+
+sendData.app.get('/comments', (req, res) => {
+    db.Comments.findAll({
+        include: [{
+            model: db.Users,
+            attributes: ['name', 'photoURL']
+        }, {
+            model: db.Products,
+            attributes: ['name'],
+            include: [{
+                model: db.Categories,
+                attributes: ['ENname']
+            }]
+        }],
+        order: [['postedAt', 'DESC']]
+    })
+        .then(result => {
+            res.json(result)
+        })
+        .catch(err => {
+            console.log(err);
+            res.sendStatus(404)
         })
 })
 

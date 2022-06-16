@@ -36,7 +36,13 @@ export default function (htmlPage) {
                     })
                     .catch(err => {
                         err.response.data.errors.forEach(error => {
-                            alert(error.comment)
+                            new Toast({
+                                    title: false,
+                                    text: error.comment,
+                                    theme: 'warning',
+                                    autohide: true,
+                                    interval: 10000
+                                })
                         });
                     })
             },
@@ -61,7 +67,13 @@ export default function (htmlPage) {
                     })
                     .catch(err => {
                         err.response.data.errors.forEach(error => {
-                            alert(error.comment)
+                            new Toast({
+                                    title: false,
+                                    text: error.comment,
+                                    theme: 'warning',
+                                    autohide: true,
+                                    interval: 10000
+                                })
                         });
                     })
             },
@@ -89,7 +101,13 @@ export default function (htmlPage) {
                         })
                         .catch(err => {
                             err.response.data.errors.forEach(error => {
-                                alert(error.comment)
+                                new Toast({
+                                    title: false,
+                                    text: error.comment,
+                                    theme: 'warning',
+                                    autohide: true,
+                                    interval: 10000
+                                })
                             });
                         })
                 }

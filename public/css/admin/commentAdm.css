@@ -1,1 +1,110 @@
 @import url('/css/profile.css');
+
+#comments-card {
+    margin-bottom: calc(0.5 * var(--mini-text));
+    padding: calc(0.25 * var(--mini-text)) calc(0.5 * var(--mini-text));
+
+    box-sizing: border-box;
+    min-height: calc(1.75*var(--medium-text-2));
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+
+    border: calc(0.15 * var(--medium-text-2)) solid var(--light-1);
+    font-size: var(--mini-text);
+
+    background-color: var(--light-2);
+    color: var(--my-blue-2);
+
+    transition: var(--speed-1);
+}
+#comments-card[open] {
+    color: var(--light-1);
+    border: calc(0.15 * var(--medium-text-2)) solid var(--dark-1);
+    background-color: var(--dark-2);
+}
+
+#comments-card summary .material-icons {
+    margin-right: calc(0.75 * var(--mini-text));
+    transition: var(--speed-1);
+}
+
+#comments-card[open] summary .material-icons {
+    transform: rotate(180deg);
+    transition: var(--speed-1);
+}
+
+#comments-card summary {
+    box-sizing: border-box;
+    width: 100%;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#comments-card summary > span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#comments-card summary {
+    padding: 0 calc(0.25 * var(--mini-text));
+    cursor: pointer;
+}
+#comments-card summary button {
+    display: none;
+    padding: calc(0.125 * var(--mini-text)) calc(0.5 * var(--mini-text));
+
+    z-index: 5;
+
+    box-sizing: border-box;
+    min-width: calc(7 * var(--mini-text));
+
+    justify-content: center;
+    align-items: center;
+
+    border: calc(0.125 * var(--medium-text-2)) solid var(--light-1);
+
+    color: var(--light-1);
+    background-color: var(--my-green-1);
+    transition: var(--speed-2);
+}
+
+#comments-card summary button:hover {
+    background-color: var(--my-yellow);
+    box-shadow: 0px 0px var(--medium-text-1) var(--my-yellow);
+    transition: var(--speed-2);
+}
+
+#comments-card summary button:active {
+    background-color: var(--my-orange);
+    box-shadow: 0px 0px var(--medium-text-1) var(--my-orange);
+    transition: var(--speed-2);
+}
+
+#comments-card[open] summary button {
+    display: flex;
+}
+
+.delete-check-label {
+    margin: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-color: var(--dark-1);
+    color: var(--light-2) !important;
+    background-color: var(--dark-2);
+}
+.delete-check-label:hover {
+    border-color: var(--light-2);
+}
+.delete-check-label[checked] {
+    border-color: var(--light-2);
+}
