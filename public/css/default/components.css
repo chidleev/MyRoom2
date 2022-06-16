@@ -248,6 +248,16 @@
     transition: var(--speed-2);
 }
 
+#productCard #text #head .favorite.in-favorite {
+    visibility: hidden;
+    position: relative;
+}
+#productCard #text #head .favorite.in-favorite::after {
+    content: 'bookmark_remove';
+    visibility: visible;
+    position: absolute;
+}
+
 #productCard #text #description {
     margin-bottom: calc(0.5*var(--mini-text));
 }

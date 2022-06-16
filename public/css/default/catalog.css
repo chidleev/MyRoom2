@@ -22,7 +22,7 @@
     box-shadow: 0px 0px var(--medium-text-1) var(--dark-3);
 
     background-image: var(--back-img);
-    background-position:  calc(0.5 * var(--mini-text)) 0, calc(0.5 * var(--mini-text)) 0, 0 0, 0 0;
+    background-position: calc(0.5 * var(--mini-text)) 0, calc(0.5 * var(--mini-text)) 0, 0 0, 0 0;
     background-size: calc(0.5 * var(--mini-text)) calc(0.5 * var(--mini-text));
     background-repeat: repeat;
 }
@@ -50,4 +50,51 @@
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
+}
+
+.no-product-card {
+    padding: var(--mini-text);
+
+    box-sizing: border-box;
+    min-width: 100%;
+    min-height: calc(15 * var(--mini-text));
+
+    flex: 1 0;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+
+    border: calc(0.2 * var(--medium-text-2)) solid var(--dark-3);
+    border-radius: calc(0.5 * var(--mini-text));
+    box-shadow: 0px 0px var(--medium-text-1) var(--dark-3),
+          inset 0px 0px calc(2.5 * var(--mini-text)) var(--dark-3);
+
+    background-image: var(--black-back-img);
+    background-position: calc(0.5 * var(--mini-text)) 0, calc(0.5 * var(--mini-text)) 0, 0 0, 0 0;
+    background-size: calc(0.5 * var(--mini-text)) calc(0.5 * var(--mini-text));
+    background-repeat: repeat;
+
+    transition: var(--speed-1);
+}
+
+.no-product-card .material-icons {
+    font-size: calc(12 * var(--mini-text));
+    position: absolute;
+    top: calc(50% - 6 * var(--mini-text));
+    left: calc(50% - 6 * var(--mini-text));
+    color: var(--dark-1);
+    text-shadow: 0px 0px calc(1.5 * var(--mini-text)) var(--dark-3);
+    opacity: 0.8;
+}
+
+.no-product-card .text {
+    font-size: calc(2.5 * var(--mini-text));
+    font-weight: 600;
+    text-align: center;
+    color: var(--light-2);
+    text-shadow: 0px 0px calc(2.5 * var(--mini-text)) var(--light-2);
+    z-index: 5;
 }

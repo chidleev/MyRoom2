@@ -1,17 +1,24 @@
 <div id="catalog">
-    <SearchLine @searchByName="(searchLine) => searchLineText = searchLine"/>
+    <SearchLine @searchByName="(searchLine) => searchLineText = searchLine" />
 
     <div id="catalogName">
         <span>Ассортимент товаров категории "{{categoryName}}"</span>
     </div>
 
     <div id="productsContainer">
-            <ProductCard 
-                v-for="product in products" 
-                :product="product" 
-                :isFavorite="favoriteOrders.find(favorite => favorite.ProductUuid == product.uuid) != null" 
-                :inBasket="buyOrders.find(basket => basket.ProductUuid == product.uuid) != null" 
-                :categoryENname="$route.params.categoryENname"
-            />
+        <div v-if="!products.length" class="no-product-card">
+            <span class="material-icons">
+                view_in_ar
+            </span>
+                
+            <span class="text">
+                Упс! Кажется нет такого товара..
+            </span>
+        </div>
+        
+        <ProductCard v-for="product in products" :product="product"
+            :isFavorite="favoriteOrders.find(favorite => favorite.ProductUuid == product.uuid) != null"
+            :inBasket="buyOrders.find(basket => basket.ProductUuid == product.uuid) != null"
+            :categoryENname="$route.params.categoryENname" />
     </div>
 </div>

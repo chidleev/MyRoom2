@@ -24,18 +24,34 @@
 </div>
 
 <div v-if="currentTab == 'favorite'" id="favorite" class="productsContainer">
-    <ProductCard 
-        v-for="order in favoriteOrders" 
-        :product="order.Product" 
-        :isFavorite="true" 
-        :inBasket="buyOrders.find(basket => basket.ProductUuid == order.Product.uuid) != null" 
-    />
+    <details v-for="order in favoriteOrders"  id="product-card">
+        <summary>
+            <span>
+                <span class="material-icons">
+                    expand_circle_down
+                </span>
+                <span>{{order.Product.name}} | {{order.Product.price}}руб.</span>
+            </span>
+        </summary>
+        <br>
+        <ProductCard 
+            :product="order.Product" 
+            :isFavorite="favoriteOrders.find(favorite => favorite.ProductUuid == order.Product.uuid) != null" 
+            :inBasket="buyOrders.find(basket => basket.ProductUuid == order.Product.uuid) != null" 
+            class="no-shadow"
+        />
+    </details>
 </div>
 
 <div v-if="currentTab == 'basket'" id="basket" class="productsContainer">
     <details id="product-card">
         <summary>
-            <span>Можете приобрести сейчас. Сумма заказа: {{getTotalPrice(canBuyNow(buyOrders))}}руб.</span>
+            <span>
+                <span class="material-icons">
+                    expand_circle_down
+                </span>
+                <span>Можете приобрести сейчас. Сумма заказа: {{getTotalPrice(canBuyNow(buyOrders))}}руб.</span>
+            </span>
            
             <button @click="buyProducts(canBuyNow(buyOrders))">Оформить заказ</button>
         </summary>
@@ -51,7 +67,12 @@
 
     <details id="product-card">
         <summary>
-            <span>Сможете приобрести чуть позже. Сумма заказа: {{getTotalPrice(canBuyLater(buyOrders))}}руб.</span>
+            <span>
+                <span class="material-icons">
+                    expand_circle_down
+                </span>
+                <span>Сможете приобрести чуть позже (товара нет в наличии). Сумма заказа: {{getTotalPrice(canBuyLater(buyOrders))}}руб.</span>
+            </span>
         </summary>
         <br>
         <ProductCard 
@@ -67,7 +88,12 @@
 <div v-if="currentTab == 'bought'" id="bought" class="productsContainer">
     <details id="product-card">
         <summary>
-            <span>Ожидает подтверждения оплаты и отправки. ({{paidOrders.length}}шт.)</span>
+            <span>
+                <span class="material-icons">
+                    expand_circle_down
+                </span>
+                <span>Ожидает подтверждения оплаты и отправки. ({{paidOrders.length}}шт.)</span>
+            </span>
         </summary>
         <br>
         <ProductCard 
@@ -81,7 +107,12 @@
 
     <details id="product-card">
         <summary>
-            <span>Приобретенные товары. ({{boughtOrders.length}}шт.)</span>
+            <span>
+                <span class="material-icons">
+                    expand_circle_down
+                </span>
+                <span>Приобретенные товары. ({{boughtOrders.length}}шт.)</span>
+            </span>
         </summary>
         <br>
         <ProductCard 
