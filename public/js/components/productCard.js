@@ -24,7 +24,7 @@ export default function(htmlCode) {
                             autohide: true,
                             interval: 2000
                         });
-                        window.dispatchEvent(new Event('updateFavorite'))
+                        window.dispatchEvent(new Event('updateBasket'))
                     })
                     .catch(err => {
                         err.response.data.errors.forEach(error => {

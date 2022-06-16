@@ -591,7 +591,7 @@ userAPI.post('/toggleBasket', (req, res) => {
         })
 })
 
-userAPI.get('/getBasket', (req, res) => {
+userAPI.get('/getBasketOrders', (req, res) => {
     db.Tokens.findOne({
         where: { value: req.signedCookies.token }
     })
@@ -600,9 +600,6 @@ userAPI.get('/getBasket', (req, res) => {
                 token.getUser()
                     .then(user => {
                         user.getBasketOrders({
-                            where: {
-                                status: 1
-                            },
                             attributes: {
                                 exclude: ['UserUuid']
                             },

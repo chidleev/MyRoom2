@@ -4,8 +4,7 @@ export default function (htmlPage) {
         data() {
             return {
                 products: [],
-                favoriteProducts: [],
-                basketProducts: [],
+                basketOrders: [],
                 categoryName: '',
                 searchLineText: ''
             }
@@ -30,16 +29,21 @@ export default function (htmlPage) {
                 }))
             }
         },
+        computed: {
+            favoriteOrders: function() {
+                return this.basketOrders.filter(basket => basket.status == 0)
+            },
+            buyOrders: function() {
+                return this.basketOrders.filter(basket => basket.status == 1)
+            },
+        },
         mounted() {
             window.addEventListener('productsDistribution', event => {
                 this.products = event.detail.products
                 this.categoryName = event.detail.categoryName
             })
-            window.addEventListener('favoriteDistribution', event => {
-                this.favoriteProducts = event.detail.favoriteProducts
-            })
             window.addEventListener('basketDistribution', event => {
-                this.basketProducts = event.detail.basketProducts
+                this.basketOrders = event.detail.basketOrders || []
             })
             window.addEventListener('categoriesDistribution', event => {
                 window.dispatchEvent(new CustomEvent('productsRequest', {
@@ -50,7 +54,6 @@ export default function (htmlPage) {
                 }))
             })
             window.dispatchEvent(new Event('categoriesRequest'))
-            window.dispatchEvent(new Event('favoriteRequest'))
             window.dispatchEvent(new Event('basketRequest'))
         }
     }
