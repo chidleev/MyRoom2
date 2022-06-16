@@ -72,11 +72,11 @@ export default function() {
 
     window.addEventListener('updateBasket', () => {
         const that = this
-        axios.get('/api/user/getBasket')
+        axios.get('/api/user/getBasketOrders')
         .then(response => {
-            that.basketProducts = response.data
+            that.basketOrders = response.data
             window.dispatchEvent(new CustomEvent('basketDistribution', { detail: {
-                basketProducts: that.basketProducts
+                basketOrders: that.basketOrders
             }}))
         })
         .catch(error => {
@@ -86,7 +86,7 @@ export default function() {
 
     window.addEventListener('basketRequest', () => {
         window.dispatchEvent(new CustomEvent('basketDistribution', { detail: {
-            basketProducts: this.basketProducts
+            basketOrders: this.basketOrders
         }}))
     })
     

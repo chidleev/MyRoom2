@@ -6,18 +6,26 @@ export default function (htmlPage) {
                 currentTab: 'basket',
                 orders: [],
                 favoriteProducts: [],
-                basketProducts: []
+                basketOrders: []
             }
         },
-        computed: {},
+        computed: {
+            favoriteOrders: function() {
+                return this.basketOrders.filter(basket => basket.status == 0)
+            },
+            buyOrders: function() {
+                return this.basketOrders.filter(basket => basket.status == 1)
+            },
+            paidOrders: function() {
+                return this.basketOrders.filter(basket => basket.status == 2)
+            },
+            boughtOrders: function() {
+                return this.basketOrders.filter(basket => basket.status == 3)
+            }
+        },
         mounted() {
-            window.addEventListener('favoriteDistribution', event => {
-                this.favoriteProducts = event.detail.favoriteProducts
-            })
-            window.dispatchEvent(new Event('favoriteRequest'))
-
             window.addEventListener('basketDistribution', event => {
-                this.basketProducts = event.detail.basketProducts
+                this.basketOrders = event.detail.basketOrders
             })
             window.dispatchEvent(new Event('basketRequest'))
         },

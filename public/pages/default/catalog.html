@@ -9,8 +9,8 @@
             <ProductCard 
                 v-for="product in products" 
                 :product="product" 
-                :isFavorite="favoriteProducts.find(favorite => favorite.ProductUuid == product.uuid) != null" 
-                :inBasket="basketProducts.find(basket => basket.ProductUuid == product.uuid) != null" 
+                :isFavorite="favoriteOrders.find(favorite => favorite.ProductUuid == product.uuid) != null" 
+                :inBasket="buyOrders.find(basket => basket.ProductUuid == product.uuid) != null" 
                 :categoryENname="$route.params.categoryENname"
             />
     </div>

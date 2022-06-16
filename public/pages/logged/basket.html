@@ -25,25 +25,25 @@
 
 <div v-if="currentTab == 'favorite'" id="favorite" class="productsContainer">
     <ProductCard 
-        v-for="order in favoriteProducts" 
+        v-for="order in favoriteOrders" 
         :product="order.Product" 
         :isFavorite="true" 
-        :inBasket="basketProducts.find(basket => basket.ProductUuid == order.Product.uuid) != null" 
+        :inBasket="buyOrders.find(basket => basket.ProductUuid == order.Product.uuid) != null" 
     />
 </div>
 
 <div v-if="currentTab == 'basket'" id="basket" class="productsContainer">
     <details id="product-card">
         <summary>
-            <span>Можете приобрести сейчас. Сумма заказа: {{getTotalPrice(canBuyNow(basketProducts))}}руб.</span>
+            <span>Можете приобрести сейчас. Сумма заказа: {{getTotalPrice(canBuyNow(buyOrders))}}руб.</span>
            
-            <button @click="buyProducts(canBuyNow(basketProducts))">Оформить заказ</button>
+            <button @click="buyProducts(canBuyNow(buyOrders))">Оформить заказ</button>
         </summary>
         <br>
         <ProductCard 
-            v-for="order in canBuyNow(basketProducts)" 
+            v-for="order in canBuyNow(buyOrders)" 
             :product="order.Product" 
-            :isFavorite="favoriteProducts.find(favorite => favorite.ProductUuid == order.Product.uuid) != null" 
+            :isFavorite="favoriteOrders.find(favorite => favorite.ProductUuid == order.Product.uuid) != null" 
             :inBasket="true" 
             class="no-shadow"
         />
@@ -51,18 +51,45 @@
 
     <details id="product-card">
         <summary>
-            <span>Сможете приобрести потом. Сумма заказа: {{getTotalPrice(canBuyLater(basketProducts))}}руб.</span>
+            <span>Сможете приобрести чуть позже. Сумма заказа: {{getTotalPrice(canBuyLater(buyOrders))}}руб.</span>
         </summary>
         <br>
         <ProductCard 
-            v-for="order in canBuyLater(basketProducts)" 
+            v-for="order in canBuyLater(buyOrders)" 
             :product="order.Product" 
-            :isFavorite="favoriteProducts.find(favorite => favorite.ProductUuid == order.Product.uuid) != null" 
+            :isFavorite="favoriteOrders.find(favorite => favorite.ProductUuid == order.Product.uuid) != null" 
             :inBasket="true" 
             class="no-shadow"
         />
     </details>
 </div>
 
+<div v-if="currentTab == 'bought'" id="bought" class="productsContainer">
+    <details id="product-card">
+        <summary>
+            <span>Ожидает подтверждения оплаты и отправки. ({{paidOrders.length}}шт.)</span>
+        </summary>
+        <br>
+        <ProductCard 
+            v-for="order in paidOrders" 
+            :product="order.Product" 
+            :isFavorite="favoriteOrders.find(favorite => favorite.ProductUuid == order.Product.uuid) != null" 
+            :inBasket="buyOrders.find(basket => basket.ProductUuid == order.Product.uuid) != null" 
+            class="no-shadow"
+        />
+    </details>
 
-                
+    <details id="product-card">
+        <summary>
+            <span>Приобретенные товары. ({{boughtOrders.length}}шт.)</span>
+        </summary>
+        <br>
+        <ProductCard 
+            v-for="order in boughtOrders" 
+            :product="order.Product" 
+            :isFavorite="favoriteOrders.find(favorite => favorite.ProductUuid == order.Product.uuid) != null" 
+            :inBasket="buyOrders.find(basket => basket.ProductUuid == order.Product.uuid) != null" 
+            class="no-shadow"
+        />
+    </details>
+</div>
