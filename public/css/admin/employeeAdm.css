@@ -1,1 +1,360 @@
 @import url('/css/profile.css');
+
+#employee-card {
+    margin-bottom: calc(0.5 * var(--mini-text));
+    padding: calc(0.25 * var(--mini-text)) calc(0.5 * var(--mini-text));
+
+    box-sizing: border-box;
+    min-height: calc(1.75*var(--medium-text-2));
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+
+    border: calc(0.15 * var(--medium-text-2)) solid var(--light-1);
+    font-size: var(--mini-text);
+
+    background-color: var(--light-2);
+    color: var(--my-blue-2);
+
+    transition: var(--speed-1);
+}
+#employee-card[open] {
+    color: var(--light-1);
+    border: calc(0.15 * var(--medium-text-2)) solid var(--dark-1);
+    background-color: var(--dark-2);
+}
+
+#employee-card summary .material-icons {
+    margin-right: calc(0.75 * var(--mini-text));
+    transition: var(--speed-1);
+}
+
+#employee-card[open] summary .material-icons {
+    transform: rotate(180deg);
+    transition: var(--speed-1);
+}
+
+#employee-card summary {
+    box-sizing: border-box;
+    width: 100%;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#employee-card summary > span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#employee-card summary {
+    padding: 0 calc(0.25 * var(--mini-text));
+    cursor: pointer;
+}
+#employee-card summary button {
+    display: none;
+    padding: calc(0.125 * var(--mini-text)) calc(0.5 * var(--mini-text));
+
+    z-index: 5;
+
+    box-sizing: border-box;
+    min-width: calc(7 * var(--mini-text));
+
+    justify-content: center;
+    align-items: center;
+
+    border: calc(0.125 * var(--medium-text-2)) solid var(--light-1);
+
+    color: var(--light-1);
+    background-color: var(--my-green-1);
+    transition: var(--speed-2);
+}
+
+#employee-card summary button:hover {
+    background-color: var(--my-yellow);
+    box-shadow: 0px 0px var(--medium-text-1) var(--my-yellow);
+    transition: var(--speed-2);
+}
+
+#employee-card summary button:active {
+    background-color: var(--my-orange);
+    box-shadow: 0px 0px var(--medium-text-1) var(--my-orange);
+    transition: var(--speed-2);
+}
+
+#employee-card[open] summary button {
+    display: flex;
+}
+
+.update-btn {
+    min-height: calc(2*var(--mini-text));
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    flex: 1 1;
+
+    outline: none;
+    border: calc(0.15 * var(--medium-text-2)) solid var(--light-1);
+
+    color: var(--light-1) !important;
+    background-color: var(--my-green-1);
+    transition: var(--speed-2);
+}
+.update-btn:hover {
+    background-color: var(--my-green-1);
+    transition: var(--speed-2);
+}
+.update-btn:active {
+    background-color: var(--my-green-2);
+    transition: var(--speed-2);
+}
+
+.delete-btn {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    flex: 1 1;
+
+    outline: none;
+    border: calc(0.15 * var(--medium-text-2)) solid var(--light-1);
+
+    color: var(--light-1) !important;
+    background-color: var(--my-yellow);
+    transition: var(--speed-2);
+}
+.delete-btn:hover {
+    background-color: var(--my-orange);
+    transition: var(--speed-2);
+}
+.delete-btn:active {
+    background-color: var(--my-red-1);
+    transition: var(--speed-2);
+}
+.delete-btn:disabled {
+    background-color: var(--dark-1);
+    border-color: var(--dark-2);
+    transition: var(--speed-2);
+}
+
+.delete-btn span {
+    margin: 0 var(--mini-text);
+}
+
+.worker-card {
+    margin-bottom: calc(0.5 * var(--mini-text));
+    padding: calc(0.5 * var(--mini-text)) calc(0.5 * var(--mini-text));
+
+    box-sizing: border-box;
+
+    display: inline-flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: stretch;
+    gap: var(--mini-text);
+
+    border: calc(0.15 * var(--medium-text-2)) solid var(--light-1);
+    font-size: var(--mini-text);
+
+    background-color: var(--light-2);
+    color: var(--my-blue-2);
+
+    transition: var(--speed-1);
+}
+
+.worker-card img {
+    align-self: center;
+    height: calc(5 * var(--mini-text));
+    border: calc(0.15 * var(--medium-text-2)) solid var(--my-blue-2);
+}
+.worker-card .no-photo {
+    align-self: center;
+    font-size: calc(5*var(--mini-text));
+    border: calc(0.125 * var(--medium-text-2)) solid var(--my-blue-1);
+    color: var(--dark-2);
+    background-color: var(--dark-1);
+}
+
+.worker-card input, #promote-tab input {
+    padding: 0 calc(0.5 * var(--mini-text));
+    
+    box-sizing: border-box;
+    width: max-content;
+    min-height: calc(2*var(--mini-text));
+
+    flex: 1 1;
+
+    border: none;
+    outline: none;
+
+    text-align: center;
+
+    color: var(--my-blue-2);
+    background-color: var(--light-1);
+}
+
+.worker-card input::placeholder, #promote-tab input::placeholder {
+    color: var(--my-blue-1);
+}
+
+.worker-card .info {
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: stretch;
+    flex: 1 1;
+}
+
+.worker-card .info div, .worker-card .info > span {
+    margin-bottom: calc(0.5 * var(--mini-text));
+
+    display: inline-flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: stretch;
+    flex: 1 1;
+    flex-wrap: wrap;
+    gap: calc(0.5 * var(--mini-text));
+}
+
+.tab {
+    margin-bottom: var(--mini-text);
+    width: 100%;
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: stretch;
+}
+
+.promote-title {
+    margin-bottom: calc(0.25 * var(--mini-text));
+    text-align: center;
+
+    border: calc(0.15 * var(--medium-text-2)) solid var(--light-1);
+    font-size: calc(1.25 * var(--mini-text));
+
+    background-color: var(--light-2);
+    color: var(--my-blue-2);
+}
+
+#promote-tab {
+    padding: calc(0.25 * var(--mini-text)) calc(0.5 * var(--mini-text));
+
+    box-sizing: border-box;
+    min-height: calc(2*var(--medium-text-2));
+    width: 100%;
+
+    display: inline-flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: stretch;
+    flex-wrap: wrap;
+    gap: calc(0.25 * var(--mini-text));
+
+    border: calc(0.15 * var(--medium-text-2)) solid var(--light-1);
+    font-size: var(--mini-text);
+
+    background-color: var(--light-2);
+    color: var(--my-blue-2);
+
+    transition: var(--speed-1);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-text {
+    padding: 0 calc(0.5 * var(--mini-text));
+
+    box-sizing: border-box;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+
+    border: calc(0.125 * var(--medium-text-2)) solid var(--light-1);
+
+    font-size: calc(0.8 * var(--mini-text));
+
+    background-color: var(--my-blue-1);
+    color: var(--light-1);
+    
+    transition: var(--speed-2);
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    width: 100%;
+    z-index: 1;
+    transition: all var(--speed-1);
+}
+
+/* Links inside the dropdown */
+.dropdown-content div {
+    padding: calc(0.25 * var(--mini-text)) calc(0.5 * var(--mini-text));
+
+    box-sizing: border-box;
+    width: 100%;
+
+    display: block;
+
+    border: calc(0.125 * var(--medium-text-2)) solid var(--my-green-2);
+
+    color: var(--my-blue-2);
+    background-color: var(--light-2);
+
+    transition: var(--speed-2);
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content div:hover {
+    color: var(--light-1);
+    background-color: var(--my-yellow);
+    transition: var(--speed-2);
+}
+
+.dropdown-content div.active {
+    color: var(--light-1);
+    background-color: var(--my-orange);
+    transition: var(--speed-2);
+}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+    display: block;
+    transition: all var(--speed-1);
+}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropdown-text {
+    border: calc(0.125 * var(--medium-text-2)) solid var(--my-green-2);
+    background-color: var(--my-green-1);
+    transition: var(--speed-2);
+}

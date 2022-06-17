@@ -1,25 +1,85 @@
 <div id="panel">
     <div id="buttons">
         <div class="block">
-            <router-link 
-                v-for="(pageName, key) in {categoryAdm: 'Категории', productAdm: 'Товары'}"
-                :to="{ name: key }" 
-                class="button" 
-                active-class="active-btn"
-            >
-            {{pageName}}
+            <router-link v-for="(pageName, key) in {categoryAdm: 'Категории', productAdm: 'Товары'}" :to="{ name: key }"
+                class="button" active-class="active-btn">
+                {{pageName}}
             </router-link>
         </div>
         <div class="block">
-            <router-link 
-                v-for="(pageName, key) in {commentAdm: 'Комментарии', employeeAdm: 'Работники'}"
-                :to="{ name: key }" 
-                class="button" 
-                active-class="active-btn"
-            >
-            {{pageName}}
+            <router-link v-for="(pageName, key) in {commentAdm: 'Комментарии', employeeAdm: 'Работники'}"
+                :to="{ name: key }" class="button" active-class="active-btn">
+                {{pageName}}
             </router-link>
         </div>
     </div>
     <div id="text">Панель управления. Персонал</div>
 </div>
+
+<div class="tab">
+    <span class="promote-title">Изменить должность пользователя</span>
+    <div id="promote-tab">
+        <input type="text" v-model="promoteWorker.login" placeholder="Логин"
+            title="Логин страницы пользователя для изменения должности">
+        <input type="text" v-model="promoteWorker.password" placeholder="Пароль"
+            title="Пароль страницы пользователя для изменения должности">
+        <div class="dropdown">
+            <div class="dropdown-text">Присвоить должность: {{roleName(promoteWorker.roleUuid) || 'не выбрана'}}</div>
+            <div class="dropdown-content">
+                <div v-for="workers in groupBy(employee, 'roleUUID')" @click="promoteWorker.roleUuid = workers[0].roleUUID"
+                    :class="{'active': promoteWorker.roleUuid == workers[0].roleUUID}">
+                    {{roleName(workers[0].roleUUID)}}
+                </div>
+                <div @click="promoteWorker.roleUuid = '00000000-0000-0000-0000-000000000000'"
+                    :class="{'active': promoteWorker.roleUuid == '00000000-0000-0000-0000-000000000000'}">
+                    {{roleName('00000000-0000-0000-0000-000000000000')}}
+                </div>
+            </div>
+        </div>
+        <button class="update-btn" @click="promote">Изменить должность</button>
+    </div>
+</div>
+
+
+<template v-for="workers in groupBy(employee, 'roleUUID')">
+    <details id="employee-card">
+        <summary>
+            <span>
+                <span class="material-icons">
+                    expand_circle_down
+                </span>
+                <span>Должность: {{roleName(workers[0].roleUUID)}} ({{workers.length}} чел.)</span>
+            </span>
+        </summary>
+        <br>
+        <div v-for="worker in workers" class="worker-card">
+            <img v-if="worker.photoURL" :src="worker.photoURL" alt="Фотография работника">
+            <span v-else class="material-icons no-photo">
+                account_box
+            </span>
+            <div class="info">
+                <span>
+                    <span>Имя:
+                        <input type="text" v-model="worker.name" placeholder="Имя работника" title="Имя работника">
+                    </span>
+                    <span>Зарегестрирован(-а): {{getDate(worker.createdAt)}}</span>
+                </span>
+                <div>
+                    <input type="text" v-model="worker.newPassword" placeholder="Новый пароль" title="Новый пароль">
+                    <input type="text" v-model="worker.phone" placeholder="Номер телефона" title="Номер телефона">
+                    <input type="text" v-model="worker.email" placeholder="Электронная почта" title="Электронная почта">
+                </div>
+                <div>
+                    <button class="update-btn" @click="updateWorker(worker)">
+                        Изменить
+                    </button>
+                    <button class="delete-btn" :disabled="!worker.deletePassword"
+                        @click.stop="deleteWorker($event, worker)">
+                        <span>Удалить</span>
+                        <input type="text" v-model="worker.deletePassword" placeholder="Подтвердите пароль">
+                    </button>
+                </div>
+            </div>
+        </div>
+    </details>
+</template>

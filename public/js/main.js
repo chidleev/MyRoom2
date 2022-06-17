@@ -41,7 +41,7 @@ const settings = {
                         interval: 10000
                     })
                     document.getElementById('logout_icon').style.display = 'none'
-                    this.$router.go()
+                    this.$router.push({name: 'login'})
                 })
                 .catch(error => {
                     error.response.data.errors.forEach(error => {

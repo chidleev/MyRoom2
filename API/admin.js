@@ -6,6 +6,8 @@
 */
 
 const axios = require('axios');
+const validator = require('validator')
+const bcrypt = require('bcrypt')
 const fileUpload = require('express-fileupload');
 const xlsx = require('node-xlsx');
 const cloudinary = require('cloudinary').v2
@@ -634,18 +636,18 @@ adminAPI.post('/deleteComments', (req, res) => {
                 }
             }
         })
-        .then(result => {
-            res.send('Комментарии удалены')
-        })
-        .catch(err => {
-            console.log(err);
-            res.status(500).json({
-                errors: [{
-                    type: 'sequalize',
-                    comment: 'Не удалось удалить комментарии'
-                }]
+            .then(result => {
+                res.send('Комментарии удалены')
             })
-        })
+            .catch(err => {
+                console.log(err);
+                res.status(500).json({
+                    errors: [{
+                        type: 'sequalize',
+                        comment: 'Не удалось удалить комментарии'
+                    }]
+                })
+            })
     }
     else {
         res.status(422).json({
@@ -655,6 +657,210 @@ adminAPI.post('/deleteComments', (req, res) => {
             }]
         })
     }
+})
+
+adminAPI.get('/employee', (req, res) => {
+    db.Users.findAll({
+        where: { roleUUID: { [db.Op.not]: '00000000-0000-0000-0000-000000000000' } },
+        order: [['roleUUID', 'ASC'], ['name', 'ASC']]
+    })
+        .then(result => {
+            res.json(result)
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                errors: [{
+                    type: 'sequalize',
+                    comment: 'Не удалось получить список работников'
+                }]
+            })
+        })
+})
+
+adminAPI.patch('/employee', (req, res) => {
+    const errors = []
+    const updateData = {}
+
+    if (Boolean(req.body.newPassword)) {
+        updateData.password = newPassword
+    }
+
+    if (!Boolean(req.body.name)) {
+        errors.push({
+            type: 'name',
+            comment: 'Вы не ввели свое имя'
+        })
+    }
+    else {
+        updateData.name = req.body.name
+    }
+
+    if (!Boolean(req.body.email)) {
+        errors.push({
+            type: 'email',
+            comment: 'Вы не ввели свою электронную почту'
+        })
+    }
+    else if (!validator.isEmail(req.body.email)) {
+        errors.push({
+            type: 'email',
+            comment: 'Вы ввели некорректную электронную почту'
+        })
+    }
+    else {
+        updateData.email = req.body.email
+    }
+
+    if (Boolean(req.body.phone) && !validator.isMobilePhone(req.body.phone)) {
+        console.log(req.body.phone);
+        errors.push({
+            type: 'phone',
+            comment: 'Вы ввели некорректный номер телефона'
+        })
+    }
+    else {
+        updateData.phone = req.body.phone
+    }
+
+    if (errors.length > 0) {
+        res.status(422).json({
+            errors: errors
+        })
+        return
+    }
+
+    db.Users.update(updateData, {
+        where: { uuid: req.body.workerUuid }
+    })
+        .then(result => {
+            res.send('Страница работника обновлена')
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                errors: [{
+                    type: 'sequalize',
+                    comment: 'Не удалось обновить страницу работника'
+                }]
+            })
+        })
+})
+
+adminAPI.patch('/promoteEmployee', (req, res) => {
+    const errors = []
+
+    if (!Boolean(req.body.login)) {
+        errors.push({
+            type: 'login',
+            comment: 'Вы не ввели логин'
+        })
+    }
+
+    if (!Boolean(req.body.password)) {
+        errors.push({
+            type: 'password',
+            comment: 'Вы не ввели пароль'
+        })
+    }
+
+    if (!Boolean(req.body.roleUuid)) {
+        errors.push({
+            type: 'roleUuid',
+            comment: 'Вы не выбрали должность'
+        })
+    }
+
+    if (errors.length > 0) {
+        res.status(422).json({
+            errors: errors
+        })
+        return
+    }
+
+    db.Users.findOne({
+        where: { login: req.body.login }
+    })
+        .then(user => {
+            bcrypt.compare(req.body.password, user.password).then(success => {
+                if (success) {
+                    user.update({ roleUUID: req.body.roleUuid })
+                        .then(result => {
+                            res.send('Должность работника обновлена')
+                        })
+                        .catch(err => {
+                            console.log(err);
+                            res.status(500).json({
+                                errors: [{
+                                    type: 'sequalize',
+                                    comment: 'Не удалось обновить должность работника'
+                                }]
+                            })
+                        })
+                }
+                else {
+                    res.status(422).json({
+                        errors: [{
+                            type: 'password',
+                            comment: 'Неверный пароль'
+                        }]
+                    })
+                }
+            })
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                errors: [{
+                    type: 'login',
+                    comment: 'Пользователя с таким логином не существует'
+                }]
+            })
+        })
+})
+
+adminAPI.delete('/employee', (req, res) => {
+    db.Users.findOne({
+        where: { uuid: req.body.workerUuid }
+    })
+        .then(user => {
+            bcrypt.compare(req.body.password, user.password).then(success => {
+                if (success) {
+                    db.Users.destroy({
+                        where: { uuid: req.body.workerUuid }
+                    })
+                        .then(result => {
+                            res.send('Страница работника удалена')
+                        })
+                        .catch(err => {
+                            console.log(err);
+                            res.status(500).json({
+                                errors: [{
+                                    type: 'sequalize',
+                                    comment: 'Не удалось удалить страницу работника'
+                                }]
+                            })
+                        })
+                }
+                else {
+                    res.status(422).json({
+                        errors: [{
+                            type: 'password',
+                            comment: 'Неверный пароль'
+                        }]
+                    })
+                }
+            })
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                errors: [{
+                    type: 'sequalize',
+                    comment: 'Не удалось получить список работников'
+                }]
+            })
+        })
 })
 
 module.exports = adminAPI
