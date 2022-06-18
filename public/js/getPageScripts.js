@@ -35,7 +35,7 @@ async function adminScripts() {
 }
 
 async function accountantScripts() {
-    const pages = ['']
+    const pages = ['deliveryConfirm', 'paymentConfirm', 'shippingConfirm', 'accountanPprofile']
     const pageScripts = {}
 
     for (var pageName of pages) {
@@ -47,7 +47,7 @@ async function accountantScripts() {
 }
 
 async function managerScripts() {
-    const pages = ['']
+    const pages = ['statistics', 'orders', 'usersOrders', 'managerProfile']
     const pageScripts = {}
 
     for (var pageName of pages) {

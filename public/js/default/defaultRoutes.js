@@ -62,6 +62,7 @@ export default function(defaultPageScripts, loggedPageScripts) {
         },
         {
             path: "/profile",
+            name: "mainProfile",
             component: {
                 template: "<router-view></router-view>"
             },

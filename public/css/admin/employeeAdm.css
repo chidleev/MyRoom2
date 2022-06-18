@@ -325,7 +325,7 @@
 
     display: block;
 
-    border: calc(0.125 * var(--medium-text-2)) solid var(--my-green-2);
+    border: calc(0.125 * var(--medium-text-2)) solid var(--light-1);
 
     color: var(--my-blue-2);
     background-color: var(--light-2);
@@ -354,7 +354,7 @@
 
 /* Change the background color of the dropdown button when the dropdown content is shown */
 .dropdown:hover .dropdown-text {
-    border: calc(0.125 * var(--medium-text-2)) solid var(--my-green-2);
+    border: calc(0.125 * var(--medium-text-2)) solid var(--light-1);
     background-color: var(--my-green-1);
     transition: var(--speed-2);
 }

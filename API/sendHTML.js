@@ -6,8 +6,8 @@ const defaultPages = ['about', 'mainCatalog', 'catalog', 'product', 'login', 'si
 
 const loggedPages = ['profile', 'basket']
 const adminPages = ['categoryAdm', 'commentAdm', 'employeeAdm', 'productAdm', 'profileAdm']
-const accountantPages = []
-const managerPages = []
+const accountantPages = ['deliveryConfirm', 'paymentConfirm', 'shippingConfirm', 'accountanPprofile']
+const managerPages = ['statistics', 'orders', 'usersOrders', 'managerProfile']
 
 const components = ['searchLine', 'productCard', 'commentCard']
 
@@ -48,6 +48,22 @@ sendHtml.app.get('/admin', userValidators.isAdmin, (req, res) => {
     pages = {}
     adminPages.forEach((fileName) => {
         pages[fileName] =  fs.readFileSync(`./public/pages/admin/${fileName}.html`, 'utf8')
+    })
+    res.json(pages)
+})
+
+sendHtml.app.get('/accountant', userValidators.isAccountant, (req, res) => {
+    pages = {}
+    accountantPages.forEach((fileName) => {
+        pages[fileName] =  fs.readFileSync(`./public/pages/accountant/${fileName}.html`, 'utf8')
+    })
+    res.json(pages)
+})
+
+sendHtml.app.get('/manager', userValidators.isManager, (req, res) => {
+    pages = {}
+    managerPages.forEach((fileName) => {
+        pages[fileName] =  fs.readFileSync(`./public/pages/manager/${fileName}.html`, 'utf8')
     })
     res.json(pages)
 })

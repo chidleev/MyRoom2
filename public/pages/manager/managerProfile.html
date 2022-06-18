@@ -14,7 +14,7 @@
         <div id="buttons">
             <div class="block">
                 <router-link 
-                    v-for="(pageName, key) in {categoryAdm: 'Категории', productAdm: 'Товары'}"
+                    v-for="(pageName, key) in {statistics: 'Статистика', orders: 'Остатки'}"
                     :to="{ name: key }" 
                     class="button" 
                     active-class="active-btn"
@@ -24,7 +24,7 @@
             </div>
             <div class="block">
                 <router-link 
-                    v-for="(pageName, key) in {commentAdm: 'Комментарии', employeeAdm: 'Работники'}"
+                    v-for="(pageName, key) in {usersOrders: 'Оформить заказ'}"
                     :to="{ name: key }" 
                     class="button" 
                     active-class="active-btn"
@@ -33,6 +33,6 @@
                 </router-link>
             </div>
         </div>
-        <div id="text">Панель администратора</div>
+        <div id="text">Панель менеджера</div>
     </div>
 </div>

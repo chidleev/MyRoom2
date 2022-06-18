@@ -1,0 +1,25 @@
+<div id="panel">
+    <div id="buttons">
+        <div class="block">
+            <router-link 
+                v-for="(pageName, key) in {shippingConfirm: 'Поставки', paymentConfirm: 'Оплата заказов'}"
+                :to="{ name: key }" 
+                class="button" 
+                active-class="active-btn"
+            >
+            {{pageName}}
+            </router-link>
+        </div>
+        <div class="block">
+            <router-link 
+                v-for="(pageName, key) in {deliveryConfirm: 'Отправка товаров'}"
+                :to="{ name: key }" 
+                class="button" 
+                active-class="active-btn"
+            >
+            {{pageName}}
+            </router-link>
+        </div>
+    </div>
+    <div id="text">Панель бухгалтера. Оплата заказов</div>
+</div>

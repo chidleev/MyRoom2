@@ -52,9 +52,9 @@ serverApp.use('/js', express.static(path.join(__dirname, 'public', 'js')))
 serverApp.use('/js/component', express.static(path.join(__dirname, 'public', 'js', 'components')))
 serverApp.use('/js/pageScript', express.static(path.join(__dirname, 'public', 'js', 'default')))
 serverApp.use('/js/pageScript', express.static(path.join(__dirname, 'public', 'js', 'logged')))
-serverApp.use('/js/pageScript', usersValidators.isAdmin, express.static(path.join(__dirname, 'public', 'js', 'admin')))
-serverApp.use('/js/pageScript', usersValidators.isAccountant, express.static(path.join(__dirname, 'public', 'js', 'accountant')))
-serverApp.use('/js/pageScript', usersValidators.isManager, express.static(path.join(__dirname, 'public', 'js', 'manager')))
+serverApp.use('/js/pageScript', usersValidators.isNotDefaultUser, express.static(path.join(__dirname, 'public', 'js', 'admin')))
+serverApp.use('/js/pageScript', usersValidators.isNotDefaultUser, express.static(path.join(__dirname, 'public', 'js', 'accountant')))
+serverApp.use('/js/pageScript', usersValidators.isNotDefaultUser, express.static(path.join(__dirname, 'public', 'js', 'manager')))
 
 serverApp.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'pages', 'index.html'))

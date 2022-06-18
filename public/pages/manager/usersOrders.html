@@ -1,0 +1,24 @@
+<div id="panel">
+    <div id="buttons">
+        <div class="block">
+            <router-link 
+                v-for="(pageName, key) in {statistics: 'Статистика', orders: 'Остатки'}"
+                :to="{ name: key }" 
+                class="button" 
+                active-class="active-btn"
+            >
+            {{pageName}}
+            </router-link>
+        </div>
+        <div class="block">
+            <router-link 
+                v-for="(pageName, key) in {usersOrders: 'Оформить заказ'}"
+                :to="{ name: key }" 
+                class="button" 
+                active-class="active-btn"
+            >
+            {{pageName}}
+            </router-link>
+        </div>
+    </div>
+    <div id="text">Панель менеджера. Оформить заказ</div>

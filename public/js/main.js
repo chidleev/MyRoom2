@@ -65,9 +65,28 @@ axios({
     .then(response => {
         switch (response.data) {
             case 'admin':
-                console.log('its admin');
+                console.log('Hello admin');
                 document.getElementById('logout_icon').style.display = 'flex'
                 initRouter.adminRouter().then(router => {
+                    app.use(router)
+                    app.mount('div#app')
+                })
+                break;
+
+            case 'accountant':
+                console.log('Hello accountant');
+                document.getElementById('logout_icon').style.display = 'flex'
+                initRouter.accountantRouter().then(router => {
+                    app.use(router)
+                    console.log(router.getRoutes());
+                    app.mount('div#app')
+                })
+                break;
+
+            case 'manager':
+                console.log('Hello manager');
+                document.getElementById('logout_icon').style.display = 'flex'
+                initRouter.managerRouter().then(router => {
                     app.use(router)
                     app.mount('div#app')
                 })
