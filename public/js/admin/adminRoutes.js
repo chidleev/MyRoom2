@@ -40,9 +40,7 @@ export default function(defaultPageScripts, loggedPageScripts, adminPageScripts)
             children: [
                 {
                     path: "",
-                    name: "mainCatalog",
-                    component: defaultPageScripts.mainCatalog(defaultPages.mainCatalog),
-                    props: true
+                    redirect: { name: 'catalog', params: { categoryENname: 'Sofas' }}
                 },
                 {
                     path: ":categoryENname",

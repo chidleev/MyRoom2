@@ -20,7 +20,7 @@ export default function (htmlPage) {
                 return this.basketOrders.filter(basket => basket.status == 2)
             },
             boughtOrders: function() {
-                return this.basketOrders.filter(basket => basket.status == 3)
+                return this.basketOrders.filter(basket => basket.status == 4)
             }
         },
         mounted() {

@@ -1,25 +1,87 @@
 <div id="panel">
     <div id="buttons">
-        <div class="block">
-            <router-link 
-                v-for="(pageName, key) in {shippingConfirm: 'Поставки', paymentConfirm: 'Оплата заказов'}"
-                :to="{ name: key }" 
-                class="button" 
-                active-class="active-btn"
-            >
+        <router-link
+            v-for="(pageName, key) in {shippingConfirm: 'Прием поставок', paymentConfirm: 'Страница доходов', deliveryConfirm: 'Отпуск товаров'}"
+            :to="{ name: key }" class="button" active-class="active-btn">
             {{pageName}}
-            </router-link>
-        </div>
-        <div class="block">
-            <router-link 
-                v-for="(pageName, key) in {deliveryConfirm: 'Отправка товаров'}"
-                :to="{ name: key }" 
-                class="button" 
-                active-class="active-btn"
-            >
-            {{pageName}}
-            </router-link>
-        </div>
+        </router-link>
     </div>
-    <div id="text">Панель бухгалтера. Поставки</div>
+    <div id="text">Панель бухгалтера. Отпуск товаров</div>
 </div>
+
+<div v-for="order in todayOrders" class="section">
+    <button class="confirm-btn" @click="updateProductsCounts">Обновить количество товаров в базе данных</button>
+    <button class="confirm-btn" @click="ordersToExcel">Экспортировать в Excel</button>
+</div>
+
+<details class="section">
+    <summary>
+        <span>
+            <span class="material-icons">
+                expand_circle_down
+            </span>
+            <span>Должны прийти сегодня ({{todayOrders.length}}):</span>
+        </span>
+    </summary>
+    <br>
+    <div v-for="order in todayOrders" class="section">
+        <a :href="'/catalog/'+order.Product.Category.ENname+'/'+order.Product.name">{{order.Product.name}}</a>
+        <span>Дата заказа: {{getDate(order.createdAt)}}</span>
+        <span>Дата доставки: {{getDate(order.daliveryDate)}}</span>
+        <span>Количество: {{order.count}}</span>
+    </div>
+</details>
+
+<details class="section">
+    <summary>
+        <span>
+            <span class="material-icons">
+                expand_circle_down
+            </span>
+            <span>Должны прийти завтра ({{tomorrowOrders.length}}):</span>
+        </span>
+    </summary>
+    <br>
+    <div v-for="order in tomorrowOrders" class="section">
+        <a :href="'/catalog/'+order.Product.Category.ENname+'/'+order.Product.name">{{order.Product.name}}</a>
+        <span>Дата заказа: {{getDate(order.createdAt)}}</span>
+        <span>Дата доставки: {{getDate(order.daliveryDate)}}</span>
+        <span>Количество: {{order.count}}</span>
+    </div>
+</details>
+
+<details class="section">
+    <summary>
+        <span>
+            <span class="material-icons">
+                expand_circle_down
+            </span>
+            <span>Должны прийти более, чем через 2 дня ({{futureOrders.length}}):</span>
+        </span>
+    </summary>
+    <br>
+    <div v-for="order in futureOrders" class="section">
+        <a :href="'/catalog/'+order.Product.Category.ENname+'/'+order.Product.name">{{order.Product.name}}</a>
+        <span>Дата заказа: {{getDate(order.createdAt)}}</span>
+        <span>Дата доставки: {{getDate(order.daliveryDate)}}</span>
+        <span>Количество: {{order.count}}</span>
+    </div>
+</details>
+
+<details class="section">
+    <summary>
+        <span>
+            <span class="material-icons">
+                expand_circle_down
+            </span>
+            <span>Уже пришли ({{lastOrders.length}}):</span>
+        </span>
+    </summary>
+    <br>
+    <div v-for="order in lastOrders" class="section">
+        <a :href="'/catalog/'+order.Product.Category.ENname+'/'+order.Product.name">{{order.Product.name}}</a>
+        <span>Дата заказа: {{getDate(order.createdAt)}}</span>
+        <span>Дата доставки: {{getDate(order.daliveryDate)}}</span>
+        <span>Количество: {{order.count}}</span>
+    </div>
+</details>

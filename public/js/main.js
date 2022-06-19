@@ -42,6 +42,7 @@ const settings = {
                     })
                     document.getElementById('logout_icon').style.display = 'none'
                     this.$router.push({name: 'login'})
+                    this.$router.go()
                 })
                 .catch(error => {
                     error.response.data.errors.forEach(error => {
@@ -78,7 +79,6 @@ axios({
                 document.getElementById('logout_icon').style.display = 'flex'
                 initRouter.accountantRouter().then(router => {
                     app.use(router)
-                    console.log(router.getRoutes());
                     app.mount('div#app')
                 })
                 break;

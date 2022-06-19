@@ -1,25 +1,48 @@
 <div id="panel">
     <div id="buttons">
-        <div class="block">
-            <router-link 
-                v-for="(pageName, key) in {shippingConfirm: 'Поставки', paymentConfirm: 'Оплата заказов'}"
-                :to="{ name: key }" 
-                class="button" 
-                active-class="active-btn"
-            >
+        <router-link
+            v-for="(pageName, key) in {shippingConfirm: 'Прием поставок', paymentConfirm: 'Страница доходов', deliveryConfirm: 'Отпуск товаров'}"
+            :to="{ name: key }" class="button" active-class="active-btn">
             {{pageName}}
-            </router-link>
-        </div>
-        <div class="block">
-            <router-link 
-                v-for="(pageName, key) in {deliveryConfirm: 'Отправка товаров'}"
-                :to="{ name: key }" 
-                class="button" 
-                active-class="active-btn"
-            >
-            {{pageName}}
-            </router-link>
-        </div>
+        </router-link>
     </div>
-    <div id="text">Панель бухгалтера. Отправка товаров</div>
+    <div id="text">Панель бухгалтера. Прием поставок</div>
 </div>
+
+<template v-for="orders in groupBy(deliveryOrders, 'ProductUuid')">
+    <details class="section">
+        <summary>
+            <span>
+                <span class="material-icons">
+                    expand_circle_down
+                </span>
+                <span>Заказы товара: "{{orders[0].Product.name}}" ({{orders.length}})</span>
+            </span>
+        </summary>
+        <br>
+        <div v-for="order in orders" class="order-card">
+            <span class="id-order">ID: {{order.uuid.split('-')[4]}}</span>
+            <div class="info">
+                <span>Заказчик</span>
+                <span>Имя: {{order.User.name}}</span>
+                <span>Эл.почта: <a :href="'mailto:'+order.User.email">{{order.User.email}}</a></span>
+                <span>
+                    Телефон: 
+                    <a v-if="order.User.phone" :href="'tel:'+order.User.phone">{{order.User.phone}}</a>
+                    <span v-else>не указан</span>
+                </span>
+            </div>
+            <div class="info">
+                <span>Товар</span>
+                <span>Цена: {{order.Product.price}}</span>
+                <span>Остаток: {{order.Product.count + orders.length}}шт.</span>
+            </div>
+            <div class="last">
+                <span>Дата оплаты: {{getDate(order.updatedAt)}}</span>
+                <button class="confirm-btn" @click="confirmDelivery(order)">
+                    Подтвердить отправку
+                </button>
+            </div>
+        </div>
+    </details>
+</template>

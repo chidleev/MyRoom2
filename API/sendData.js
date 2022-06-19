@@ -89,7 +89,7 @@ sendData.app.post('/productsSearch', (req, res) => {
                 model: db.Users,
                 attributes: ['name', 'photoURL']
             }],
-            order: [['selfRate', 'DESC']]
+            order: [['postedAt', 'DESC']]
         }]
     })
         .then(products => {
@@ -120,6 +120,22 @@ sendData.app.get('/comments', (req, res) => {
             }]
         }],
         order: [['postedAt', 'DESC']]
+    })
+        .then(result => {
+            res.json(result)
+        })
+        .catch(err => {
+            console.log(err);
+            res.sendStatus(404)
+        })
+})
+
+sendData.app.get('/contacts', (req, res) => {
+    db.Users.findAll({
+        where: { roleUUID: {
+            [db.Op.not]: "00000000-0000-0000-0000-000000000000"
+        }},
+        attributes: ['name', 'photoURL', 'phone', 'email', 'roleUUID']
     })
         .then(result => {
             res.json(result)

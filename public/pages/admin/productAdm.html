@@ -1,26 +1,11 @@
 <div id="product-box">
     <div id="panel">
         <div id="buttons">
-            <div class="block">
-                <router-link 
-                    v-for="(pageName, key) in {categoryAdm: 'Категории', productAdm: 'Товары'}"
-                    :to="{ name: key }" 
-                    class="button" 
-                    active-class="active-btn"
-                >
+            <router-link
+                v-for="(pageName, key) in {categoryAdm: 'Категории', productAdm: 'Товары', commentAdm: 'Комментарии', employeeAdm: 'Работники'}"
+                :to="{ name: key }" class="button" active-class="active-btn">
                 {{pageName}}
-                </router-link>
-            </div>
-            <div class="block">
-                <router-link 
-                    v-for="(pageName, key) in {commentAdm: 'Комментарии', employeeAdm: 'Работники'}"
-                    :to="{ name: key }" 
-                    class="button" 
-                    active-class="active-btn"
-                >
-                {{pageName}}
-                </router-link>
-            </div>
+            </router-link>
         </div>
         <div id="text">Панель администратора. Товары</div>
     </div>

@@ -1,1 +1,54 @@
 @import url('/css/profile.css');
+@import url('/css/paymentConfirm.css');
+
+.section {
+    display: inline-flex;
+    flex-direction: row;
+    align-items: stretch;
+    flex-wrap: wrap;
+    gap: calc(0.5 * var(--mini-text));
+}
+
+.section a {
+    box-sizing: border-box;
+    min-height: 100%;
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    text-decoration: none;
+    color: var(--my-blue-2);
+    transition: var(--speed-2);
+    flex: 1 1;
+}
+.section a:hover {
+    color: var(--my-yellow);
+    transition: var(--speed-2);
+}
+.section a:active {
+    color: var(--my-orange);
+    transition: var(--speed-2);
+}
+
+.section .section span {
+    padding: 0 calc(0.5 * var(--mini-text));
+    box-sizing: border-box;
+    min-height: 100%;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--light-1);
+}
+
+.yellow {
+    color: var(--my-yellow)
+}
+
+.orange {
+    color: var(--my-orange)
+}
+ 
+.confirm-btn {
+    padding: calc(0.25 * var(--mini-text)) calc(0.5 * var(--mini-text));
+    margin: 0;
+    max-width: max-content
+}

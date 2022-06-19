@@ -1,24 +1,29 @@
 <div id="panel">
     <div id="buttons">
-        <div class="block">
-            <router-link 
-                v-for="(pageName, key) in {statistics: 'Статистика', orders: 'Остатки'}"
-                :to="{ name: key }" 
-                class="button" 
-                active-class="active-btn"
-            >
+        <router-link
+            v-for="(pageName, key) in {statistics: 'Продажи', orders: 'Заявки на поставку', usersOrders: 'Оформление заказов'}"
+            :to="{ name: key }" class="button" active-class="active-btn">
             {{pageName}}
-            </router-link>
-        </div>
-        <div class="block">
-            <router-link 
-                v-for="(pageName, key) in {usersOrders: 'Оформить заказ'}"
-                :to="{ name: key }" 
-                class="button" 
-                active-class="active-btn"
-            >
-            {{pageName}}
-            </router-link>
+        </router-link>
+    </div>
+    <div id="text">Панель менеджера. Заявки на поставку</div>
+</div>
+
+<div class="section">
+    <div class="dropdown">
+        <div class="dropdown-text">Текущая категория: {{selectedCategory.name || 'не выбрана'}}</div>
+        <div class="dropdown-content">
+            <div v-for="category in categories" @click="selectedCategory = category"
+                :class="{'active': selectedCategory == category}">{{category.name}}</div>
         </div>
     </div>
-    <div id="text">Панель менеджера. Остатки</div>
+    <button v-if="checkOrderCount" class="confirm-btn" @click="takeOrder()">Оформить заказ</button>
+</div>
+
+<div v-for="product in products" class="section">
+    <a :href="'/catalog/'+selectedCategory.ENname+'/'+product.name">{{product.name}}</a>
+    <span :class="{'yellow': product.count < getCountOf(product.uuid, 0), 'orange': product.count < getCountOf(product.uuid, 1)}">Остаток: {{product.count || 0}}</span>
+    <span>В избранном у: {{getCountOf(product.uuid, 0)}} чел.</span>
+    <span>Хочет приобрести: {{getCountOf(product.uuid, 1)}} чел.</span>
+    <span>Заказать: <input type="number" v-model="orderCount[product.uuid]" min="0" max="10"> ед.</span>
+</div>

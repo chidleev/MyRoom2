@@ -143,7 +143,7 @@ export default function (htmlPage) {
             },
             getDate(date) {
                 return new Date(date).toLocaleDateString("ru-RU")
-            },
+            }
         }
     }
 }

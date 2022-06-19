@@ -1,26 +1,11 @@
 <div id="categories-box">
     <div id="panel">
         <div id="buttons">
-            <div class="block">
-                <router-link 
-                    v-for="(pageName, key) in {categoryAdm: 'Категории', productAdm: 'Товары'}"
-                    :to="{ name: key }" 
-                    class="button" 
-                    active-class="active-btn"
-                >
+            <router-link
+                v-for="(pageName, key) in {categoryAdm: 'Категории', productAdm: 'Товары', commentAdm: 'Комментарии', employeeAdm: 'Работники'}"
+                :to="{ name: key }" class="button" active-class="active-btn">
                 {{pageName}}
-                </router-link>
-            </div>
-            <div class="block">
-                <router-link 
-                    v-for="(pageName, key) in {commentAdm: 'Комментарии', employeeAdm: 'Работники'}"
-                    :to="{ name: key }" 
-                    class="button" 
-                    active-class="active-btn"
-                >
-                {{pageName}}
-                </router-link>
-            </div>
+            </router-link>
         </div>
         <div id="text">Панель администратора. Категории</div>
     </div>
@@ -47,7 +32,8 @@
 
     <div v-for="category in categories" class="category-item" :id="'category-item-'+category.uuid">
         <div>
-            <input type="text" v-model="category.name" @change="renameCategory(category)" :id="'category-name-'+category.uuid">
+            <input type="text" v-model="category.name" @change="renameCategory(category)"
+                :id="'category-name-'+category.uuid">
             <label :for="'category-name-'+category.uuid">
                 <span class="material-icons">
                     drive_file_rename_outline
@@ -56,8 +42,10 @@
         </div>
         <div>
             <span>Количество товаров: {{category.productsCount}}шт.</span>
-            <label :for="'check-category-'+category.uuid" class="delete-check-label" :checked="checkedCategories.find(thisCategoryUUID => thisCategoryUUID == category.uuid)">
-                <input type="checkbox" :id="'check-category-'+category.uuid" v-model="checkedCategories" :value="category.uuid">
+            <label :for="'check-category-'+category.uuid" class="delete-check-label"
+                :checked="checkedCategories.find(thisCategoryUUID => thisCategoryUUID == category.uuid)">
+                <input type="checkbox" :id="'check-category-'+category.uuid" v-model="checkedCategories"
+                    :value="category.uuid">
             </label>
         </div>
     </div>

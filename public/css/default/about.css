@@ -1,6 +1,19 @@
 #main-content {
-    
     display: flex;
+    flex-direction: column;
+    align-items: stretch;
+
+    color: var(--light-2);
+}
+
+.block-1 {
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 50vh;
+
+    position: relative;
+    display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 
@@ -8,9 +21,7 @@
 }
 
 .about-text-block {
-    margin-bottom: 0;
-
-    
+    margin-bottom: calc(2 * var(--mini-text));
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -43,10 +54,105 @@
 }
 
 .about-help {
-    min-width: fit-content;
+    bottom: calc(2.5 * var(--mini-text));
+    text-align: center;
+    font-weight: 600;
+    font-size: calc(1.5 * var(--mini-text));
+}
+
+.right {
+    right: 0;
+}
+.left {
+    left: 0;
+}
+
+.to-info {
     position: absolute;
     bottom: calc(2.5 * var(--mini-text));
+    font-size: calc(2.5 * var(--mini-text));
+}
 
-    font-weight: 300;
-    font-size: var(--mini-text);
+.block-2 {
+    padding: calc(0.5 * var(--mini-text));
+    box-sizing: border-box;
+    width: 100%;
+
+    display: inline-flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: calc(0.5 * var(--mini-text));
+
+    border: calc(0.2 * var(--medium-text-2)) dashed var(--my-blue-1);
+
+    color: var(--my-blue-2);
+    background-image: var(--back-img);
+    background-position:  calc(0.5 * var(--mini-text)) 0, calc(0.5 * var(--mini-text)) 0, 0 0, 0 0;
+    background-size: calc(0.5 * var(--mini-text)) calc(0.5 * var(--mini-text));
+    background-repeat: repeat;
+}
+
+.title {
+    padding: calc(0.25 * var(--mini-text)) calc(0.5 * var(--mini-text));
+    box-sizing: border-box;
+    width: 100%;
+
+    font-weight: 600;
+    font-size: var(--medium-text-1);
+
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    gap: calc(0.5 * var(--mini-text));
+
+    background: linear-gradient(to right, var(--light-1) 15%, var(--light-1) 55%, transparent);
+}
+
+.title[medium] {
+    font-weight: 400;
+    font-size: var(--medium-text-2);
+}
+
+.title[mini] {
+    gap: calc(var(--mini-text));
+    flex-wrap: wrap;
+}
+
+.title[mini] span {
+    font-weight: 400;
+    font-size: calc(1.5 * var(--mini-text));
+}
+
+.title[mini] a {
+    text-decoration: none;
+    font-weight: 400;
+    font-size: calc(1.25 * var(--mini-text));
+    color: var(--my-blue-1);
+    transition: var(--speed-2);
+}
+.title[mini] a:hover {
+    color: var(--my-yellow);
+    transition: var(--speed-2);
+}
+.title[mini] a:active {
+    color: var(--my-orange);
+    transition: var(--speed-2);
+}
+
+iframe {
+    box-sizing: border-box;
+    border: calc(0.2 * var(--medium-text-2)) solid var(--my-yellow);
+}
+
+.title[mini] img {
+    align-self: center;
+    height: calc(5 * var(--mini-text));
+    border: calc(0.15 * var(--medium-text-2)) solid var(--my-blue-2);
+}
+.title[mini] .no-photo {
+    align-self: center;
+    font-size: calc(5*var(--mini-text));
+    border: calc(0.125 * var(--medium-text-2)) solid var(--my-blue-1);
+    color: var(--dark-2);
+    background-color: var(--dark-1);
 }

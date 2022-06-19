@@ -84,6 +84,7 @@
 
 #panel {
     margin-bottom: calc(var(--mini-text));
+	padding: calc(0.25*var(--mini-text));
 
     box-sizing: border-box;
     width: 100%;
@@ -92,11 +93,11 @@
 
     z-index: 10;
 
-    display: flex;
+    display: inline-flex;
     flex-direction: column;
     justify-content: center;
     align-items: stretch;
-
+	gap: calc(0.25*var(--mini-text));
     flex: 0 0;
 
     border: calc(0.15 * var(--medium-text-2)) dashed var(--my-blue-1);
@@ -108,32 +109,26 @@
 }
 
 #panel #buttons {
-    display: flex;
+    display: inline-flex;
     flex-direction: row;
     justify-content: center;
     align-items: stretch;
     flex-wrap: wrap;
+    gap: calc(0.25*var(--mini-text))
 }
 
-#panel #buttons .block {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: stretch;
-}
-
-#panel #buttons .block .button {
-    margin: calc(0.5*var(--mini-text)) calc(0.5*var(--mini-text));
-    
+#panel #buttons .button {
     box-sizing: border-box;
-    height: calc(1.75*var(--medium-text-2));
-    width: calc(12*var(--mini-text));
+    max-width: max-content;
+    min-width: calc(12*var(--mini-text));
+    height: calc(2.5*var(--mini-text));
     
     display: flex;
     justify-content: center;
     align-items: center;
-    flex: 1, 1;
+    flex: 1 1;
     
+    text-align: center;
     text-decoration: none;
     font-size: var(--mini-text);
 
@@ -145,39 +140,40 @@
     transition: var(--speed-2);
 }
 
-#panel #buttons .block .button:hover {
+#panel #buttons .button:hover {
     border: calc(0.125 * var(--medium-text-2)) solid var(--light-1);
     background-color: var(--my-yellow);
     box-shadow: 0px 0px var(--medium-text-1) var(--my-yellow);
     transition: var(--speed-2);
 }
 
-#panel #buttons .block .button:active, #panel #buttons .block .button.active-btn {
+#panel #buttons .button:active, #panel #buttons .button.active-btn {
     border: calc(0.125 * var(--medium-text-2)) solid var(--light-1);
     background-color: var(--my-orange);
     box-shadow: 0px 0px var(--medium-text-1) var(--my-orange);
     transition: var(--speed-2);
 }
 
-#panel #buttons .block .button:disabled {
+#panel #buttons .button:disabled {
     background-color: var(--dark-1);
     box-shadow: none;
     transition: var(--speed-2);
 }
 
 #panel #text {
-    margin-bottom: calc(0.5*var(--mini-text));
-
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
 
+	text-align: center;
     font-size: calc(1.5*var(--mini-text));
     font-weight: 600;
 
     color: var(--my-blue-2);
 }
+
+
 
 
 .delete-check-label input[type="checkbox"] {

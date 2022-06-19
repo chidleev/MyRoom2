@@ -1,24 +1,30 @@
 <div id="panel">
     <div id="buttons">
-        <div class="block">
-            <router-link 
-                v-for="(pageName, key) in {statistics: 'Статистика', orders: 'Остатки'}"
-                :to="{ name: key }" 
-                class="button" 
-                active-class="active-btn"
-            >
+        <router-link
+            v-for="(pageName, key) in {statistics: 'Продажи', orders: 'Заявки на поставку', usersOrders: 'Оформление заказов'}"
+            :to="{ name: key }" class="button" active-class="active-btn">
             {{pageName}}
-            </router-link>
-        </div>
-        <div class="block">
-            <router-link 
-                v-for="(pageName, key) in {usersOrders: 'Оформить заказ'}"
-                :to="{ name: key }" 
-                class="button" 
-                active-class="active-btn"
-            >
-            {{pageName}}
-            </router-link>
+        </router-link>
+    </div>
+    <div id="text">Панель менеджера. Оформление заказов</div>
+</div>
+
+<div class="section">
+    <div class="dropdown">
+        <div class="dropdown-text">Текущая категория: {{selectedCategory.name || 'не выбрана'}}</div>
+        <div class="dropdown-content">
+            <div v-for="category in categories" @click="(selectedCategory = category) && (selectedProduct = {})"
+                :class="{'active': selectedCategory == category}">{{category.name}}</div>
         </div>
     </div>
-    <div id="text">Панель менеджера. Оформить заказ</div>
+    <div class="dropdown">
+        <div class="dropdown-text">Товар: {{selectedProduct.name || 'не выбран'}}</div>
+        <div class="dropdown-content">
+            <div v-for="product in products" @click="selectedProduct = (product.count > 0)? product : {}"
+                :class="{'active': selectedProduct == product, 'disabled': product.count <= 0}">{{product.name}}</div>
+        </div>
+    </div>
+    <input type="text" name="login" placeholder="Логин" v-model="user.login" autocomplete="off">
+    <input type="password" name="password" placeholder="Пароль" v-model="user.password" autocomplete="off">
+    <button class="confirm-btn" @click="takeOrder">Оформить заказ</button>
+</div>

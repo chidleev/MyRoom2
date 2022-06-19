@@ -1,6 +1,52 @@
-<div class="about-text-block">
-    <span class="about-hello">Добро пожаловать!</span>
-    <span class="about-logo">MyRoom</span>
-    <span class="about-description">интернет-магазин мебели</span>
+<div class="block-1">
+    <div class="about-text-block">
+        <span class="about-hello">Добро пожаловать!</span>
+        <span class="about-logo">MyRoom</span>
+        <span class="about-description">интернет-магазин мебели</span>
+    </div>
 </div>
-<span class="about-help">Выберите категорию, чтобы увидеть товар</span>
+
+<div class="block-2" id="information" ref="information">
+    <span class="title">Наш адрес: ул. Бутаково, 4, Химки, Россия</span>
+    <iframe
+        src="https://yandex.ru/map-widget/v1/?um=constructor%3Ac1eb5a51c3eadd5d14e66a9f5ecf82424eb44474b83281c079307faddec50608&amp;source=constructor"
+        width="100%" height="400" frameborder="0"></iframe>
+    <span class="title">Нужна помощь при выборе мебели?</span>
+    <span class="title" medium>Задайте интересующие вопросы менеджеру:</span>
+    <span class="title" mini
+        v-for="contact in contacts.filter(cont => cont.roleUUID == 'cc8554cb-d9c7-44e9-9c68-6ab2caac61e9')">
+        <img v-if="contact.photoURL" :src="contact.photoURL" alt="Фотография работника">
+        <span v-else class="material-icons no-photo">
+            account_box
+        </span>
+        <span>{{contact.name}}</span>
+        <a :href="'tel:'+contact.phone">{{contact.phone}}</a>
+        <a :href="'mailto:'+contact.email">{{contact.email}}</a>
+    </span>
+
+    <span class="title">Возникили проблемы с оплатой?</span>
+    <span class="title" medium>Обратитесь за помощью к бухгалтеру:</span>
+    <span class="title" mini
+        v-for="contact in contacts.filter(cont => cont.roleUUID == '5757484e-79e0-4a4d-a8c9-c7a08b9137fc')">
+        <img v-if="contact.photoURL" :src="contact.photoURL" alt="Фотография работника">
+        <span v-else class="material-icons no-photo">
+            account_box
+        </span>
+        <span>{{contact.name}}</span>
+        <a :href="'tel:'+contact.phone">{{contact.phone}}</a>
+        <a :href="'mailto:'+contact.email">{{contact.email}}</a>
+    </span>
+
+    <span class="title">Проблемы с сайтом?</span>
+    <span class="title" medium>Сообщите администратору:</span>
+    <span class="title" mini
+        v-for="contact in contacts.filter(cont => cont.roleUUID == '56de4ebc-c616-496f-8666-a45232a900eb')">
+        <img v-if="contact.photoURL" :src="contact.photoURL" alt="Фотография работника">
+        <span v-else class="material-icons no-photo">
+            account_box
+        </span>
+        <span>{{contact.name}}</span>
+        <a :href="'tel:'+contact.phone">{{contact.phone}}</a>
+        <a :href="'mailto:'+contact.email">{{contact.email}}</a>
+    </span>
+</div>

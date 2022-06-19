@@ -1,7 +1,10 @@
 <div id="profile-content">
     <div id="header" class="row">
-        <div id="photo">
-            <img :src="userData.photoURL || '/icon/profile.svg'" alt="Фотография профиля">
+        <div id="photo" @click="uploadProfilePhoto" new-photo>
+            <img v-if="userData.photoURL" :src="userData.photoURL" alt="Фотография профиля">
+            <span v-else class="material-icons">
+                account_box
+            </span>
         </div>
 
         <div id="text">
@@ -12,26 +15,11 @@
 
     <div id="panel">
         <div id="buttons">
-            <div class="block">
-                <router-link 
-                    v-for="(pageName, key) in {statistics: 'Статистика', orders: 'Остатки'}"
-                    :to="{ name: key }" 
-                    class="button" 
-                    active-class="active-btn"
-                >
+            <router-link
+                v-for="(pageName, key) in {statistics: 'Продажи', orders: 'Заявки на поставку', usersOrders: 'Оформление заказов'}"
+                :to="{ name: key }" class="button" active-class="active-btn">
                 {{pageName}}
-                </router-link>
-            </div>
-            <div class="block">
-                <router-link 
-                    v-for="(pageName, key) in {usersOrders: 'Оформить заказ'}"
-                    :to="{ name: key }" 
-                    class="button" 
-                    active-class="active-btn"
-                >
-                {{pageName}}
-                </router-link>
-            </div>
+            </router-link>
         </div>
         <div id="text">Панель менеджера</div>
     </div>
