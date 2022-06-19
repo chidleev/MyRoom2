@@ -103,9 +103,13 @@ adminAPI.patch('/category', (req, res) => {
     };
 
     axios.request(options).then(response => {
+        var en = req.body.newName
+        if (response.data.text) {
+            en = response.data.text[0]
+        }
         db.Categories.update({
             name: req.body.newName,
-            ENname: response.data.text[0]
+            ENname: en
         }, {
             where: { uuid: req.body.uuid }
         })

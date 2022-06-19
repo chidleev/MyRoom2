@@ -69,7 +69,8 @@ export default function (htmlPage) {
                 }))
             },
             setInBasket(event) {
-                this.inBasket = event.detail.basketProducts.find(basket => basket.Product.name == this.product.name)
+                console.log(event.detail.basketOrders);
+                this.inBasket = event.detail.basketOrders.find(basket => (basket.Product.name == this.product.name) && (basket.status == 1))
             },
             setInFavorite(event) {
                 this.inFavorite = event.detail.favoriteProducts.find(favorite => favorite.Product.name == this.product.name)
