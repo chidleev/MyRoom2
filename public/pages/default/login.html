@@ -20,6 +20,7 @@
             v-model="user.password" 
             :wrong="wrongInput.password"
         >
+        <span v-if="user.login" class="forgot" @click="sendPassword">Забыли пароль?</span>
         <button @click="loginReq" :disabled="haveErrors">Войти</button>
     </div>
 </div>

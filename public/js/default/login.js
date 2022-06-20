@@ -34,6 +34,17 @@ export default function (htmlPage) {
             }
         },
         methods: {
+            sendPassword() {
+                setTimeout(() => {
+                    new Toast({
+                        title: false,
+                        text: "Пароль отправлен на вашу почту",
+                        theme: 'success',
+                        autohide: true,
+                        interval: 2000
+                    })
+                }, 1000)
+            },
             loginReq() {
                 axios({
                     url: '/api/user/login',
