@@ -1,6 +1,6 @@
 # MyRoom - Интернет-магазин мебели
 
-![MyRoom Logo](public/icon/logo.svg)
+![MyRoom Logo](public/icons/logo.svg)
 
 ## О проекте
 
